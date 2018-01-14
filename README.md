@@ -26,6 +26,7 @@ The ideas are also welcome ;)
 -Ghosting
 -Theme manager
 
+
 <b>===To do:</b><br>
 -"Play animation" button
 -Tool: Eraser
