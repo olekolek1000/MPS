@@ -1,18 +1,17 @@
-<h1><b>===Moving Picture Studio===</b></h1>
+<h1><b>===Moving Picture Studio===</b></h1><br>
 
 This is a stop-motion animation program which is made to be <b>MODERN</b>, <b>EASY</b>, <b>MULTIPLATFORM</b> and <b>FAST</b>.
 This project is currently under HEAVY DEVELOPMENT.
 
-The application is based on OpenGL 2.1 and SDL library.
-
-Current supported platforms:
-	-Linux x64  (./MPS)
-	-Windows x86  (MPS.exe)
+The application is based on OpenGL 2.1 and SDL library.<br>
+Current supported platforms:<br>
+	-Linux x64  (./MPS)<br>
+	-Windows x86  (MPS.exe)<br>
 	
 Please report any bugs and problems in this program. It helps a lot!
 The ideas are also welcome ;)
 
-<b>===Done:</b>
+<b>===Done:</b><br>
 -Frame selector (Create/remove frame, duplicate frame)
 -History (Undo/redo)
 -Tool: Pencil
@@ -21,13 +20,13 @@ The ideas are also welcome ;)
 -Tool: Bucket fill
 -Tool: Pipette
 
-<b>===Partially done (Works fine, but there may be a lot of changes in the future):</b>
+<b>===Partially done (Works fine, but there may be a lot of changes in the future):</b><br>
 -Toolbox
 -Color selector
 -Ghosting
 -Theme manager
 
-<b>===To do:</b>
+<b>===To do:</b><br>
 -"Play animation" button
 -Tool: Eraser
 -Tool: Brush (draw using any image)
@@ -41,7 +40,7 @@ The ideas are also welcome ;)
 -Compressed history (less RAM usage, more history actions)
 -Change key bindings
 
-<b>===In the distant future:</b>
+<b>===In the distant future:</b><br>
 -Layer support
 -Rotatable viewport
 -Tablet pressure support (I'm waiting for the SDL library)
