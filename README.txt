@@ -1,6 +1,6 @@
 ===Moving Picture Studio===
 
-This is a stop-motion animation program which is made to be MODERN, EASY, MULTIPLATFORM and FAST.
+This is a stop-motion animation program which is made to be **MODERN**, **EASY**, **MULTIPLATFORM** and **FAST**.
 This project is currently under HEAVY DEVELOPMENT.
 
 The application is based on OpenGL 2.1 and SDL library.
