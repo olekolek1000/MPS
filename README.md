@@ -13,54 +13,54 @@ The ideas are also welcome ;)
 
 <b>===Done:</b><br>
 -Frame selector (Create/remove frame, duplicate frame)
--History (Undo/redo)
--Tool: Pencil
--Tool: Line
--Tool: Spray
--Tool: Bucket fill
--Tool: Pipette
+-History (Undo/redo)<br>
+-Tool: Pencil<br>
+-Tool: Line<br>
+-Tool: Spray<br>
+-Tool: Bucket fill<br>
+-Tool: Pipette<br>
 
 <b>===Partially done (Works fine, but there may be a lot of changes in the future):</b><br>
--Toolbox
--Color selector
--Ghosting
--Theme manager
+-Toolbox<br>
+-Color selector<br>
+-Ghosting<br>
+-Theme manager<br>
 
 
 <b>===To do:</b><br>
--"Play animation" button
--Tool: Eraser
--Tool: Brush (draw using any image)
--Tool: Circle
--Tool: Rectangle
--Tool: Select
--Better pencil/line drawing (circles instead of squares)
--Menu (save/load etc.)
--Copy/paste
--Resize image
--Compressed history (less RAM usage, more history actions)
--Change key bindings
+-"Play animation" button<br>
+-Tool: Eraser<br>
+-Tool: Brush (draw using any image)<br>
+-Tool: Circle<br>
+-Tool: Rectangle<br>
+-Tool: Select<br>
+-Better pencil/line drawing (circles instead of squares)<br>
+-Menu (save/load etc.)<br>
+-Copy/paste<br>
+-Resize image<br>
+-Compressed history (less RAM usage, more history actions)<br>
+-Change key bindings<br>
 
 <b>===In the distant future:</b><br>
--Layer support
--Rotatable viewport
--Tablet pressure support (I'm waiting for the SDL library)
--Mac support
+-Layer support<br>
+-Rotatable viewport<br>
+-Tablet pressure support (I'm waiting for the SDL library)<br>
+-Mac support<br>
 
 
 <b>===Controls:</b>
-LMB: Use tool (draw)
-MMB: Pick color
-RMB: Drag viewport
-Mouse wheel: Zoom in/out
-1/2/3/4/5/6/7/8/9: Scale viewport to (1:1, 2:1, 3:1 ....)
-Space: Toggle ghosting visibility
-CTRL+Z: Undo
-CTRL+Y: Redo
-Left/Right: Change frames
-
-F3: Show FPS
-F4: Toggle fullscreen
-F5: Toggle VSync
-ESC: Restart the application (Be careful!)
+LMB: Use tool (draw)<br>
+MMB: Pick color<br>
+RMB: Drag viewport<br>
+Mouse wheel: Zoom in/out<br>
+1/2/3/4/5/6/7/8/9: Scale viewport to (1:1, 2:1, 3:1 ....)<br>
+Space: Toggle ghosting visibility<br>
+CTRL+Z: Undo<br>
+CTRL+Y: Redo<br>
+Left/Right: Change frames<br>
+<br>
+F3: Show FPS<br>
+F4: Toggle fullscreen<br>
+F5: Toggle VSync<br>
+ESC: Restart the application (Be careful!)<br>
 
