@@ -1,5 +1,5 @@
 <h1><b>===Moving Picture Studio===</b></h1><br>
-![icon](http://www.olekolek1000.pl/mps/icon.png)
+<img src="http://www.olekolek1000.pl/mps/icon.png" width="256"/>
 
 This is a stop-motion animation program which is made to be <b>MODERN</b>, <b>EASY</b>, <b>MULTIPLATFORM</b> and <b>FAST</b>.
 This project is currently under HEAVY DEVELOPMENT.
