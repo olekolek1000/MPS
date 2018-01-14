@@ -1,4 +1,4 @@
-===Moving Picture Studio===
+<h1><b>===Moving Picture Studio===</b></h1>
 
 This is a stop-motion animation program which is made to be <b>MODERN</b>, <b>EASY</b>, <b>MULTIPLATFORM</b> and <b>FAST</b>.
 This project is currently under HEAVY DEVELOPMENT.
@@ -12,7 +12,7 @@ Current supported platforms:
 Please report any bugs and problems in this program. It helps a lot!
 The ideas are also welcome ;)
 
-===Done:
+<b>===Done:</b>
 -Frame selector (Create/remove frame, duplicate frame)
 -History (Undo/redo)
 -Tool: Pencil
@@ -21,13 +21,13 @@ The ideas are also welcome ;)
 -Tool: Bucket fill
 -Tool: Pipette
 
-===Partially done (Works fine, but there may be a lot of changes in the future):
+<b>===Partially done (Works fine, but there may be a lot of changes in the future):</b>
 -Toolbox
 -Color selector
 -Ghosting
 -Theme manager
 
-===To do:
+<b>===To do:</b>
 -"Play animation" button
 -Tool: Eraser
 -Tool: Brush (draw using any image)
@@ -41,14 +41,14 @@ The ideas are also welcome ;)
 -Compressed history (less RAM usage, more history actions)
 -Change key bindings
 
-===In the distant future:
+<b>===In the distant future:</b>
 -Layer support
 -Rotatable viewport
 -Tablet pressure support (I'm waiting for the SDL library)
 -Mac support
 
 
-===Controls
+<b>===Controls:</b>
 LMB: Use tool (draw)
 MMB: Pick color
 RMB: Drag viewport
