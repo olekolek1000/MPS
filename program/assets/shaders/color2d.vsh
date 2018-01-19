@@ -3,7 +3,6 @@ precision highp float;
 #endif
 
 attribute vec2 inPosition;   
-
 uniform mat4 M;
 uniform mat4 P;
 
