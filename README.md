@@ -8,8 +8,9 @@ This project is currently under HEAVY DEVELOPMENT.
 
 The application is based on OpenGL 2.1 and SDL library.<br>
 Current supported platforms:<br>
-	-Linux x64  (./MPS)<br>
-	-Windows x86  (MPS.exe)<br>
+	-Linux x64  (program/linux64/MPS.x86_64)<br>
+	-Windows x86  (program/win32/MPS_win32.exe)<br>
+	-Windows x64  (program/win64/MPS_win64.exe)<br>
 	
 Please report any bugs and problems in this program. It helps a lot!
 The ideas are also welcome ;)
