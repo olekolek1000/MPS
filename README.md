@@ -8,21 +8,22 @@ This project is currently under HEAVY DEVELOPMENT.
 
 The application is based on OpenGL 2.1 and SDL library.<br>
 Current supported platforms:<br>
-	-Linux x64  (program/linux64/MPS.x86_64)<br>
-	-Windows x86  (program/win32/MPS_win32.exe)<br>
-	-Windows x64  (program/win64/MPS_win64.exe)<br>
+	-Linux x64<br>
+	-Windows x64<br>
 	
 Please report any bugs and problems in this program. It helps a lot!
 The ideas are also welcome ;)
 
 <b>===Done:</b><br>
--Frame selector (Create/remove frame, duplicate frame)
+-Frame selector (Create/remove frame, duplicate frame)<br>
 -History (Undo/redo)<br>
 -Tool: Pencil<br>
 -Tool: Line<br>
 -Tool: Spray<br>
 -Tool: Bucket fill<br>
 -Tool: Pipette<br>
+-Zoomable viewport
+-Dynamic Rotatable viewport
 
 <b>===Partially done (Works fine, but there may be a lot of changes in the future):</b><br>
 -Toolbox<br>
@@ -47,17 +48,17 @@ The ideas are also welcome ;)
 
 <b>===In the distant future:</b><br>
 -Layer support<br>
--Rotatable viewport<br>
 -Tablet pressure support (I'm waiting for the SDL library)<br>
 -Mac support<br>
 
 
 <b>===Controls:</b>
+Left Shift: Rotate viewport
 LMB: Use tool (draw)<br>
 MMB: Pick color<br>
 RMB: Drag viewport<br>
 Mouse wheel: Zoom in/out<br>
-1/2/3/4/5/6/7/8/9: Scale viewport to (1:1, 2:1, 3:1 ....)<br>
+1/2/3/4/5/6/7/8/9: Scale viewport to (1:1, 2:1, 3:1 etc.) and reset viewport rotation<br>
 Space: Toggle ghosting visibility<br>
 CTRL+Z: Undo<br>
 CTRL+Y: Redo<br>
@@ -66,5 +67,4 @@ Left/Right: Change frames<br>
 F3: Show FPS<br>
 F4: Toggle fullscreen<br>
 F5: Toggle VSync<br>
-ESC: Restart the application (Be careful!)<br>
 
