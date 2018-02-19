@@ -1,12 +1,14 @@
 <h1><b>===Moving Picture Studio===</b></h1><br>
+<center>
 <img src="http://www.olekolek1000.pl/mps/icon.png" width="256"/>
+</center>
 
 This is a stop-motion animation program which is made to be <b>MODERN</b>, <b>EASY</b>, <b>MULTIPLATFORM</b> and <b>FAST</b>.
 This project is currently under HEAVY DEVELOPMENT.
 
 ![screenshot](http://www.olekolek1000.pl/mps/screenshot.png)
 
-The application is based on OpenGL 2.1 and SDL library.<br>
+The application is written in C++, based on OpenGL 2.1/ES 2.0 and SDL.<br>
 Current supported platforms:<br>
 	-Linux x64<br>
 	-Windows x64<br>
@@ -22,8 +24,8 @@ The ideas are also welcome ;)
 -Tool: Spray<br>
 -Tool: Bucket fill<br>
 -Tool: Pipette<br>
--Zoomable viewport
--Dynamic Rotatable viewport
+-Zoomable viewport<br>
+-Dynamic Rotatable viewport<br>
 
 <b>===Partially done (Works fine, but there may be a lot of changes in the future):</b><br>
 -Toolbox<br>
@@ -52,8 +54,8 @@ The ideas are also welcome ;)
 -Mac support<br>
 
 
-<b>===Controls:</b>
-Left Shift: Rotate viewport
+<b>===Controls:</b><br>
+Left Shift: Rotate viewport<br>
 LMB: Use tool (draw)<br>
 MMB: Pick color<br>
 RMB: Drag viewport<br>
