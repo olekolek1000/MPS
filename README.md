@@ -69,4 +69,6 @@ Left/Right: Change frames<br>
 F3: Show FPS<br>
 F4: Toggle fullscreen<br>
 F5: Toggle VSync<br>
+Esc: Open menu (work in progress)<br>
 
+End: Restart application (for debugging purposes)<br>
