@@ -1,10 +1,10 @@
 <h1><b>===Moving Picture Studio===</b></h1><br>
-![screenshot](http://mps.olekolek1000.pl/github/logo.png)
+![img_logo](http://mps.olekolek1000.pl/github/logo.png)
 
 This is a stop-motion animation program which is made to be <b>MODERN</b>, <b>EASY</b>, <b>MULTIPLATFORM</b> and <b>FAST</b>.
 This project is currently under HEAVY DEVELOPMENT.
 
-![screenshot](http://mps.olekolek1000.pl/github/screenshot.png)
+![img_screenshot](http://mps.olekolek1000.pl/github/screenshot.png)
 
 The application is written in C++, based on OpenGL 2.1/ES 2.0 and SDL.<br>
 Current supported platforms:<br>
