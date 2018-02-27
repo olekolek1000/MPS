@@ -1,5 +1,6 @@
 <h1><b>===Moving Picture Studio===</b></h1><br>
-![img_logo](http://mps.olekolek1000.pl/github/logo.png)
+
+<img src="http://mps.olekolek1000.pl/github/logo.png">
 
 This is a stop-motion animation program which is made to be <b>MODERN</b>, <b>EASY</b>, <b>MULTIPLATFORM</b> and <b>FAST</b>.
 This project is currently under HEAVY DEVELOPMENT.
