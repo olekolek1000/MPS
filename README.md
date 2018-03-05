@@ -8,9 +8,10 @@ This project is currently under HEAVY DEVELOPMENT.
 ![img_screenshot](http://mps.olekolek1000.pl/github/screenshot.png)
 
 The application is written in C++, based on OpenGL 2.1/ES 2.0 and SDL.<br>
-Current supported platforms:<br>
+Currently supported/tested platforms:<br>
 	-Linux x64<br>
 	-Windows x64<br>
+This application works also on ARM processors (Raspberry PI and other).<br>
 	
 Please report any bugs and problems in this program. It helps a lot!
 The ideas are also welcome ;)

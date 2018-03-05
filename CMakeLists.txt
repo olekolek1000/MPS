@@ -6,7 +6,7 @@ cmake_minimum_required(VERSION 2.8.12)
 
 project(MPS)
 
-set(TYPE "Normal")#Debug, Normal, Release
+set(TYPE "Debug")#Debug, Normal, Release
 set(PLATFORM "Linux")#Linux, Windows
 set(ROOT "./src/")
 
@@ -64,7 +64,7 @@ SET(PROGRAM_SRCS
 	
 	${ROOT}/scenes/editor/menu/menu.cpp
 	${ROOT}/scenes/editor/menu/menubutton.cpp
-	${ROOT}/scenes/editor/menu/filedialog.cpp
+	${ROOT}/scenes/editor/menu/tinyfiledialogs.c
 	
 	${ROOT}/scenes/editor/gui/button.cpp
 	${ROOT}/scenes/editor/gui/checkbox.cpp
@@ -118,5 +118,7 @@ if(PLATFORM STREQUAL "Windows")
 	target_link_libraries (MPS -lglew32s)
 	target_link_libraries (MPS -lopengl32)
 	target_link_libraries (MPS -mwindows)
+	target_link_libraries (MPS -lole32)
+	target_link_libraries (MPS -loleaut32)
 endif()
 
