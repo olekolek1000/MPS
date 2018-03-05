@@ -23,6 +23,8 @@
 
 #include "gif.h"
 
+#include <fstream>
+
 Menu::Menu(sceneEditor * scene){
 	this->scene = scene;
 	this->a = &scene->a;
@@ -96,8 +98,10 @@ void Menu::loop(){
 	step.setRate(30);
 	std::map<std::string, MenuButton> buttons;
 	buttons["01back"].init(this, 200, "Go back");
-	buttons["export"].init(this, 300, "Export");
-	buttons["99quit"].init(this, 400, "Quit");
+	buttons["saveproject"].init(this, 300, "Save project");
+	buttons["loadproject"].init(this, 400, "Load project");
+	buttons["export"].init(this, 500, "Export");
+	buttons["99quit"].init(this, 600, "Quit");
 
 	float postarget = 1.0;
 	
@@ -167,35 +171,25 @@ void Menu::loop(){
 			}
 			
 			if(buttons["01back"].isClicked()){
-				exitMenu();
+				actionBack();
+			}
+			if(buttons["loadproject"].isClicked()){
+				actionLoadProject();
+			}
+			if(buttons["saveproject"].isClicked()){
+				actionSaveProject();
 			}
 			if(buttons["export"].isClicked()){
-				dialogPrepare();
-				const char * patterns[2] = { "*.gif", "*.png" };
-				const char * name = tinyfd_saveFileDialog("Export animation...", NULL, 2, patterns, NULL);
-				if(name!=NULL){
-					string str_name = string(name);
-					
-					int delay = 100;
-					int width = scene->frameMan.getFrame(0)->getWidth();
-					int height = scene->frameMan.getFrame(0)->getHeight();
-					
-					GifWriter writer;
-					GifBegin(&writer, name, width, height, delay, 8, false);
-					for(int i=0; i<scene->frameMan.getFrameCount(); i++){
-						SDL_Surface * overlay = scene->frameMan.getFrame(i)->getOverlay();
-						GifWriteFrame(&writer, (const uint8_t*)overlay->pixels, overlay->w, overlay->h, delay, 8, false);
-					}
-					GifEnd(&writer);
-				}
-				dialogEnd();
+				actionExport();
 			}
 			if(buttons["99quit"].isClicked()){
-				exit(0);
+				actionQuit();
 			}
 		}
 
 		{//render
+			scene->shGui.select();scene->shGui.setP(&projection);
+		
 			glClearColor(0.0,0.0,0.0,1.0);
 			glClear(GL_COLOR_BUFFER_BIT);
 			
@@ -276,4 +270,137 @@ void Menu::dialogEnd(){
 		scene->a.setFullscreen(true);
 	}
 	step.reset();
+}
+
+
+void Menu::actionBack(){
+	exitMenu();
+}
+void Menu::actionExport(){
+	dialogPrepare();
+	bool end=false;
+	while(!end){
+		end=true;
+		const char * patterns[2] = { "*.gif", "*.png" };
+		const char * name = tinyfd_saveFileDialog("Export animation...", NULL, 2, patterns, NULL);
+		if(name!=NULL){
+			string str_name = string(name);
+			if(str_name.size()>4){
+				string str_ext = str_name.substr( str_name.length() - 4 );
+				if(str_ext==".gif"){
+					int delay = 15;
+					int width = scene->frameMan.getFrame(0)->getWidth();
+					int height = scene->frameMan.getFrame(0)->getHeight();
+					
+					GifWriter writer;
+					GifBegin(&writer, name, width, height, delay, 8, false);
+					for(int i=0; i<scene->frameMan.getFrameCount(); i++){
+						SDL_Surface * overlay = scene->frameMan.getFrame(i)->getOverlay();
+						GifWriteFrame(&writer, (const uint8_t*)overlay->pixels, overlay->w, overlay->h, delay, 8, false);
+					}
+					GifEnd(&writer);
+				}
+				else{
+					error("Invalid file extension");
+					end=false;
+				}
+			}
+			else{
+				error("Invalid filename");
+				end=false;
+			}
+		}
+	}
+	dialogEnd();
+}
+void Menu::actionLoadProject(){
+	dialogPrepare();
+	const char * patterns[1] = {"*.mpsp"};
+	const char * name = tinyfd_openFileDialog("Load project...", NULL, 1, patterns, "Moving Picture Studio Project (*.mpsp)", false);
+	if(name!=NULL){
+		std::fstream file;
+		file.open(name, std::ios::in|std::ios::binary);
+		if(file.good()){
+			string pref;
+			pref.resize(strlen(filePrefix));
+			file.read((char*)pref.c_str(), strlen(filePrefix));
+			
+			if(pref!=string(filePrefix)){
+				error("This is not a MPS project!");
+			}
+			else{
+				int fileVersion;
+				file.read((char*)&fileVersion, sizeof(int));
+				
+				switch(fileVersion){
+					case 1:{
+						int frameCount;
+						file.read((char*)&frameCount, sizeof(int));
+						
+						scene->frameMan.clearFrames();
+						//frames
+						for(int i=0; i<frameCount; i++){
+							int width;
+							file.read((char*)&width, sizeof(int));//width
+							int height;
+							file.read((char*)&height, sizeof(int));//height
+							scene->frameMan.selectFrame(scene->frameMan.getFrameCount());
+							scene->frameMan.createFrame(width, height);
+							scene->frameMan.getFrame(i)->forceUpdate();
+							file.read((char*)scene->frameMan.getFrame(i)->getOverlay()->pixels, width*height*4);//pixels
+						}
+						scene->changeFrame(0);
+						exitMenu();
+						break;
+					}
+					default:{
+						error("File version not supported. Upgrade your program.");
+					}
+				}
+			}
+			
+			file.close();
+		}
+		else{
+			error("Cannot load file! Check your filename and location.");
+		}
+	}
+	dialogEnd();
+}
+
+void Menu::actionSaveProject(){
+	dialogPrepare();
+	const char * patterns[1] = {"*.mpsp"};
+	const char * name = tinyfd_saveFileDialog("Save project...", NULL, 1, patterns, "Moving Picture Studio Project (*.mpsp)");
+	if(name!=NULL){
+		std::fstream file;
+		file.open(name, std::ios::out|std::ios::binary);
+		if(file.good()){
+			int frameCount = scene->frameMan.getFrameCount();
+			
+			//header
+			file.write((char*)filePrefix, strlen(filePrefix));
+			file.write((char*)&fileVersion, sizeof(int));
+			file.write((char*)&frameCount, sizeof(int));
+			
+			//frames
+			for(int i=0; i<frameCount; i++){
+				Frame * frame = scene->frameMan.getFrame(i);
+				int width = frame->getWidth();
+				int height = frame->getHeight();
+				file.write((char*)&width, sizeof(int));//width
+				file.write((char*)&height, sizeof(int));//height
+				file.write((char*)frame->getOverlay()->pixels, width*height*4);//pixels
+			}
+			
+			file.close();
+		}
+		else{
+			error("Cannot create file! Check your permissions or location.");
+		}
+	}
+	dialogEnd();
+}
+void Menu::actionQuit(){
+	exit(0);
 }

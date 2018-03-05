@@ -100,7 +100,7 @@ void FrameManager::clearFrames(){
         delete frames[i];
     }
     frames.clear();
-    updateIndexes();
+	currentframe=0;
 }
 
 FrameManager::~FrameManager(){

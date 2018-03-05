@@ -22,6 +22,15 @@ private:
 	void dialogPrepare();
 	void dialogEnd();
 	
+	int fileVersion = 1;
+	const char * filePrefix = "Moving Picture Studio Project";
+	
+	void actionBack();
+	void actionExport();
+	void actionLoadProject();
+	void actionSaveProject();
+	void actionQuit();
+	
 	Timestep step;
 public:
 	App * a;

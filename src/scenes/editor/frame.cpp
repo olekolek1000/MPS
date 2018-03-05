@@ -32,7 +32,7 @@ void Frame::load(int w, int h){
     glGenTextures(1, &overlayTex);
     glBindTexture(GL_TEXTURE_2D, overlayTex);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, overlay->pixels);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
     loaded=true;
@@ -73,4 +73,9 @@ int Frame::getIndex(){
 
 SDL_Surface * Frame::getOverlay(){
     return overlay;
+}
+
+
+void Frame::forceUpdate(){
+	needUpdate=true;
 }

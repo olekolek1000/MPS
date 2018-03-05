@@ -34,5 +34,6 @@ public:
     SDL_Surface * getOverlay();
     float getProportions();
     int getIndex();
+	void forceUpdate();
     ~Frame();
 };
