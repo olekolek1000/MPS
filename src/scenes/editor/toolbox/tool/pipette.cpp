@@ -4,6 +4,9 @@
 #include "../../framemanager.h"
 #include "../../colorselector/colorselector.h"
 #include "../toolbox.h"
+#include "../../editor.h"
+
+#include "render/func.h"
 
 #include "transform.h"
 #include "lib/glm.h"
@@ -64,11 +67,9 @@ void Pipette::render(){
         }
 
         glm::mat4 model;
-/*
-        glBindBuffer(GL_ARRAY_BUFFER, scene->a.square_vert);
-        glVertexAttribPointer(0,2,GL_FLOAT,GL_FALSE,0,(void*)0);
-        glBindBuffer(GL_ARRAY_BUFFER, scene->a.square_uv);
-        glVertexAttribPointer(1,2,GL_FLOAT,GL_FALSE,0,(void*)0);
+
+		scene->a.square_vert->bind().attrib(0,2,GL_FLOAT);
+        scene->a.square_uv->bind().attrib(1,2,GL_FLOAT);
 
         float scale = 1.0+scaleMul;
 
@@ -76,14 +77,13 @@ void Pipette::render(){
         xTranslate(&model, mouseX-34*scale/2,mouseY-34*scale/2-25);
         xScale(&model, 34*scale, 34*scale);
         scene->shGuiColor.select().setM(&model).setUniform("COLOR",0.0,0.0,0.0,opacity);
-        glDrawArrays(GL_TRIANGLES, 0, 6);
+        rDraw(GL_TRIANGLES,6);
 
         xReset(&model);
         xTranslate(&model, mouseX-32*scale/2,mouseY-32*scale/2-25);
         xScale(&model, 32*scale, 32*scale);
         scene->shGuiColor.select().setM(&model).setUniform("COLOR",r/255.0,g/255.0,b/255.0,opacity);
-
-        glDrawArrays(GL_TRIANGLES, 0, 6);*/
+		rDraw(GL_TRIANGLES,6);
     }
 }
 void Pipette::select(){

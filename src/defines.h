@@ -8,5 +8,5 @@
     #define LOC_ROOT "../assets/"
 #endif
  
-//#define FASTSTART 
+#define FASTSTART 
 //#define USE_FRAMEBUFFER

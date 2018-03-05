@@ -7,11 +7,14 @@
 #include "lib/sdl_image.h"
 #include "transform.h"
 #include "render/func.h"
+#include "menubutton.h"
+#include "filedialog.h"
 
 #include "lib/SDL2_rotozoom.h"
 
 #include <sstream>
 #include <iostream>
+#include <map>
 
 Menu::Menu(sceneEditor * scene){
 	this->scene = scene;
@@ -81,9 +84,16 @@ void Menu::loop(){
 	
 	scene->thMan.addTexture("menu/background","menu/background.png",TEXSPACE_RGB,TEXFILTERING_LINEAR);
 	scene->thMan.addTexture("menu/soon","menu/soon.png",TEXSPACE_RGBA,TEXFILTERING_LINEAR);
+	scene->thMan.addTexture("menu/menubutton","menu/menubutton.png",TEXSPACE_RGBA,TEXFILTERING_LINEAR);
 	
 	Timestep step;
 	step.setRate(30);
+	std::map<std::string, MenuButton> buttons;
+	buttons["01back"].init(this, 200, "Go back");
+	buttons["export"].init(this, 300, "Export");
+	buttons["99quit"].init(this, 400, "Quit");
+
+	float postarget = 1.0;
 	
 	bool end=false;
 	while(!end){
@@ -100,7 +110,11 @@ void Menu::loop(){
 			    }
 			}
 			
-			//push event
+			if(exit_delay==0&&end==false){
+				for(auto iter = buttons.begin(); iter!=buttons.end(); iter++){
+					iter->second.pushEvent(&evt);
+				}
+			}
 		}
 		
 		while(a->onEvent()){
@@ -136,8 +150,25 @@ void Menu::loop(){
 					end=true;
 				}
 			}
-			//mul_prev=mul;
-            //mul*=0.95;
+
+			postarget*=0.88;
+			
+			if(exit_delay==0&&end==false){
+				for(auto iter = buttons.begin(); iter!=buttons.end(); iter++){
+					iter->second.update();
+					iter->second.setXPosition(-300+400*(1.0-postarget));
+				}
+			}
+			
+			if(buttons["01back"].isClicked()){
+				exitMenu();
+			}
+			if(buttons["export"].isClicked()){
+				fd_saveFile();
+			}
+			if(buttons["99quit"].isClicked()){
+				exit(0);
+			}
 		}
 
 		{//render
@@ -180,6 +211,13 @@ void Menu::loop(){
 				sh3dref.select().setP(&tProjection).setV(&tView).setM(&tModel).setTime(SDL_GetTicks());
 				rDraw(GL_TRIANGLES,buf_plane.getSize());
 			}
+			if(exit_delay==0&&end==false)
+			{//buttons
+				for(auto iter = buttons.begin(); iter!=buttons.end(); iter++){
+					iter->second.render(step.getAlpha());
+				}
+			}
+			
 			{//build in progress text
 				a->square_vert->bind().attrib(0,2,GL_FLOAT);
 				a->square_uv->bind().attrib(1,2,GL_FLOAT);
@@ -196,4 +234,5 @@ void Menu::loop(){
 	}
 	scene->thMan.removeTexture("menu/background");
 	scene->thMan.removeTexture("menu/soon");
+	scene->thMan.removeTexture("menu/menubutton");
 }
