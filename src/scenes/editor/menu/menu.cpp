@@ -8,13 +8,20 @@
 #include "transform.h"
 #include "render/func.h"
 #include "menubutton.h"
-#include "filedialog.h"
+
+
+#include "tinyfiledialogs.h"
+
 
 #include "lib/SDL2_rotozoom.h"
 
 #include <sstream>
 #include <iostream>
 #include <map>
+
+#include "error.h"
+
+#include "gif.h"
 
 Menu::Menu(sceneEditor * scene){
 	this->scene = scene;
@@ -86,7 +93,6 @@ void Menu::loop(){
 	scene->thMan.addTexture("menu/soon","menu/soon.png",TEXSPACE_RGBA,TEXFILTERING_LINEAR);
 	scene->thMan.addTexture("menu/menubutton","menu/menubutton.png",TEXSPACE_RGBA,TEXFILTERING_LINEAR);
 	
-	Timestep step;
 	step.setRate(30);
 	std::map<std::string, MenuButton> buttons;
 	buttons["01back"].init(this, 200, "Go back");
@@ -164,7 +170,25 @@ void Menu::loop(){
 				exitMenu();
 			}
 			if(buttons["export"].isClicked()){
-				fd_saveFile();
+				dialogPrepare();
+				const char * patterns[2] = { "*.gif", "*.png" };
+				const char * name = tinyfd_saveFileDialog("Export animation...", NULL, 2, patterns, NULL);
+				if(name!=NULL){
+					string str_name = string(name);
+					
+					int delay = 100;
+					int width = scene->frameMan.getFrame(0)->getWidth();
+					int height = scene->frameMan.getFrame(0)->getHeight();
+					
+					GifWriter writer;
+					GifBegin(&writer, name, width, height, delay, 8, false);
+					for(int i=0; i<scene->frameMan.getFrameCount(); i++){
+						SDL_Surface * overlay = scene->frameMan.getFrame(i)->getOverlay();
+						GifWriteFrame(&writer, (const uint8_t*)overlay->pixels, overlay->w, overlay->h, delay, 8, false);
+					}
+					GifEnd(&writer);
+				}
+				dialogEnd();
 			}
 			if(buttons["99quit"].isClicked()){
 				exit(0);
@@ -235,4 +259,21 @@ void Menu::loop(){
 	scene->thMan.removeTexture("menu/background");
 	scene->thMan.removeTexture("menu/soon");
 	scene->thMan.removeTexture("menu/menubutton");
+}
+
+void Menu::dialogPrepare(){
+	if(scene->a.isFullscreen()){
+		wasFullscreen=true;
+		scene->a.setFullscreen(false);
+	}
+	else{
+		wasFullscreen=false;
+	}
+}
+
+void Menu::dialogEnd(){
+	if(wasFullscreen){
+		scene->a.setFullscreen(true);
+	}
+	step.reset();
 }

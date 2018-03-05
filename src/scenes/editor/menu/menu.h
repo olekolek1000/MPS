@@ -2,6 +2,7 @@
 
 #include "lib/glm.h"
 #include "texturemanager.h"
+#include "timestep.h"
 
 class App;
 class sceneEditor;
@@ -16,6 +17,12 @@ private:
 	float z_target = 0.5;
 	float animspeed = 0.08;
 	int exit_delay=0;
+	
+	bool wasFullscreen;
+	void dialogPrepare();
+	void dialogEnd();
+	
+	Timestep step;
 public:
 	App * a;
 	sceneEditor * scene;
