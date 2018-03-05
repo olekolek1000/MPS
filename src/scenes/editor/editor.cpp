@@ -17,14 +17,14 @@ void sceneEditor::setProjection(){
 	projection = glm::ortho(0.0f,a.getProportions(),1.0f,0.0f);
 	shMan.setProportions(a.getProportions());
 	shMan.setResolution(w, h);
-
+ 
 	drawer.updateViewport();
 
 	guiProjection = glm::ortho(0.0f, (float)a.getAreaWidth(), (float)a.getAreaHeight(), 0.0f);
 	shGui.select();shGui.setP(&guiProjection);
 	shGuiColor.select();shGuiColor.setP(&guiProjection);
 }
- 
+  
 void sceneEditor::setCursor(std::string name){
     SDL_SetCursor(cursors[name]);
 }  
@@ -34,7 +34,7 @@ sceneEditor::~sceneEditor(){
         SDL_FreeCursor(iter->second);
     }
     cursors.clear();
-}
+} 
 
 void sceneEditor::load(){
     cursors["arrow"] = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW);

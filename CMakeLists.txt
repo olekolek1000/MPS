@@ -6,8 +6,8 @@ cmake_minimum_required(VERSION 2.8.12)
 
 project(MPS)
 
-set(TYPE "Release")#Debug, Normal, Release
-set(PLATFORM "Windows")#Linux, Windows
+set(TYPE "Normal")#Debug, Normal, Release
+set(PLATFORM "Linux")#Linux, Windows
 set(ROOT "./src/")
 
 if(TYPE STREQUAL "Debug")
@@ -63,6 +63,8 @@ SET(PROGRAM_SRCS
 	${ROOT}/scenes/editor/frameselector/frameselector.cpp
 	
 	${ROOT}/scenes/editor/menu/menu.cpp
+	${ROOT}/scenes/editor/menu/menubutton.cpp
+	${ROOT}/scenes/editor/menu/filedialog.cpp
 	
 	${ROOT}/scenes/editor/gui/button.cpp
 	${ROOT}/scenes/editor/gui/checkbox.cpp
@@ -77,7 +79,7 @@ SET(PROGRAM_SRCS
 	${ROOT}/scenes/editor/toolbox/tool/spray.cpp
 	${ROOT}/scenes/editor/toolbox/tool/tool.cpp
 	)
-	
+	 
 if(PLATFORM STREQUAL "Linux")
 	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/APP/linux64/)
 endif()
