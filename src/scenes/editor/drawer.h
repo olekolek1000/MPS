@@ -3,13 +3,14 @@
 #include "frame.h"
 #include "lib/glm.h"
 #include "lib/floats.h"
+#include "render/buffer.h"
 
 #include <vector>
 
 class Tool;
 class Toolbox;
 class sceneEditor;
-class RBuffer;
+
 
 class HistoryCell{
 private:
@@ -52,9 +53,9 @@ private:
     float cameraZoomSmoothPrev=1.0;
     float cameraZoomAlpha=1.0;
 	
-	RBuffer * linebuf;
-	RBuffer * bordercoordbuf;
-	RBuffer * bordercolorbuf;
+	RBuffer bordercoordbuf;
+	RBuffer bordercolorbuf;
+	RBuffer linebuf;
 	void updateBorders();
 	
 	Float2 cameraRot={0,1},cameraRotSmooth={0,1},cameraRotSmoothPrev={0,1},cameraRotAlpha={0,1},rotationStart={0,1};

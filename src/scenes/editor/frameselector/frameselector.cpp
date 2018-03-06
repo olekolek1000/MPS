@@ -108,7 +108,7 @@ void frameSelector::render(float alpha){
         sh.setM(&model);
         scene->a.square_vert->bind().attrib(0,2,GL_FLOAT);
 		scene->a.square_uv->bind().attrib(1,2,GL_FLOAT);
-		rDraw(GL_TRIANGLES,scene->a.square_vert->getSize());
+		scene->a.square_vert->draw(GL_TRIANGLES);
 
         {//top
             int offsetX = areawidth/2-topWidth/2;
@@ -120,7 +120,7 @@ void frameSelector::render(float alpha){
             xTranslate(&model, offsetX-8,offsetY-8);
             xScale(&model, background_top.getWidth(),background_top.getHeight());
             sh.setM(&model);
-            rDraw(GL_TRIANGLES,scene->a.square_vert->getSize());
+            scene->a.square_vert->draw(GL_TRIANGLES);
 
             but_newframe.setPosition(offsetX+topWidth-35,offsetY+topHeight-35);
             but_newframe.render();
@@ -176,8 +176,7 @@ void frameSelector::render(float alpha){
 
                 scene->a.square_vert->bind().attrib(0,2,GL_FLOAT);
 				scene->a.square_uv->bind().attrib(1,2,GL_FLOAT);
-				rDraw(GL_TRIANGLES,scene->a.square_vert->getSize());
-                glDrawArrays(GL_TRIANGLES, 0, 6);
+				scene->a.square_vert->draw(GL_TRIANGLES);
             }
         }
     }

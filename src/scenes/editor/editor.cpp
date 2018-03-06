@@ -17,12 +17,12 @@ void sceneEditor::setProjection(){
 	projection = glm::ortho(0.0f,a.getProportions(),1.0f,0.0f);
 	shMan.setProportions(a.getProportions());
 	shMan.setResolution(w, h);
- 
-	drawer.updateViewport();
 
 	guiProjection = glm::ortho(0.0f, (float)a.getAreaWidth(), (float)a.getAreaHeight(), 0.0f);
 	shGui.select();shGui.setP(&guiProjection);
 	shGuiColor.select();shGuiColor.setP(&guiProjection);
+	
+	drawer.updateViewport();
 }
   
 void sceneEditor::setCursor(std::string name){
@@ -48,9 +48,13 @@ void sceneEditor::load(){
 
     shGuiColor.load("editor/guicolor.vsh","editor/guicolor.fsh");
     shGuiColor.createUniform("COLOR");
+	
+	shMan["overlay"].load("editor/overlay.vsh","editor/overlay.fsh").createUniform("OVERLAY_RES").createUniform("ALPHA");
+    shMan["overlaybg"].load("editor/overlaybg.vsh","editor/overlaybg.fsh").createUniform("OVERLAY_RES").createUniform("ZOOM");
+    shMan["overlaygrid"].load("editor/overlaygrid.vsh","editor/overlaygrid.fsh").createUniform("OVERLAY_RES").createUniform("ZOOM");
+	shMan["overlayborder"].load("editor/overlayborder.vsh","editor/overlayborder.fsh").setAttrib(0, "inPosition").setAttrib(1, "inTexcoord");
 
     frameMan.createFrame(320, 240);
-
     frameMan.selectFrame(0);
 
     drawer.init(this);drawer.setCurrentFrame(frameMan.getCurrentFrame());
@@ -58,10 +62,6 @@ void sceneEditor::load(){
     colorselector.init(this);
     frameselector.init(this);
 
-    shMan["overlay"].load("editor/overlay.vsh","editor/overlay.fsh").createUniform("OVERLAY_RES").createUniform("ALPHA");
-    shMan["overlaybg"].load("editor/overlaybg.vsh","editor/overlaybg.fsh").createUniform("OVERLAY_RES").createUniform("ZOOM");
-    shMan["overlaygrid"].load("editor/overlaygrid.vsh","editor/overlaygrid.fsh").createUniform("OVERLAY_RES").createUniform("ZOOM");
-	shMan["overlayborder"].load("editor/overlayborder.vsh","editor/overlayborder.fsh");
 
     step.setRate(30);
     setProjection();
@@ -158,7 +158,7 @@ void sceneEditor::loop(){
                 shader.select().setM(&model);
 				a.square_vert->bind().attrib(0,2,GL_FLOAT);
 				a.square_uv->bind().attrib(1,2,GL_FLOAT);
-				rDraw(GL_TRIANGLES,a.square_vert->getSize());
+				a.square_vert->draw(GL_TRIANGLES);
             }
 
             drawer.render(step.getAlpha());

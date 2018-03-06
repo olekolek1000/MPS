@@ -16,6 +16,11 @@ Shader & Shader::load(std::string vsh, std::string fsh){
 	return *this;
 }
 
+Shader & Shader::setAttrib(GLuint index, const char * name){
+	glBindAttribLocation(prog, index, name);
+	return *this;
+}
+
 void Shader::free(){
 	if(loaded==true){
 	    Shader::select();

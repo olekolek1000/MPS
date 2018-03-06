@@ -24,6 +24,7 @@ public:
 	Shader & setM(glm::mat4*model);
 	Shader & setV(glm::mat4*view);
 	Shader & setP(glm::mat4*projection);
+	Shader & setAttrib(GLuint index, const char * name);
 	Shader & setTime(float n);
 	Shader & setProportions(float n);
 	Shader & setResolution(float w, float h);

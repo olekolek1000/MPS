@@ -24,6 +24,7 @@ RBuffer& RBuffer::bind(){
 
 RBuffer& RBuffer::attrib(GLuint index, GLuint size, GLuint type){
 	glVertexAttribPointer(index,size,type,GL_FALSE,0,(void*)0);
+	drawsize = this->size / sizeof(float) / size;
 	return *this;
 }
 
@@ -34,6 +35,6 @@ RBuffer& RBuffer::setData(GLsizeiptr size, const GLvoid * data, GLenum usage){
 }
 
 RBuffer& RBuffer::draw(GLenum mode){
-	glDrawArrays(mode, 0, size);
+	glDrawArrays(mode, 0, drawsize);
 	return *this;
 }

@@ -129,7 +129,7 @@ GuiText& GuiText::render(){
         scene->shGui.setM((glm::mat4*)model);
         scene->a.square_vert->bind().attrib(0,2,GL_FLOAT);
 		scene->a.square_uv->bind().attrib(1,2,GL_FLOAT);
-		rDraw(GL_TRIANGLES,scene->a.square_vert->getSize());
+		scene->a.square_vert->draw(GL_TRIANGLES);
     }
 	return *this;
 }

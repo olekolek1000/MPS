@@ -89,7 +89,7 @@ void Toolbox::render(){
         sh.setM(&model);
         scene->a.square_vert->bind().attrib(0,2,GL_FLOAT);
 		scene->a.square_uv->bind().attrib(1,2,GL_FLOAT);
-		rDraw(GL_TRIANGLES,scene->a.square_vert->getSize());
+		scene->a.square_vert->draw(GL_TRIANGLES);
     }
     {//buttons
         butUndo.render();
@@ -113,7 +113,7 @@ void Toolbox::render(){
         sh.setM(&model);
         scene->a.square_vert->bind().attrib(0,2,GL_FLOAT);
 		scene->a.square_uv->bind().attrib(1,2,GL_FLOAT);
-		rDraw(GL_TRIANGLES,scene->a.square_vert->getSize());
+		scene->a.square_vert->draw(GL_TRIANGLES);
     }
     currentTool->render();
 }

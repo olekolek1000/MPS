@@ -77,13 +77,13 @@ void Pipette::render(){
         xTranslate(&model, mouseX-34*scale/2,mouseY-34*scale/2-25);
         xScale(&model, 34*scale, 34*scale);
         scene->shGuiColor.select().setM(&model).setUniform("COLOR",0.0,0.0,0.0,opacity);
-        rDraw(GL_TRIANGLES,6);
+        scene->a.square_vert->draw(GL_TRIANGLES);
 
         xReset(&model);
         xTranslate(&model, mouseX-32*scale/2,mouseY-32*scale/2-25);
         xScale(&model, 32*scale, 32*scale);
         scene->shGuiColor.select().setM(&model).setUniform("COLOR",r/255.0,g/255.0,b/255.0,opacity);
-		rDraw(GL_TRIANGLES,6);
+		scene->a.square_vert->draw(GL_TRIANGLES);
     }
 }
 void Pipette::select(){
