@@ -121,11 +121,11 @@ GuiButton & GuiButton::render(){
 
     if(background){
         scene->thMan["button"].select();
-        rDraw(GL_TRIANGLES,scene->a.square_vert->getSize());
+        scene->a.square_vert->draw(GL_TRIANGLES);
     }
     if(texture!=NULL){
         texture->select();
-        rDraw(GL_TRIANGLES,scene->a.square_vert->getSize());
+        scene->a.square_vert->draw(GL_TRIANGLES);
     }
     return *this;
 }

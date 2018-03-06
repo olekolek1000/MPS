@@ -200,7 +200,7 @@ void colorSelector::render(){
         xScale(&model,16, selectorheight);
         verticalbartexture.select();
         sh.setM(&model);
-        rDraw(GL_TRIANGLES,scene->a.square_vert->getSize());
+        scene->a.square_vert->draw(GL_TRIANGLES);
     }
     {//hue colors
         if(updatecolors){
@@ -212,7 +212,7 @@ void colorSelector::render(){
         xScale(&model,selectorheight, selectorheight);
         colorstexture.select();
         sh.setM(&model);
-        rDraw(GL_TRIANGLES,scene->a.square_vert->getSize());
+        scene->a.square_vert->draw(GL_TRIANGLES);
     }
 
     {//hue bar scroll
@@ -222,7 +222,7 @@ void colorSelector::render(){
         scrolltexture.select();
         sh.setM(&model);
 
-        rDraw(GL_TRIANGLES,scene->a.square_vert->getSize());
+        scene->a.square_vert->draw(GL_TRIANGLES);
     }
     {//hue colors point
         xReset(&model);
@@ -231,7 +231,7 @@ void colorSelector::render(){
         pointtexture.select();
         sh.setM(&model);
 
-        rDraw(GL_TRIANGLES,scene->a.square_vert->getSize());
+        scene->a.square_vert->draw(GL_TRIANGLES);
     }
 
     {//current color
@@ -239,7 +239,7 @@ void colorSelector::render(){
         xTranslate(&model, colorsX, selectorheight+8);
         xScale(&model, scene->a.getAreaWidth()-colorsX,32);
         scene->shGuiColor.select().setM(&model).setUniform("COLOR",red/255.0,green/255.0,blue/255.0,1.0);
-        rDraw(GL_TRIANGLES,scene->a.square_vert->getSize());
+        scene->a.square_vert->draw(GL_TRIANGLES);
 
         text_info.setPosition(colorsX+8,selectorheight+8+16);
         text_info.render();

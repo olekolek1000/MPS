@@ -207,13 +207,13 @@ void Menu::loop(){
 				xScale(&model, a->getAreaWidth(), a->getAreaHeight());
 				scene->thMan["menu/background"].select();
 				a->shMan["default2d"].select().setM(&model).setP(&projection);
-				rDraw(GL_TRIANGLES,a->square_vert->getSize());
+				a->square_vert->draw(GL_TRIANGLES);
 			}
 			{//stars
 				xReset(&model);
 				xScale(&model, a->getAreaWidth(),a->getAreaHeight()/2);
 				shStars.select().setM(&model).setP(&projection).setTime(step.getTime()/8.0).setResolution(a->getAreaWidth()/5.0f,a->getAreaHeight()/5.0f);
-				rDraw(GL_TRIANGLES,a->square_vert->getSize());
+				a->square_vert->draw(GL_TRIANGLES);
 			}
 			{//3d screen overlay
 				buf_plane.bind().attrib(0,3,GL_FLOAT);
@@ -224,10 +224,10 @@ void Menu::loop(){
 				zScale(&tModel,1.0,1.0,(float)width/(float)height);
 				
 				sh3d.select().setP(&tProjection).setV(&tView).setM(&tModel);
-				rDraw(GL_TRIANGLES,buf_plane.getSize());
+				buf_plane.draw(GL_TRIANGLES);
 				
 				sh3dref.select().setP(&tProjection).setV(&tView).setM(&tModel).setTime(SDL_GetTicks());
-				rDraw(GL_TRIANGLES,buf_plane.getSize());
+				buf_plane.draw(GL_TRIANGLES);
 			}
 			if(exit_delay==0&&end==false)
 			{//buttons
@@ -244,7 +244,7 @@ void Menu::loop(){
 				xScale(&model, 400, 80);
 				scene->thMan["menu/soon"].select();
 				a->shMan["default2d"].select().setM(&model).setP(&projection);
-				rDraw(GL_TRIANGLES,a->square_vert->getSize());
+				a->square_vert->draw(GL_TRIANGLES);
 			}
 		}
 
@@ -263,6 +263,7 @@ void Menu::dialogPrepare(){
 	else{
 		wasFullscreen=false;
 	}
+	SDL_HideWindow(a->window);
 }
 
 void Menu::dialogEnd(){
@@ -270,6 +271,7 @@ void Menu::dialogEnd(){
 		scene->a.setFullscreen(true);
 	}
 	step.reset();
+	SDL_ShowWindow(a->window);
 }
 
 

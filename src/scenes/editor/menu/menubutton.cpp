@@ -57,7 +57,7 @@ void MenuButton::render(float alpha){
 	scene->shGui.setM(&model);
 	scene->a.square_vert->bind().attrib(0,2,GL_FLOAT);
 	scene->a.square_uv->bind().attrib(1,2,GL_FLOAT);
-	rDraw(GL_TRIANGLES,scene->a.square_vert->getSize());
+	scene->a.square_vert->draw(GL_TRIANGLES);
 	
 	this->text.setPosition(posX_smooth+width/2, posY+height/2);
 	text.render();

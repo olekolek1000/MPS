@@ -4,7 +4,8 @@
 
 class RBuffer{
 	GLuint buffer;
-	unsigned int size;
+	unsigned int size=0;
+	unsigned int drawsize=0;
 public:
 	GLuint getBuffer();
 	GLuint getSize();

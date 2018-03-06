@@ -12,6 +12,6 @@ uniform mat4 M;
 
 void main()
 {
-	color = inColor;
 	gl_Position.xyzw = P * M * vec4(inPosition,0,1);
+	color = inColor;
 }

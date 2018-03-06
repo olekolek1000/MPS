@@ -92,9 +92,8 @@ void Drawer::updateBorders(){
 	float g = scene->thMan.getVariableF("drawerBorderColorG");
 	float b = scene->thMan.getVariableF("drawerBorderColorB");
 	{
-		bordercoordbuf->bind();
 		float sLeft,sRight,sUp,sDown;
-		float size = scene->thMan.getVariableF("drawerBorderSize");;
+		float size = scene->thMan.getVariableF("drawerBorderSize");
 		if(currentFrame==NULL){
 			sLeft=size;
 			sRight=size;
@@ -108,7 +107,7 @@ void Drawer::updateBorders(){
 			sUp=size;
 			sDown=size;
 		}
-		float data[] = {
+		float coorddata[] = {
 			0,0,
 			-sLeft,0,
 			0,1,
@@ -151,13 +150,12 @@ void Drawer::updateBorders(){
 			//downright
 			1,1,
 			1,1+sDown,
-			1+sRight,1,
+			1+sRight,1
 		};
-		bordercoordbuf->setData(sizeof(data),data,GL_STATIC_DRAW);
+		bordercoordbuf.bind().setData(sizeof(coorddata),coorddata,GL_STATIC_DRAW);
 	}
 	{
-		bordercolorbuf->bind();
-		float data[] = {
+		float colordata[] = {
 			//left
 			r,g,b,alpha,
 			r,g,b,0,
@@ -201,9 +199,9 @@ void Drawer::updateBorders(){
 			//downright
 			r,g,b,alpha,
 			r,g,b,0,
-			r,g,b,0,
+			r,g,b,0
 		};
-		bordercolorbuf->setData(sizeof(data),data,GL_STATIC_DRAW);
+		bordercolorbuf.bind().setData(sizeof(colordata),colordata,GL_STATIC_DRAW);
 	}
 }
 
@@ -214,10 +212,6 @@ void Drawer::reloadTextures(){
 void Drawer::init(sceneEditor * scene){
     this->scene = scene;
     this->toolbox = &scene->toolbox;
-
-	linebuf = new RBuffer;
-	bordercoordbuf = new RBuffer;
-	bordercolorbuf = new RBuffer;
 	
     glGenTextures(1,&activeOverlayTex);
 	updateBorders();
@@ -568,6 +562,7 @@ void Drawer::update(){
 	}
 }
 
+
 void Drawer::render(float alpha){
     if(cameraZoomSmooth-cameraZoom<0.01&&cameraZoomSmooth-cameraZoom>-0.01){
         if(cameraZoomSmooth!=cameraZoom){
@@ -598,7 +593,7 @@ void Drawer::render(float alpha){
     scene->shMan["overlaybg"].select().setP(&projection).setM(&model);
 	scene->a.square_vert->bind().attrib(0,2,GL_FLOAT);
 	scene->a.square_uv->bind().attrib(1,2,GL_FLOAT);
-	rDraw(GL_TRIANGLES,scene->a.square_vert->getSize());
+	scene->a.square_vert->draw(GL_TRIANGLES);
 
     Shader & overlaysh = scene->shMan["overlay"];
     overlaysh.select().setP(&projection).setM(&model);
@@ -611,7 +606,7 @@ void Drawer::render(float alpha){
             ){
                 overlaysh.setUniform("ALPHA",((ghostback-i+1)/(float)ghostback)*ghostopacity);
                 scene->frameMan.getFrame(currentFrame->getIndex()-i)->bindTexture();
-                rDraw(GL_TRIANGLES,scene->a.square_vert->getSize());
+                scene->a.square_vert->draw(GL_TRIANGLES);
             }
         }
     }
@@ -623,28 +618,41 @@ void Drawer::render(float alpha){
             ){
                 overlaysh.setUniform("ALPHA",((ghostfront-i+1)/(float)ghostfront)*ghostopacity);
                 scene->frameMan.getFrame(currentFrame->getIndex()+i)->bindTexture();
-                rDraw(GL_TRIANGLES,scene->a.square_vert->getSize());
+                scene->a.square_vert->draw(GL_TRIANGLES);
             }
         }
     }
     {//current frame
         overlaysh.setUniform("ALPHA",1.0f);
         currentFrame->bindTexture();
-        rDraw(GL_TRIANGLES,scene->a.square_vert->getSize());
+        scene->a.square_vert->draw(GL_TRIANGLES);
     }
 
     {//active
         glBindTexture(GL_TEXTURE_2D, activeOverlayTex);
         if(activeNeedUpdate){
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, activeOverlay->w, activeOverlay->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, activeOverlay->pixels);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
             activeNeedUpdate=false;
         }
 
         overlaysh.setUniform("ALPHA", activealpha);
-        rDraw(GL_TRIANGLES,scene->a.square_vert->getSize());
+        scene->a.square_vert->draw(GL_TRIANGLES);
     }
+	
+	{//borders
+		//Shader & overlaysh = scene->a.shMan["color2d"];
+		//overlaysh.select().setP(&projection).setM(&model).setUniform("COLOR",1.0,0.0,0.0,1.0);
+		
+		Shader & border = scene->shMan["overlayborder"];
+		border.select().setP(&projection).setM(&model);
+		
+		bordercoordbuf.bind().attrib(0,2,GL_FLOAT);
+		bordercolorbuf.bind().attrib(1,4,GL_FLOAT);
+		bordercoordbuf.draw(GL_TRIANGLES);
+
+	}
 
     if(cameraZoom>15){
         Shader & grid = scene->shMan["overlaygrid"];
@@ -652,17 +660,10 @@ void Drawer::render(float alpha){
         grid.setP(&projection).setM(&model);
 		scene->a.square_vert->bind().attrib(0,2,GL_FLOAT);
 		scene->a.square_uv->bind().attrib(1,2,GL_FLOAT);
-		rDraw(GL_TRIANGLES,scene->a.square_vert->getSize());
+		scene->a.square_vert->draw(GL_TRIANGLES);
     }
 	
 	
-	{//borders
-		scene->shMan["overlayborder"].select().setP(&projection).setM(&model);
-		
-		bordercoordbuf->bind().attrib(0,2,GL_FLOAT);
-		bordercolorbuf->bind().attrib(1,4,GL_FLOAT);
-		rDraw(GL_TRIANGLES, bordercoordbuf->getSize());
-	}
 	
 	if(rotating)
 	{//rotation indicator
@@ -672,18 +673,18 @@ void Drawer::render(float alpha){
 		xReset(&mdl);
 		xScale(&mdl, 1.0,1.0);
 		shColor.setM(&mdl);
-		linebuf->bind();
+		linebuf.bind();
 		float data[]={rotationStart.x,rotationStart.y,(float)mouseX,(float)mouseY};
-		linebuf->setData(sizeof(data),data,GL_DYNAMIC_DRAW);
-		linebuf->attrib(0,2,GL_FLOAT);
+		linebuf.setData(sizeof(data),data,GL_DYNAMIC_DRAW);
+		linebuf.attrib(0,2,GL_FLOAT);
 		
 		glLineWidth(10);
 		shColor.setUniform("COLOR",0.0,0.0,0.0,1.0);
-		linebuf->draw(GL_LINES);
+		linebuf.draw(GL_LINES);
 		
 		glLineWidth(7);
 		shColor.setUniform("COLOR",1.0,1.0,1.0,1.0);
-		linebuf->draw(GL_LINES);
+		linebuf.draw(GL_LINES);
 		
 		xReset(&mdl);
 		xTranslate(&mdl, rotationStart.x, rotationStart.y);
@@ -695,11 +696,11 @@ void Drawer::render(float alpha){
 		scene->a.square_vert->bind().attrib(0,2,GL_FLOAT);
 		scene->a.square_uv->bind().attrib(1,2,GL_FLOAT);
         currentFrame->bindTexture();
-		rDraw(GL_TRIANGLES,scene->a.square_vert->getSize());
+		scene->a.square_vert->draw(GL_TRIANGLES);
 		
 		scene->shMan["overlayborder"].select().setM(&mdl);
-		bordercoordbuf->bind().attrib(0,2,GL_FLOAT);
-		bordercolorbuf->bind().attrib(1,4,GL_FLOAT);
-		rDraw(GL_TRIANGLES, bordercoordbuf->getSize());
+		bordercoordbuf.bind().attrib(0,2,GL_FLOAT);
+		bordercolorbuf.bind().attrib(1,4,GL_FLOAT);
+		bordercoordbuf.draw(GL_TRIANGLES);
 	}
 }

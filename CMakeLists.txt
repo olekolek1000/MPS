@@ -6,7 +6,7 @@ cmake_minimum_required(VERSION 2.8.12)
 
 project(MPS)
 
-set(TYPE "Debug")#Debug, Normal, Release
+set(TYPE "Release")#Debug, Normal, Release
 set(PLATFORM "Linux")#Linux, Windows
 set(ROOT "./src/")
 
@@ -117,8 +117,11 @@ if(PLATFORM STREQUAL "Windows")
 	target_link_libraries (MPS -lSDL2_ttf)
 	target_link_libraries (MPS -lglew32s)
 	target_link_libraries (MPS -lopengl32)
-	target_link_libraries (MPS -mwindows)
 	target_link_libraries (MPS -lole32)
 	target_link_libraries (MPS -loleaut32)
+	target_link_libraries (MPS -lcomdlg32)
+	if(TYPE STREQUAL "Release")
+		target_link_libraries (MPS -mwindows)
+	endif()
 endif()
 
