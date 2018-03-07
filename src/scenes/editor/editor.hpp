@@ -1,17 +1,17 @@
 #pragma once
 
-#include "lib/glm.h"
-#include "texturemanager.h"
-#include "shadermanager.h"
-#include "framebuffermanager.h"
-#include "app.h"
-#include "timestep.h"
-#include "framemanager.h"
-#include "thememanager.h"
-#include "toolbox/toolbox.h"
-#include "drawer.h"
-#include "colorselector/colorselector.h"
-#include "frameselector/frameselector.h"
+#include "lib/glm.hpp"
+#include "texturemanager.hpp"
+#include "shadermanager.hpp"
+#include "framebuffermanager.hpp"
+#include "app.hpp"
+#include "timestep.hpp"
+#include "framemanager.hpp"
+#include "thememanager.hpp"
+#include "toolbox/toolbox.hpp"
+#include "drawer.hpp"
+#include "colorselector/colorselector.hpp"
+#include "frameselector/frameselector.hpp"
 #include <map>
 
 class sceneEditor{

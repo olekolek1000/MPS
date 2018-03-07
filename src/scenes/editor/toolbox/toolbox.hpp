@@ -1,10 +1,10 @@
 #pragma once
 
-#include "lib/glm.h"
-#include "texturemanager.h"
-#include "tool/tool.h"
-#include "scenes/editor/gui/text.h"
-#include "scenes/editor/gui/button.h"
+#include "lib/glm.hpp"
+#include "texturemanager.hpp"
+#include "tool/tool.hpp"
+#include "scenes/editor/gui/text.hpp"
+#include "scenes/editor/gui/button.hpp"
 #include <vector>
 
 typedef unsigned int uint;

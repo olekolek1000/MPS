@@ -1,5 +1,5 @@
-#include "buffer.h"
-#include "lib/opengl.h"
+#include "buffer.hpp"
+#include "lib/opengl.hpp"
 
 RBuffer::RBuffer(){
 	glGenBuffers(1, &buffer);

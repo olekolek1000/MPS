@@ -1,5 +1,5 @@
-#include "shadermanager.h"
-#include "shaderload.h"
+#include "shadermanager.hpp"
+#include "shaderload.hpp"
 
 Shader & Shader::load(std::string vsh, std::string fsh){
 	if(loaded==false){
@@ -108,7 +108,7 @@ GLuint Shader::getUniform(const char * name){
 }
 
 //################# SHADER MANAGER #################
-#include "lib/sdl.h"
+#include "lib/sdl.hpp"
 
 
 void ShaderManager::clear(){

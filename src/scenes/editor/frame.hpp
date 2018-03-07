@@ -1,7 +1,7 @@
 #pragma once
 
-#include "lib/sdl.h"
-#include "lib/opengl.h"
+#include "lib/sdl.hpp"
+#include "lib/opengl.hpp"
 
 typedef unsigned int uint;
 

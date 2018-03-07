@@ -1,6 +1,6 @@
-#include "line.h"
-#include "../../drawer.h"
-#include "../toolbox.h"
+#include "line.hpp"
+#include "../../drawer.hpp"
+#include "../toolbox.hpp"
 #include <sstream>
 
 void Line::init(){

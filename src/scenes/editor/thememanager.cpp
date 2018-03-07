@@ -1,9 +1,9 @@
-#include "thememanager.h"
+#include "thememanager.hpp"
 
 #include <fstream>
 #include <sstream>
-#include "error.h"
-#include "defines.h"
+#include "error.hpp"
+#include "defines.hpp"
 
 typedef unsigned int uint;
 
@@ -115,7 +115,7 @@ Texture& ThemeManager::operator [](const char* n){
 }
 
 /* THEME RELOADING */
-#include "editor.h"
+#include "editor.hpp"
 void ThemeManager::reloadThemes(sceneEditor * scene){
 	scene->toolbox.reloadTextures();
 	scene->drawer.reloadTextures();

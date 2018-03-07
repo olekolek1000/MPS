@@ -1,12 +1,12 @@
-#include "shaderload.h"
-#include "error.h"
-#include "defines.h"
+#include "shaderload.hpp"
+#include "error.hpp"
+#include "defines.hpp"
 #include <string>
 #include <fstream>
 #include <sstream>
 #include <vector>
 #include <algorithm>
-#include "lib/sdl.h"
+#include "lib/sdl.hpp"
 
 using namespace std;
 

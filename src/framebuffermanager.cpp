@@ -1,6 +1,6 @@
-#include "framebuffermanager.h"
-#include "lib/opengl.h"
-#include "error.h"
+#include "framebuffermanager.hpp"
+#include "lib/opengl.hpp"
+#include "error.hpp"
 
 void Framebuffer::generate(){
     if(generated){

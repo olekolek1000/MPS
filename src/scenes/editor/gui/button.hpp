@@ -1,6 +1,6 @@
 #pragma once
 
-#include "lib/sdl.h"
+#include "lib/sdl.hpp"
 
 class sceneEditor;
 class Texture;

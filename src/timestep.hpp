@@ -1,6 +1,6 @@
 #pragma once
 
-#include "lib/sdl.h"
+#include "lib/sdl.hpp"
 using namespace std;
 
 float alphize(float alpha, float prev, float var);

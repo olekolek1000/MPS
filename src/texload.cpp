@@ -1,11 +1,11 @@
-#include "texload.h"
-#include "defines.h"
+#include "texload.hpp"
+#include "defines.hpp"
 
-#include "lib/sdl.h"
-#include "lib/sdl_image.h"
-#include "lib/sdl_ttf.h"
-#include "lib/opengl.h"
-#include "error.h"
+#include "lib/sdl.hpp"
+#include "lib/sdl_image.hpp"
+#include "lib/sdl_ttf.hpp"
+#include "lib/opengl.hpp"
+#include "error.hpp"
 #include <sstream>
 
 using namespace std;

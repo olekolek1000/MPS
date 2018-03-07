@@ -1,27 +1,27 @@
-#include "menu.h"
+#include "menu.hpp"
 #include <vector>
 
-#include "../editor.h"
-#include "app.h"
-#include "timestep.h"
-#include "lib/sdl_image.h"
-#include "transform.h"
-#include "render/func.h"
-#include "menubutton.h"
+#include "../editor.hpp"
+#include "app.hpp"
+#include "timestep.hpp"
+#include "lib/sdl_image.hpp"
+#include "transform.hpp"
+#include "render/func.hpp"
+#include "menubutton.hpp"
 
 
-#include "tinyfiledialogs.h"
+#include "tinyfiledialogs.hpp"
 
 
-#include "lib/SDL2_rotozoom.h"
+#include "lib/SDL2_rotozoom.hpp"
 
 #include <sstream>
 #include <iostream>
 #include <map>
 
-#include "error.h"
+#include "error.hpp"
 
-#include "gif.h"
+#include "gif.hpp"
 
 #include <fstream>
 

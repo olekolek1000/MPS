@@ -1,5 +1,5 @@
-#include "floodfill.h"
-#include "../../editor.h"
+#include "floodfill.hpp"
+#include "../../editor.hpp"
 
 #include <stack>
 

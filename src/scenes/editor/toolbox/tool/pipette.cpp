@@ -1,15 +1,15 @@
-#include "pipette.h"
+#include "pipette.hpp"
 
-#include "../../drawer.h"
-#include "../../framemanager.h"
-#include "../../colorselector/colorselector.h"
-#include "../toolbox.h"
-#include "../../editor.h"
+#include "../../drawer.hpp"
+#include "../../framemanager.hpp"
+#include "../../colorselector/colorselector.hpp"
+#include "../toolbox.hpp"
+#include "../../editor.hpp"
 
-#include "render/func.h"
+#include "render/func.hpp"
 
-#include "transform.h"
-#include "lib/glm.h"
+#include "transform.hpp"
+#include "lib/glm.hpp"
 #include <stack>
 
 void Pipette::init(){

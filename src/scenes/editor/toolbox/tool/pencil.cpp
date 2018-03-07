@@ -1,6 +1,6 @@
-#include "pencil.h"
-#include "../../drawer.h"
-#include "../toolbox.h"
+#include "pencil.hpp"
+#include "../../drawer.hpp"
+#include "../toolbox.hpp"
 
 #include <sstream>
 

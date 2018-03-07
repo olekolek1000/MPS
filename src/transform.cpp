@@ -1,5 +1,5 @@
-#include "transform.h"
-#include "lib/opengl.h"
+#include "transform.hpp"
+#include "lib/opengl.hpp"
 
 glm::mat4 reset_value = glm::mat4(1.0);
 

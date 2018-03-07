@@ -1,12 +1,11 @@
-#include "drawer.h"
-#include "drawer.h"
-#include "editor.h"
-#include "pixel.h"
-#include "transform.h"
-#include "error.h"
+#include "drawer.hpp"
+#include "editor.hpp"
+#include "pixel.hpp"
+#include "transform.hpp"
+#include "error.hpp"
 
-#include "render/func.h"
-#include "render/buffer.h"
+#include "render/func.hpp"
+#include "render/buffer.hpp"
 
 void Drawer::historyCreateSnapshot(){
     if(historypos<(int)history.size()){

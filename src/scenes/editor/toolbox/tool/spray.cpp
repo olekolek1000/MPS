@@ -1,6 +1,6 @@
-#include "spray.h"
-#include "../../drawer.h"
-#include "../toolbox.h"
+#include "spray.hpp"
+#include "../../drawer.hpp"
+#include "../toolbox.hpp"
 
 void Spray::init(){
     iconName = "spray";

@@ -1,11 +1,11 @@
-#include "texturemanager.h"
-#include "lib/sdl.h"
-#include "lib/sdl_image.h"
-#include "lib/opengl.h"
-#include "error.h"
-#include "defines.h"
+#include "texturemanager.hpp"
+#include "lib/sdl.hpp"
+#include "lib/sdl_image.hpp"
+#include "lib/opengl.hpp"
+#include "error.hpp"
+#include "defines.hpp"
 
-#include "lib/SDL2_rotozoom.h"//tymczasowo chyba, trzeba odwracac tekstury
+#include "lib/SDL2_rotozoom.hpp"//tymczasowo chyba, trzeba odwracac tekstury
 
 void Texture::create(){
     if(loaded){

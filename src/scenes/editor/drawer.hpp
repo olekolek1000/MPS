@@ -1,9 +1,9 @@
 #pragma once
 
-#include "frame.h"
-#include "lib/glm.h"
-#include "lib/floats.h"
-#include "render/buffer.h"
+#include "frame.hpp"
+#include "lib/glm.hpp"
+#include "lib/floats.hpp"
+#include "render/buffer.hpp"
 
 #include <vector>
 

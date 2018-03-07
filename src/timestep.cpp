@@ -1,4 +1,4 @@
-#include "timestep.h"
+#include "timestep.hpp"
 
 float alphize(float alpha, float prev, float var){
     return var*alpha + prev*(1.0-alpha);

@@ -1,9 +1,9 @@
-#include "text.h"
-#include "lib/opengl.h"
-#include "transform.h"
-#include "../editor.h"
+#include "text.hpp"
+#include "lib/opengl.hpp"
+#include "transform.hpp"
+#include "../editor.hpp"
 
-#include "render/func.h"
+#include "render/func.hpp"
 
 int GuiText::getWidth(){
     return width;

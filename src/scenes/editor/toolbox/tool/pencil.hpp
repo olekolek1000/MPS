@@ -1,7 +1,7 @@
 #pragma once
 
-#include "tool.h"
-#include "scenes/editor/gui/valuebox.h"
+#include "tool.hpp"
+#include "scenes/editor/gui/valuebox.hpp"
 
 class Pencil : public Tool{
     bool down=false;

@@ -1,6 +1,6 @@
-#include "tool.h"
-#include "../../drawer.h"
-#include "../../editor.h"
+#include "tool.hpp"
+#include "../../drawer.hpp"
+#include "../../editor.hpp"
 
 std::string Tool::getIconName(){
     return Tool::iconName;

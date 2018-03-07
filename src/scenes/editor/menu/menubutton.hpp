@@ -1,9 +1,9 @@
 #pragma once
 
 #include <string>
-#include "../gui/text.h"
-#include "lib/glm.h"
-#include "lib/sdl.h"//SDL_Event
+#include "../gui/text.hpp"
+#include "lib/glm.hpp"
+#include "lib/sdl.hpp"//SDL_Event
 
 class sceneEditor;
 class Menu;
