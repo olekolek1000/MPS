@@ -1,14 +1,14 @@
-#include "editor.h"
-#include "lib/opengl.h"
-#include "transform.h"
-#include "texload.h"
-#include "toolbox/toolbox.h"
+#include "editor.hpp"
+#include "lib/opengl.hpp"
+#include "transform.hpp"
+#include "texload.hpp"
+#include "toolbox/toolbox.hpp"
 
-#include "render/func.h"
+#include "render/func.hpp"
 
-#include "lib/sdl_image.h"
-#include "error.h"
-#include "menu/menu.h"
+#include "lib/sdl_image.hpp"
+#include "error.hpp"
+#include "menu/menu.hpp"
 
 void sceneEditor::setProjection(){
     int w = a.getAreaWidth();

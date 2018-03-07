@@ -2,8 +2,8 @@
 
 #include <string>
 #include <map>
-#include "lib/sdl.h"
-#include "lib/opengl.h"
+#include "lib/sdl.hpp"
+#include "lib/opengl.hpp"
 
 #define TEXSPACE_RGB 0
 #define RGB 0

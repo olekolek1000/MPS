@@ -1,12 +1,12 @@
-#include "colorselector.h"
-#include "pixel.h"
-#include "shadermanager.h"
-#include "../editor.h"
-#include "transform.h"
+#include "colorselector.hpp"
+#include "pixel.hpp"
+#include "shadermanager.hpp"
+#include "../editor.hpp"
+#include "transform.hpp"
 #include <sstream>
 #include <iomanip>
 
-#include "render/func.h"
+#include "render/func.hpp"
 
 
 typedef struct RgbColor

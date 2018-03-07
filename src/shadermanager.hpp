@@ -2,7 +2,7 @@
 
 #include <map>
 #include <string>
-#include "lib/glm.h"
+#include "lib/glm.hpp"
 
 typedef unsigned int GLuint;
 

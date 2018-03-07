@@ -2,10 +2,10 @@
 
 #include <vector>
 
-#include "lib/sdl.h"
-#include "lib/opengl.h"
+#include "lib/sdl.hpp"
+#include "lib/opengl.hpp"
 
-#include "frame.h"
+#include "frame.hpp"
 
 class FrameManager{
 private:

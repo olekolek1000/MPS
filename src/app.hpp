@@ -1,13 +1,13 @@
 #pragma once
 
-#include "lib/sdl_ttf.h"
-#include "shadermanager.h"
-#include "texturemanager.h"
-#include "framebuffermanager.h"
+#include "lib/sdl_ttf.hpp"
+#include "shadermanager.hpp"
+#include "texturemanager.hpp"
+#include "framebuffermanager.hpp"
 
 #include <vector>
 
-#include "render/buffer.h"
+#include "render/buffer.hpp"
 
 typedef unsigned int uint;
 

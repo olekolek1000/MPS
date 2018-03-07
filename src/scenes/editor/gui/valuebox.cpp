@@ -1,7 +1,7 @@
-#include "valuebox.h"
-#include "../editor.h"
-#include "scenes/editor/gui/button.h"
-#include "scenes/editor/gui/text.h"
+#include "valuebox.hpp"
+#include "../editor.hpp"
+#include "scenes/editor/gui/button.hpp"
+#include "scenes/editor/gui/text.hpp"
 
 GuiValueBox::GuiValueBox(){
 	but_up = new GuiButton;

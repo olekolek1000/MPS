@@ -1,5 +1,5 @@
-#include "drawer.h"
-#include "error.h"
+#include "drawer.hpp"
+#include "error.hpp"
 
 void HistoryCell::create(SDL_Surface * surf){
     free();

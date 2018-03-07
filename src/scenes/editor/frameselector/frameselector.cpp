@@ -1,10 +1,10 @@
-#include "frameselector.h"
-#include "../editor.h"
-#include "transform.h"
+#include "frameselector.hpp"
+#include "../editor.hpp"
+#include "transform.hpp"
 #include <sstream>
-#include "timestep.h"
+#include "timestep.hpp"
 
-#include "render/func.h"
+#include "render/func.hpp"
 
 void frameSelector::init(sceneEditor * scene){
     this->scene = scene;

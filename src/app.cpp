@@ -1,16 +1,16 @@
-#include "app.h"
-#include "lib/opengl.h"
-#include "error.h"
-#include "transform.h"
-#include "lib/sdl_mixer.h"
-#include "texload.h"
-#include "lib/sdl_ttf.h"
-#include "defines.h"
+#include "app.hpp"
+#include "lib/opengl.hpp"
+#include "error.hpp"
+#include "transform.hpp"
+#include "lib/sdl_mixer.hpp"
+#include "texload.hpp"
+#include "lib/sdl_ttf.hpp"
+#include "defines.hpp"
 #include <sstream> 
 
-#include "lib/sdl_image.h"
+#include "lib/sdl_image.hpp"
 
-#include "render/buffer.h"
+#include "render/buffer.hpp"
 
 using namespace std;
 

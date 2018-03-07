@@ -1,14 +1,15 @@
 #pragma once
 
-#include "tool.h"
+#include "tool.hpp"
+#include "scenes/editor/gui/valuebox.hpp"
 
-class Pipette : public Tool{
-    int x, y;
-    int mouseX,mouseY;
-    bool isMoved;
-    float opacity;
-    int pixel,pixel_prev;
-    float scaleMul;
+class Spray : public Tool{
+    bool down=false;
+    int x,y;
+    void draw();
+	
+	GuiValueBox box_size;
+	GuiValueBox box_intensity;
 public:
     void init();
     void eventMouseMove(int x, int y);

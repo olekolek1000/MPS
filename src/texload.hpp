@@ -1,9 +1,9 @@
 #ifndef TEXLOAD_H_INCLUDED
 #define TEXLOAD_H_INCLUDED
 
-#include "lib/opengl.h"
-#include "lib/sdl_ttf.h"
-#include "texturemanager.h"
+#include "lib/opengl.hpp"
+#include "lib/sdl_ttf.hpp"
+#include "texturemanager.hpp"
 #include <string>
 
 #define RGB 0

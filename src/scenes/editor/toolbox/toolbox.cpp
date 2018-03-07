@@ -1,19 +1,19 @@
-#include "toolbox.h"
-#include "lib/opengl.h"
-#include "shadermanager.h"
-#include "../editor.h"
-#include "transform.h"
-#include "../drawer.h"
+#include "toolbox.hpp"
+#include "lib/opengl.hpp"
+#include "shadermanager.hpp"
+#include "../editor.hpp"
+#include "transform.hpp"
+#include "../drawer.hpp"
 
-#include "tool/tool.h"
-#include "tool/alltools.h"
+#include "tool/tool.hpp"
+#include "tool/alltools.hpp"
 
-#include "error.h"
+#include "error.hpp"
 
 #include <sstream>
 #include <iomanip>
 
-#include "render/func.h"
+#include "render/func.hpp"
 
 void Toolbox::createTool(Tool * tool){
     tool->initBase(scene);

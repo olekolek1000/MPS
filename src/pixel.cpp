@@ -1,4 +1,4 @@
-#include "pixel.h"
+#include "pixel.hpp"
 
 Uint32 getpixel(SDL_Surface *surface, int x, int y)
 {

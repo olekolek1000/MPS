@@ -1,8 +1,8 @@
 #pragma once
 
-#include "lib/glm.h"
-#include "texturemanager.h"
-#include "timestep.h"
+#include "lib/glm.hpp"
+#include "texturemanager.hpp"
+#include "timestep.hpp"
 
 class App;
 class sceneEditor;

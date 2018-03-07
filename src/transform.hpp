@@ -1,6 +1,6 @@
 #pragma once
 
-#include "lib/glm.h"
+#include "lib/glm.hpp"
 typedef unsigned int GLuint;
 
 void xReset(glm::mat4 * model);

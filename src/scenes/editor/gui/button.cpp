@@ -1,11 +1,11 @@
-#include "button.h"
-#include "lib/opengl.h"
-#include "transform.h"
-#include "../editor.h"
+#include "button.hpp"
+#include "lib/opengl.hpp"
+#include "transform.hpp"
+#include "../editor.hpp"
 
-#include "lib/glm.h"
+#include "lib/glm.hpp"
 
-#include "render/func.h"
+#include "render/func.hpp"
 
 int GuiButton::getWidth(){
     return width;

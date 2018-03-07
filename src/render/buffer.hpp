@@ -1,6 +1,6 @@
 #pragma once
 
-#include "lib/opengl.h"
+#include "lib/opengl.hpp"
 
 class RBuffer{
 	GLuint buffer;

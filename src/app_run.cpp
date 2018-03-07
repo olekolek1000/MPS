@@ -1,7 +1,7 @@
-#include "app.h"
+#include "app.hpp"
 
-#include "scenes/editor/editor.h"
-#include "defines.h"
+#include "scenes/editor/editor.hpp"
+#include "defines.hpp"
 
 void App::runApplication() {
     SDL_SetWindowMinimumSize(window, 1280, 720);

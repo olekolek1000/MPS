@@ -1,9 +1,9 @@
-#include "menubutton.h"
-#include "menu.h"
-#include "../editor.h"
-#include "transform.h"
-#include "render/func.h"
-#include "timestep.h"
+#include "menubutton.hpp"
+#include "menu.hpp"
+#include "../editor.hpp"
+#include "transform.hpp"
+#include "render/func.hpp"
+#include "timestep.hpp"
 
 void MenuButton::init(Menu * menu, int posY, std::string text){
 	this->menu = menu;

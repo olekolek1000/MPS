@@ -1,9 +1,9 @@
 #pragma once
 
-#include "texturemanager.h"
-#include "../gui/text.h"
-#include "lib/glm.h"
-#include "../gui/button.h"
+#include "texturemanager.hpp"
+#include "../gui/text.hpp"
+#include "lib/glm.hpp"
+#include "../gui/button.hpp"
 
 typedef unsigned int uint;
 

@@ -1,14 +1,17 @@
 #pragma once
 
-#include "tool.h"
+#include "tool.hpp"
+#include "scenes/editor/gui/valuebox.hpp"
 
-class FloodFill : public Tool{
+class Line : public Tool{
     int x,y;
     int startX, startY;
-    int oldcolor;
+    bool down=false;
+    bool moved=false;
+
+    GuiValueBox box;
 public:
     void init();
-    void floodfill(int posX, int posY);
     void eventMouseMove(int x, int y);
     void eventMouseDown();
     void eventMouseUp();

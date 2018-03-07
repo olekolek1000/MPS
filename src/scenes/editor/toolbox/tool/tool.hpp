@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "lib/sdl.h"
+#include "lib/sdl.hpp"
 
 class sceneEditor;
 class Toolbox;
