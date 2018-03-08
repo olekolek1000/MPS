@@ -78,6 +78,8 @@ SET(PROGRAM_SRCS
 	${ROOT}/scenes/editor/toolbox/tool/pipette.cpp
 	${ROOT}/scenes/editor/toolbox/tool/spray.cpp
 	${ROOT}/scenes/editor/toolbox/tool/tool.cpp
+
+	${ROOT}/modules/module.cpp
 	)
 	 
 if(PLATFORM STREQUAL "Linux")
@@ -104,6 +106,7 @@ if(PLATFORM STREQUAL "Linux")
 	#target_link_libraries (MPS -lGLESv2)
 	target_link_libraries (MPS -no-pie)
 	target_link_libraries (MPS -lpthread)
+	target_link_libraries (MPS -ldl)
 endif() 
 
 if(PLATFORM STREQUAL "Windows")
