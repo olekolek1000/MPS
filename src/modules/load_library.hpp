@@ -24,7 +24,6 @@ static inline void* load_function(libhandle_t hand, const char* name) {
     #else
         return dlsym(hand,name);
     #endif
-    return f;
 }
 
 static inline int free_library(libhandle_t hand) {
