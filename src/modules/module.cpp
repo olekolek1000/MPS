@@ -27,6 +27,8 @@ Module& Module::operator= (Module& __arg__) {
 
      __arg__.libhandle = 0;
      __arg__.loaded = false;
+    
+     return *this;
 } 
 
 bool Module::load(const char* path) {
