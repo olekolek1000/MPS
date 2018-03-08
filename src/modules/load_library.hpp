@@ -19,11 +19,10 @@ static inline libhandle_t load_library(const char* path) {
 }
 
 static inline void* load_function(libhandle_t hand, const char* name) {
-    void* f;
     #ifdef _WIN32
-        f = GetProcAddress(hand,name);
+        return GetProcAddress(hand,name);
     #else
-        f = dlsym(hand,name);
+        return dlsym(hand,name);
     #endif
     return f;
 }
