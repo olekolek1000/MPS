@@ -9,6 +9,7 @@ project(MPS)
 set(TYPE "Release")#Debug, Normal, Release
 set(PLATFORM "Linux")#Linux, Windows
 set(ROOT "./src/")
+add_definitions(-D_GLIBCXX_USE_CXX11_ABI=0)
 
 if(TYPE STREQUAL "Debug")
 	set (CMAKE_CXX_FLAGS "-Wall -I ./src -g")
@@ -52,7 +53,10 @@ SET(PROGRAM_SRCS
 	
 	${ROOT}/render/buffer.cpp
 	${ROOT}/render/func.cpp
-
+	
+	${ROOT}/scenes/editor/languageManager.cpp
+	${ROOT}/scenes/editor/configmanager.cpp
+	
 	${ROOT}/scenes/editor/drawer.cpp
 	${ROOT}/scenes/editor/editor.cpp
 	${ROOT}/scenes/editor/frame.cpp
@@ -106,6 +110,8 @@ if(PLATFORM STREQUAL "Linux")
 	#target_link_libraries (MPS -lGLESv2)
 	target_link_libraries (MPS -no-pie)
 	target_link_libraries (MPS -lpthread)
+
+	target_link_libraries (MPS -lm)
 	target_link_libraries (MPS -ldl)
 endif() 
 

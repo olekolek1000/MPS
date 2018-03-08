@@ -12,6 +12,7 @@
 #include "drawer.hpp"
 #include "colorselector/colorselector.hpp"
 #include "frameselector/frameselector.hpp"
+#include "languageManager.hpp"
 #include <map>
 
 class sceneEditor{
@@ -25,6 +26,9 @@ public:
 
     Shader shGui;
 	Shader shGuiColor;
+
+	languageManager langMan;
+	configManager mpsConfig;
 
 	ThemeManager thMan;
 	ShaderManager shMan;

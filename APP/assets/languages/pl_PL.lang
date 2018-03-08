@@ -1,0 +1,15 @@
+Lang=Polski;
+[Editor]
+Pencil=Ołówek;
+Line=Linia;
+Spray=Aerograf;
+Floodfill=Wypełnienie;
+Pipette=Próbnik;
+[Menu]
+Go_back=Wróć;
+Save_project=Zapisz projekt;
+Load_project=Wczytaj projekt;
+Export=Eksport;
+Import=Import;
+Settings=Ustawienia;
+Quit=Wyjdź;

@@ -1,6 +1,6 @@
 #pragma once
-#include "texturemanager.hpp"
-
+#include "../../texturemanager.hpp"
+#include "configmanager.hpp"
 #include <string>
 #include <map>
 
@@ -18,6 +18,7 @@ private:
     TextureManager texMan;
 	std::map<std::string, optVar> vars;
 	void loadVariables();
+    configManager configMan;
 public:
     ThemeManager();
 	std::string getVariableS(const char*n);
