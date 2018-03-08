@@ -27,6 +27,7 @@ void languageManager::loadLang() {
     lang["Save_project"] = configMan.getVariable("Save_project");
     lang["Load_project"] = configMan.getVariable("Load_project");
     lang["Export"] = configMan.getVariable("Export");
+    lang["Import"] = configMan.getVariable("Import");
     lang["Settings"] = configMan.getVariable("Settings");
     lang["Quit"] = configMan.getVariable("Quit");
 }
@@ -44,6 +45,7 @@ void languageManager::loadRecovery() {
     lang["Save_project"] = "Save_project";
     lang["Load_project"] = "Load_project";
     lang["Export"] = "Export";
+    lang["Import"] = "Import";
     lang["Settings"] = "Settings";
     lang["Quit"] = "Quit";
 }

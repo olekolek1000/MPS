@@ -39,6 +39,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/MPS.dir/src/scenes/editor/toolbox/tool/pipette.cpp.o"
   "CMakeFiles/MPS.dir/src/scenes/editor/toolbox/tool/spray.cpp.o"
   "CMakeFiles/MPS.dir/src/scenes/editor/toolbox/tool/tool.cpp.o"
+  "CMakeFiles/MPS.dir/src/modules/module.cpp.o"
   "APP/linux64/MPS64.pdb"
   "APP/linux64/MPS64"
 )

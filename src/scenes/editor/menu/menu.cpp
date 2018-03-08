@@ -105,15 +105,14 @@ void Menu::loop(){
 	scene->thMan.addTexture("menu/background","menu/background.png",TEXSPACE_RGB,TEXFILTERING_LINEAR);
 	scene->thMan.addTexture("menu/soon","menu/soon.png",TEXSPACE_RGBA,TEXFILTERING_LINEAR);
 	scene->thMan.addTexture("menu/menubutton","menu/menubutton.png",TEXSPACE_RGBA,TEXFILTERING_LINEAR);
-	
 	step.setRate(30);
 	std::map<std::string, MenuButton> buttons;
-	buttons["01back"].init(this, 200, "Go back");
-	buttons["saveproject"].init(this, 300, "Save project");
-	buttons["loadproject"].init(this, 400, "Load project");
-	buttons["import"].init(this, 500, "Import");
-	buttons["export"].init(this, 600, "Export");
-	buttons["99quit"].init(this, 700, "Quit");
+	buttons["01back"].init(this, 200, langMan.lang["Go_back"]);
+	buttons["saveproject"].init(this, 300, langMan.lang["Save_project"]);
+	buttons["loadproject"].init(this, 400, langMan.lang["Load_project"]);
+	buttons["import"].init(this, 500, langMan.lang["Import"]);
+	buttons["export"].init(this, 600, langMan.lang["Export"]);
+	buttons["99quit"].init(this, 700, langMan.lang["Quit"]);
 
 	float postarget = 1.0;
 	

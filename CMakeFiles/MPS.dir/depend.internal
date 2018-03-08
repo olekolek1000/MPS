@@ -68,6 +68,10 @@ CMakeFiles/MPS.dir/src/main.cpp.o
  /home/bober/Moving-Picture-Studio/src/render/buffer.hpp
  /home/bober/Moving-Picture-Studio/src/shadermanager.hpp
  /home/bober/Moving-Picture-Studio/src/texturemanager.hpp
+CMakeFiles/MPS.dir/src/modules/module.cpp.o
+ /home/bober/Moving-Picture-Studio/src/modules/load_library.hpp
+ /home/bober/Moving-Picture-Studio/src/modules/module.cpp
+ /home/bober/Moving-Picture-Studio/src/modules/module.hpp
 CMakeFiles/MPS.dir/src/musicload.cpp.o
  /home/bober/Moving-Picture-Studio/src/defines.hpp
  /home/bober/Moving-Picture-Studio/src/lib/sdl_mixer.hpp
@@ -120,6 +124,8 @@ CMakeFiles/MPS.dir/src/scenes/editor/drawer.cpp.o
  /home/bober/Moving-Picture-Studio/src/scenes/editor/toolbox/toolbox.hpp
  /home/bober/Moving-Picture-Studio/src/texturemanager.hpp
 CMakeFiles/MPS.dir/src/scenes/editor/editor.cpp.o
+ /home/bober/Moving-Picture-Studio/src/modules/load_library.hpp
+ /home/bober/Moving-Picture-Studio/src/modules/module.hpp
  /home/bober/Moving-Picture-Studio/src/scenes/editor/colorselector/colorselector.hpp
  /home/bober/Moving-Picture-Studio/src/scenes/editor/configmanager.hpp
  /home/bober/Moving-Picture-Studio/src/scenes/editor/drawer.hpp
@@ -221,6 +227,8 @@ CMakeFiles/MPS.dir/src/scenes/editor/languageManager.cpp.o
  /home/bober/Moving-Picture-Studio/src/scenes/editor/languageManager.cpp
  /home/bober/Moving-Picture-Studio/src/scenes/editor/languageManager.hpp
 CMakeFiles/MPS.dir/src/scenes/editor/menu/menu.cpp.o
+ /home/bober/Moving-Picture-Studio/src/modules/load_library.hpp
+ /home/bober/Moving-Picture-Studio/src/modules/module.hpp
  /home/bober/Moving-Picture-Studio/src/scenes/editor/colorselector/colorselector.hpp
  /home/bober/Moving-Picture-Studio/src/scenes/editor/configmanager.hpp
  /home/bober/Moving-Picture-Studio/src/scenes/editor/drawer.hpp
@@ -241,6 +249,8 @@ CMakeFiles/MPS.dir/src/scenes/editor/menu/menu.cpp.o
  /home/bober/Moving-Picture-Studio/src/scenes/editor/toolbox/toolbox.hpp
  /home/bober/Moving-Picture-Studio/src/texturemanager.hpp
 CMakeFiles/MPS.dir/src/scenes/editor/menu/menubutton.cpp.o
+ /home/bober/Moving-Picture-Studio/src/modules/load_library.hpp
+ /home/bober/Moving-Picture-Studio/src/modules/module.hpp
  /home/bober/Moving-Picture-Studio/src/scenes/editor/colorselector/colorselector.hpp
  /home/bober/Moving-Picture-Studio/src/scenes/editor/configmanager.hpp
  /home/bober/Moving-Picture-Studio/src/scenes/editor/drawer.hpp

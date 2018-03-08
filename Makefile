@@ -285,6 +285,33 @@ src/main.cpp.s:
 	$(MAKE) -f CMakeFiles/MPS.dir/build.make CMakeFiles/MPS.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+src/modules/module.o: src/modules/module.cpp.o
+
+.PHONY : src/modules/module.o
+
+# target to build an object file
+src/modules/module.cpp.o:
+	$(MAKE) -f CMakeFiles/MPS.dir/build.make CMakeFiles/MPS.dir/src/modules/module.cpp.o
+.PHONY : src/modules/module.cpp.o
+
+src/modules/module.i: src/modules/module.cpp.i
+
+.PHONY : src/modules/module.i
+
+# target to preprocess a source file
+src/modules/module.cpp.i:
+	$(MAKE) -f CMakeFiles/MPS.dir/build.make CMakeFiles/MPS.dir/src/modules/module.cpp.i
+.PHONY : src/modules/module.cpp.i
+
+src/modules/module.s: src/modules/module.cpp.s
+
+.PHONY : src/modules/module.s
+
+# target to generate assembly for a file
+src/modules/module.cpp.s:
+	$(MAKE) -f CMakeFiles/MPS.dir/build.make CMakeFiles/MPS.dir/src/modules/module.cpp.s
+.PHONY : src/modules/module.cpp.s
+
 src/musicload.o: src/musicload.cpp.o
 
 .PHONY : src/musicload.o
@@ -1230,6 +1257,9 @@ help:
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/modules/module.o"
+	@echo "... src/modules/module.i"
+	@echo "... src/modules/module.s"
 	@echo "... src/musicload.o"
 	@echo "... src/musicload.i"
 	@echo "... src/musicload.s"

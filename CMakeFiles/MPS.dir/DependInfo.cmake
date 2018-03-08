@@ -24,6 +24,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/bober/Moving-Picture-Studio/src/framebuffermanager.cpp" "/home/bober/Moving-Picture-Studio/CMakeFiles/MPS.dir/src/framebuffermanager.cpp.o"
   "/home/bober/Moving-Picture-Studio/src/lib/SDL2_rotozoom.cpp" "/home/bober/Moving-Picture-Studio/CMakeFiles/MPS.dir/src/lib/SDL2_rotozoom.cpp.o"
   "/home/bober/Moving-Picture-Studio/src/main.cpp" "/home/bober/Moving-Picture-Studio/CMakeFiles/MPS.dir/src/main.cpp.o"
+  "/home/bober/Moving-Picture-Studio/src/modules/module.cpp" "/home/bober/Moving-Picture-Studio/CMakeFiles/MPS.dir/src/modules/module.cpp.o"
   "/home/bober/Moving-Picture-Studio/src/musicload.cpp" "/home/bober/Moving-Picture-Studio/CMakeFiles/MPS.dir/src/musicload.cpp.o"
   "/home/bober/Moving-Picture-Studio/src/pixel.cpp" "/home/bober/Moving-Picture-Studio/CMakeFiles/MPS.dir/src/pixel.cpp.o"
   "/home/bober/Moving-Picture-Studio/src/render/buffer.cpp" "/home/bober/Moving-Picture-Studio/CMakeFiles/MPS.dir/src/render/buffer.cpp.o"

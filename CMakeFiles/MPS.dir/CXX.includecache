@@ -144,6 +144,24 @@ lib/sdl.hpp
 app.hpp
 /home/bober/Moving-Picture-Studio/src/app.hpp
 
+/home/bober/Moving-Picture-Studio/src/modules/load_library.hpp
+windows.h
+-
+dlfcn.h
+-
+
+/home/bober/Moving-Picture-Studio/src/modules/module.cpp
+module.hpp
+/home/bober/Moving-Picture-Studio/src/modules/module.hpp
+iostream
+-
+
+/home/bober/Moving-Picture-Studio/src/modules/module.hpp
+map
+-
+load_library.hpp
+/home/bober/Moving-Picture-Studio/src/modules/load_library.hpp
+
 /home/bober/Moving-Picture-Studio/src/musicload.cpp
 musicload.hpp
 /home/bober/Moving-Picture-Studio/src/musicload.hpp
@@ -499,6 +517,8 @@ texturemanager.hpp
 /home/bober/Moving-Picture-Studio/src/scenes/editor/menu/texturemanager.hpp
 timestep.hpp
 /home/bober/Moving-Picture-Studio/src/scenes/editor/menu/timestep.hpp
+../../../modules/module.hpp
+/home/bober/Moving-Picture-Studio/src/modules/module.hpp
 
 /home/bober/Moving-Picture-Studio/src/scenes/editor/menu/menubutton.cpp
 menubutton.hpp

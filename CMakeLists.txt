@@ -110,11 +110,9 @@ if(PLATFORM STREQUAL "Linux")
 	#target_link_libraries (MPS -lGLESv2)
 	target_link_libraries (MPS -no-pie)
 	target_link_libraries (MPS -lpthread)
-<<<<<<< HEAD
+
 	target_link_libraries (MPS -lm)
-=======
 	target_link_libraries (MPS -ldl)
->>>>>>> fd7e1fc761ecfbd5acf7df5fa0104584a21457be
 endif() 
 
 if(PLATFORM STREQUAL "Windows")

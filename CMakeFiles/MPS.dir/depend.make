@@ -68,6 +68,10 @@ CMakeFiles/MPS.dir/src/main.cpp.o: src/render/buffer.hpp
 CMakeFiles/MPS.dir/src/main.cpp.o: src/shadermanager.hpp
 CMakeFiles/MPS.dir/src/main.cpp.o: src/texturemanager.hpp
 
+CMakeFiles/MPS.dir/src/modules/module.cpp.o: src/modules/load_library.hpp
+CMakeFiles/MPS.dir/src/modules/module.cpp.o: src/modules/module.cpp
+CMakeFiles/MPS.dir/src/modules/module.cpp.o: src/modules/module.hpp
+
 CMakeFiles/MPS.dir/src/musicload.cpp.o: src/defines.hpp
 CMakeFiles/MPS.dir/src/musicload.cpp.o: src/lib/sdl_mixer.hpp
 CMakeFiles/MPS.dir/src/musicload.cpp.o: src/musicload.cpp
@@ -119,6 +123,8 @@ CMakeFiles/MPS.dir/src/scenes/editor/drawer.cpp.o: src/scenes/editor/toolbox/too
 CMakeFiles/MPS.dir/src/scenes/editor/drawer.cpp.o: src/scenes/editor/toolbox/toolbox.hpp
 CMakeFiles/MPS.dir/src/scenes/editor/drawer.cpp.o: src/texturemanager.hpp
 
+CMakeFiles/MPS.dir/src/scenes/editor/editor.cpp.o: src/modules/load_library.hpp
+CMakeFiles/MPS.dir/src/scenes/editor/editor.cpp.o: src/modules/module.hpp
 CMakeFiles/MPS.dir/src/scenes/editor/editor.cpp.o: src/scenes/editor/colorselector/colorselector.hpp
 CMakeFiles/MPS.dir/src/scenes/editor/editor.cpp.o: src/scenes/editor/configmanager.hpp
 CMakeFiles/MPS.dir/src/scenes/editor/editor.cpp.o: src/scenes/editor/drawer.hpp
@@ -220,6 +226,8 @@ CMakeFiles/MPS.dir/src/scenes/editor/languageManager.cpp.o: src/scenes/editor/co
 CMakeFiles/MPS.dir/src/scenes/editor/languageManager.cpp.o: src/scenes/editor/languageManager.cpp
 CMakeFiles/MPS.dir/src/scenes/editor/languageManager.cpp.o: src/scenes/editor/languageManager.hpp
 
+CMakeFiles/MPS.dir/src/scenes/editor/menu/menu.cpp.o: src/modules/load_library.hpp
+CMakeFiles/MPS.dir/src/scenes/editor/menu/menu.cpp.o: src/modules/module.hpp
 CMakeFiles/MPS.dir/src/scenes/editor/menu/menu.cpp.o: src/scenes/editor/colorselector/colorselector.hpp
 CMakeFiles/MPS.dir/src/scenes/editor/menu/menu.cpp.o: src/scenes/editor/configmanager.hpp
 CMakeFiles/MPS.dir/src/scenes/editor/menu/menu.cpp.o: src/scenes/editor/drawer.hpp
@@ -240,6 +248,8 @@ CMakeFiles/MPS.dir/src/scenes/editor/menu/menu.cpp.o: src/scenes/editor/toolbox/
 CMakeFiles/MPS.dir/src/scenes/editor/menu/menu.cpp.o: src/scenes/editor/toolbox/toolbox.hpp
 CMakeFiles/MPS.dir/src/scenes/editor/menu/menu.cpp.o: src/texturemanager.hpp
 
+CMakeFiles/MPS.dir/src/scenes/editor/menu/menubutton.cpp.o: src/modules/load_library.hpp
+CMakeFiles/MPS.dir/src/scenes/editor/menu/menubutton.cpp.o: src/modules/module.hpp
 CMakeFiles/MPS.dir/src/scenes/editor/menu/menubutton.cpp.o: src/scenes/editor/colorselector/colorselector.hpp
 CMakeFiles/MPS.dir/src/scenes/editor/menu/menubutton.cpp.o: src/scenes/editor/configmanager.hpp
 CMakeFiles/MPS.dir/src/scenes/editor/menu/menubutton.cpp.o: src/scenes/editor/drawer.hpp

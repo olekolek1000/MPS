@@ -10,5 +10,6 @@ Go_back=Wróć;
 Save_project=Zapisz projekt;
 Load_project=Wczytaj projekt;
 Export=Eksport;
+Import=Import;
 Settings=Ustawienia;
 Quit=Wyjdź;
