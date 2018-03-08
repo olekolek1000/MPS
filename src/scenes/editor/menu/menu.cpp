@@ -9,9 +9,7 @@
 #include "render/func.hpp"
 #include "menubutton.hpp"
 
-
 #include "tinyfiledialogs.hpp"
-
 
 #include "lib/SDL2_rotozoom.hpp"
 
@@ -37,7 +35,6 @@ Menu::~Menu(){
 void Menu::setProjection(){
 	projection = glm::ortho(0.0f, (float)a->getAreaWidth(), (float)a->getAreaHeight(), 0.0f);
 }
-
 void Menu::exitMenu(){
 	x_target=-0.757;
 	y_target=0.0;
@@ -97,11 +94,12 @@ void Menu::loop(){
 	
 	step.setRate(30);
 	std::map<std::string, MenuButton> buttons;
-	buttons["01back"].init(this, 200, "Go back");
-	buttons["saveproject"].init(this, 300, "Save project");
-	buttons["loadproject"].init(this, 400, "Load project");
-	buttons["export"].init(this, 500, "Export");
-	buttons["99quit"].init(this, 600, "Quit");
+	buttons["01back"].init(this, 200, scene->langMan.lang["Go_back"]);
+	buttons["saveproject"].init(this, 300, scene->langMan.lang["Save_project"]);
+	buttons["loadproject"].init(this, 400, scene->langMan.lang["Load_project"]);
+	buttons["export"].init(this, 500, scene->langMan.lang["Export"]);
+	buttons["settings"].init(this, 600, scene->langMan.lang["Settings"]);
+	buttons["99quit"].init(this, 700, scene->langMan.lang["Quit"]);
 
 	float postarget = 1.0;
 	
@@ -181,6 +179,9 @@ void Menu::loop(){
 			}
 			if(buttons["export"].isClicked()){
 				actionExport();
+			}
+			if(buttons["settings"].isClicked()){
+				
 			}
 			if(buttons["99quit"].isClicked()){
 				actionQuit();

@@ -10,6 +10,8 @@
 #include "error.hpp"
 #include "menu/menu.hpp"
 
+#include <iostream>
+
 void sceneEditor::setProjection(){
     int w = a.getAreaWidth();
     int h = a.getAreaHeight();
@@ -62,6 +64,14 @@ void sceneEditor::load(){
     colorselector.init(this);
     frameselector.init(this);
 
+	if(mpsConfig.loadFile("mps.conf") == 0) {
+		langMan.loadRecovery();
+		error("Can't load config!");
+	} else {
+		if(langMan.loadFile(std::string("../assets/")+std::string("/languages/")+std::string(mpsConfig.getVariable("Lang"))+std::string(".lang")) == 0) {
+			error("Can't load language!");
+		}
+	}
 
     step.setRate(30);
     setProjection();

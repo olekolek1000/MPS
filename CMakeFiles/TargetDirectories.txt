@@ -1,0 +1,3 @@
+/home/bober/Moving-Picture-Studio/CMakeFiles/rebuild_cache.dir
+/home/bober/Moving-Picture-Studio/CMakeFiles/MPS.dir
+/home/bober/Moving-Picture-Studio/CMakeFiles/edit_cache.dir

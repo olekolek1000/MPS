@@ -2,19 +2,26 @@
 
 #include <fstream>
 #include <sstream>
-#include "error.hpp"
-#include "defines.hpp"
+#include "../../error.hpp"
+#include "../../defines.hpp"
+#include "configmanager.hpp"
+
+#include <string>
+#include <iostream>
+#include <iomanip>
 
 typedef unsigned int uint;
 
 ThemeManager::ThemeManager(){
 	themeName = defaultThemeName;
 	loadVariables();
-    std::fstream file;
-    file.open(std::string(std::string(LOC_ROOT)+std::string("/editor/themes/default.txt")).c_str(), std::ios::in);
-    std::string theme;
-    std::getline(file, theme);
-    file.close();
+    //std::fstream file;
+    configMan.loadFile(std::string(LOC_ROOT)+std::string("/editor/themes/default.txt"));
+    //file.open(std::string(std::string(LOC_ROOT)+std::string("/editor/themes/default.txt")).c_str(), std::ios::in);
+    //std::string theme = configMan.getVariable("Theme");
+    std::string theme = configMan.getVariable("Theme");
+    //std::getline(file, theme);
+    //file.close();
     loadTheme(theme);
 }
 
@@ -41,6 +48,7 @@ void ThemeManager::addTexture(std::string name, std::string location, int texspa
 }
 
 void ThemeManager::loadVariables(){
+    
 	std::stringstream loc;
     loc<<LOC_ROOT<<"/editor/themes/"<<themeName<<"/theme.cfg";
 	std::fstream file;
@@ -51,7 +59,7 @@ void ThemeManager::loadVariables(){
 			std::getline(file, line);
 			std::stringstream name;
 			uint i=0;
-			while(i<line.size()&&line[i]!=' '){
+			while(i<line.size()&&line[i]!='='){
 				name<<line[i];
 				i++;
 			}
@@ -61,7 +69,8 @@ void ThemeManager::loadVariables(){
 				variable<<line[i];
 				i++;
 			}
-			vars[name.str()].varstr = variable.str();
+            
+    		vars[name.str()].varstr = variable.str();
 			vars[name.str()].varfloat = std::atof(variable.str().c_str());
 		}
 	}

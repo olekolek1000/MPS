@@ -29,6 +29,7 @@ private:
 	void actionExport();
 	void actionLoadProject();
 	void actionSaveProject();
+	void actionGoSettings();
 	void actionQuit();
 	
 	Timestep step;

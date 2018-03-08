@@ -1,0 +1,14 @@
+Lang=pусский;
+[Editor]
+Pencil=карандаш;
+Line=линия;
+Spray=распылитель краски;
+Floodfill=выполнение;
+Pipette=зонд;
+[Menu]
+Go_back=возвращение;
+Save_project=Сохранить проект;
+Load_project=Загрузить проект;
+Export=экспорт;
+Settings=настройки;
+Quit=выход;

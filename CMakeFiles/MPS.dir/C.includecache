@@ -1,0 +1,44 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/bober/Moving-Picture-Studio/src/scenes/editor/menu/tinyfiledialogs.c
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+ctype.h
+-
+sys/stat.h
+-
+tinyfiledialogs.hpp
+/home/bober/Moving-Picture-Studio/src/scenes/editor/menu/tinyfiledialogs.hpp
+windows.h
+-
+shlobj.h
+-
+conio.h
+-
+commdlg.h
+-
+limits.h
+-
+unistd.h
+-
+dirent.h
+-
+termios.h
+-
+sys/utsname.h
+-
+signal.h
+-
+
+/home/bober/Moving-Picture-Studio/src/scenes/editor/menu/tinyfiledialogs.hpp
+
