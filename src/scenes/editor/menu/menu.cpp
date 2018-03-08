@@ -23,6 +23,20 @@
 
 #include <fstream>
 
+#include <stdlib.h>
+
+void pix_map::Malloc(size_t size) {
+	pixmaps = (int**)malloc(size * sizeof(int*));
+	heights = (int*)malloc(size * sizeof(int));
+	weights = (int*)malloc(size * sizeof(int));
+}
+
+void pix_map::Free() {
+	free(pixmaps);
+	free(heights);
+	free(weights);
+}
+
 Menu::Menu(sceneEditor * scene){
 	this->scene = scene;
 	this->a = &scene->a;
@@ -94,12 +108,12 @@ void Menu::loop(){
 	
 	step.setRate(30);
 	std::map<std::string, MenuButton> buttons;
-	buttons["01back"].init(this, 200, scene->langMan.lang["Go_back"]);
-	buttons["saveproject"].init(this, 300, scene->langMan.lang["Save_project"]);
-	buttons["loadproject"].init(this, 400, scene->langMan.lang["Load_project"]);
-	buttons["export"].init(this, 500, scene->langMan.lang["Export"]);
-	buttons["settings"].init(this, 600, scene->langMan.lang["Settings"]);
-	buttons["99quit"].init(this, 700, scene->langMan.lang["Quit"]);
+	buttons["01back"].init(this, 200, "Go back");
+	buttons["saveproject"].init(this, 300, "Save project");
+	buttons["loadproject"].init(this, 400, "Load project");
+	buttons["import"].init(this, 500, "Import");
+	buttons["export"].init(this, 600, "Export");
+	buttons["99quit"].init(this, 700, "Quit");
 
 	float postarget = 1.0;
 	
@@ -176,6 +190,9 @@ void Menu::loop(){
 			}
 			if(buttons["saveproject"].isClicked()){
 				actionSaveProject();
+			}
+			if(buttons["import"].isClicked()) {
+				actionImport();
 			}
 			if(buttons["export"].isClicked()){
 				actionExport();
@@ -279,43 +296,98 @@ void Menu::dialogEnd(){
 void Menu::actionBack(){
 	exitMenu();
 }
+
 void Menu::actionExport(){
+	std::cout << "a";
+
 	dialogPrepare();
-	bool end=false;
-	while(!end){
-		end=true;
-		const char * patterns[2] = { "*.gif", "*.png" };
-		const char * name = tinyfd_saveFileDialog("Export animation...", NULL, 2, patterns, NULL);
-		if(name!=NULL){
-			string str_name = string(name);
-			if(str_name.size()>4){
-				string str_ext = str_name.substr( str_name.length() - 4 );
-				if(str_ext==".gif"){
-					int delay = 15;
-					int width = scene->frameMan.getFrame(0)->getWidth();
-					int height = scene->frameMan.getFrame(0)->getHeight();
-					
-					GifWriter writer;
-					GifBegin(&writer, name, width, height, delay, 8, false);
-					for(int i=0; i<scene->frameMan.getFrameCount(); i++){
-						SDL_Surface * overlay = scene->frameMan.getFrame(i)->getOverlay();
-						GifWriteFrame(&writer, (const uint8_t*)overlay->pixels, overlay->w, overlay->h, delay, 8, false);
+	while(1){
+		std::cout << "a";
+
+		size_t size = 0;
+		const char** patterns = NULL;
+		patterns = (const char**)realloc(patterns,size++);
+
+		patterns[size-1] = "*.*";
+
+		for(auto& i : io_library_manager) {
+			const char* format = i.first.c_str();
+			
+			patterns = (const char**)realloc(patterns,(size++) * sizeof(const char*));
+			patterns[size-1] = format;
+		}
+		const char * name = tinyfd_saveFileDialog("Export animation...", NULL, size, patterns, NULL);
+		free(patterns);
+
+		if(name!=NULL) {
+			std::string str = std::string(name);
+			if(str.size() > 4) {
+				str = str.substr(str.length() - 3);
+				loaded:
+				if(io_library_manager[str].isLoaded()) {
+					Module::export_ft exp_func = (Module::export_ft)io_library_manager[str].get_function("export");
+
+					current_export_data.Malloc(scene->frameMan.getFrameCount());
+
+					for(int i = 0; i < scene->frameMan.getFrameCount(); i++) {
+						SDL_Surface* pixmap = scene->frameMan.getFrame(i)->getOverlay();
+
+						current_export_data.pixmaps[i] = (int*)pixmap->pixels;
+						current_export_data.heights[i] = pixmap->h;
+						current_export_data.weights[i] = pixmap->w;
+
 					}
-					GifEnd(&writer);
+
+					exp_func((const int**)current_export_data.pixmaps,current_export_data.heights,current_export_data.weights,scene->frameMan.getFrameCount(),&current_export_thread_progress);
+
+					current_export_data.Free();
+
 				}
-				else{
-					error("Invalid file extension");
-					end=false;
+				else {
+					std::string es = std::string("Module responsible for: ") + str + std::string(" isn't loaded.\nYou can choose it manually after this message.");
+					error(es.c_str());
+
+					if(LoadModule()) goto loaded;
+					else error("Cannot load module");
 				}
 			}
-			else{
-				error("Invalid filename");
-				end=false;
-			}
+		}
+		else {
+			break;
 		}
 	}
 	dialogEnd();
 }
+
+bool Menu::LoadModule() {
+	const char* format = "*.mpsm";
+	const char* path = tinyfd_openFileDialog("Select module...", NULL, 1, &format, "Moving Picture Studio Module (*.mpsm)", false);
+	if(path != NULL) {
+		std::string str(path);
+		if(str.size() > 4) {
+			std::string sec_str = str.substr(str.length() - 3);
+			Module mod;
+			if(mod.load(path)) {
+				if(mod.get_function("info") && mod.get_function("export")) {
+					
+					Module::info_ft inf_func = (Module::info_ft)mod.get_function("info");
+					const char* formats = inf_func();
+
+					io_library_manager[std::string(formats)] = mod;
+					return true;
+				}
+
+			}
+		}
+	}
+	return false;
+}
+
+void Menu::actionImport(){
+	dialogPrepare();
+
+}
+
 void Menu::actionLoadProject(){
 	dialogPrepare();
 	const char * patterns[1] = {"*.mpsp"};
