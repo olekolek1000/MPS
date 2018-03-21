@@ -5,13 +5,19 @@
 #include "render/func.hpp"
 #include "timestep.hpp"
 
-void MenuButton::init(Menu * menu, int posY, std::string text){
+void MenuButton::init(Menu * menu, int posX, int posY, char side, std::string text){
 	this->menu = menu;
 	this->scene = menu->scene;
-	this->posX = -400;
+	this->posX = posX;
 	this->posX_prev = posX;
 	this->posX_smooth = posX;
+
 	this->posY = posY;
+	this->posY_prev = posY;
+	this->posY_smooth = posY;
+
+	this->side = side;
+	
 	this->width = 400;
 	this->height = 96;
 	
@@ -22,35 +28,111 @@ void MenuButton::init(Menu * menu, int posY, std::string text){
 	this->scale = 1.0;
 	this->scale_prev = this->scale;
 	this->scale_target = this->scale;
+
+	updateObjPos();
 }
 
+void MenuButton::setPosition(int posX, int posY){
+	this->posX = posX;
+	this->posY = posY;
+	updateObjPos();
+}
 
 void MenuButton::setXPosition(int posX){
 	this->posX = posX;
+	updateObjPos();
+}
+
+void MenuButton::setYPosition(int posY){
+	this->posY = posY;
+	updateObjPos();
 }
 
 void MenuButton::update(){
 	scale_prev = scale;
-	scale = scale + (scale_target - scale)*0.5;
+	scale = scale + (scale_target - scale)*scale_speed;
 	posX_prev=posX;
+	posY_prev=posY;
 	
 	if(hovered){
 		scale_target = 1.1;
+		scale_speed = 0.8;
 	}
 	else{
 		scale_target = 1.0;
+		scale_speed = 0.2;
 	}
+}
+
+void MenuButton::updateObjPos(){
+	int areaW = scene->a.getAreaWidth();
+	int areaH = scene->a.getAreaHeight();
+	switch(side){
+		case 'A':{
+			objX = posX_smooth;
+			objY = posY_smooth;
+			break;
+		}
+		case 'B':{
+			objX = areaW/2+posX_smooth;
+			objY = posY_smooth;
+			break;
+		}
+		case 'C':{
+			objX = areaW-posX_smooth;
+			objY = posY_smooth;
+			break;
+		}
+		case 'D':{
+			objX = areaW-posX_smooth;
+			objY = areaH/2+posY_smooth;
+			break;
+		}
+		case 'E':{
+			objX = areaW-posX_smooth;
+			objY = areaH-posY_smooth;
+			break;
+		}
+		case 'F':{
+			objX = areaW/2+posX_smooth;
+			objY = areaH-posY_smooth;
+			break;
+		}
+		case 'G':{
+			objX = posX_smooth;
+			objY = areaH-posY_smooth;
+			break;
+		}
+		case 'H':{
+			objX = posX_smooth;
+			objY = areaH/2+posY_smooth;
+			break;
+		}
+		case 'I':{
+			objX = areaW/2+posX_smooth;
+			objY = areaH/2+posY_smooth;
+			break;
+		}
+		default:{
+			assert("Invalid button side");
+		}
+	}
+}
+
+void MenuButton::setSide(char side){
+	this->side = side;
 }
 
 void MenuButton::render(float alpha){
 	posX_smooth = alphize(alpha, posX_prev, posX);
-	xReset(&model);
-	xTranslate(&model, posX_smooth, posY);
+	posY_smooth = alphize(alpha, posY_prev, posY);
+
 	float sc = alphize(alpha, scale_prev, scale);
+	xReset(&model);
+	xTranslate(&model, objX-width/2, objY-height/2);
 	xScale(&model, width, height);
 	xTranslate(&model, 0.5, 0.5);
 	xScale(&model, sc, sc);
-	xRotate(&model, (1.0-sc)/3.0);
 	xTranslate(&model, -0.5, -0.5);
 	scene->thMan["menu/menubutton"].select();
 	scene->shGui.select();
@@ -59,7 +141,7 @@ void MenuButton::render(float alpha){
 	scene->a.square_uv->bind().attrib(1,2,GL_FLOAT);
 	scene->a.square_vert->draw(GL_TRIANGLES);
 	
-	this->text.setPosition(posX_smooth+width/2, posY+height/2);
+	this->text.setPosition(objX, objY);
 	text.render();
 }
 
@@ -69,7 +151,7 @@ bool MenuButton::pushEvent(SDL_Event * evt){
 	switch(evt->type){
         case SDL_MOUSEBUTTONDOWN:{
             if(evt->button.button==SDL_BUTTON_LEFT){
-                if(evt->button.x>=posX&&evt->button.y>=posY&&evt->button.x<posX+width&&evt->button.y<posY+height){
+                if(evt->motion.x>=objX-width/2&&evt->motion.y>=objY-height/2&&evt->motion.x<objX+width/2&&evt->motion.y<objY+height/2){
                     used=true;
                     pressed=true;
                 }
@@ -79,7 +161,7 @@ bool MenuButton::pushEvent(SDL_Event * evt){
         case SDL_MOUSEBUTTONUP:{
             if(evt->button.button==SDL_BUTTON_LEFT){
                 if(pressed){
-                    if(evt->button.x>=posX&&evt->button.y>=posY&&evt->button.x<posX+width&&evt->button.y<posY+height){
+                    if(evt->motion.x>=objX-width/2&&evt->motion.y>=objY-height/2&&evt->motion.x<objX+width/2&&evt->motion.y<objY+height/2){
                         used=true;
                         clicked=true;
                     }
@@ -90,7 +172,7 @@ bool MenuButton::pushEvent(SDL_Event * evt){
             break;
         }
         case SDL_MOUSEMOTION:{
-			if(evt->motion.x>=posX&&evt->motion.y>=posY&&evt->motion.x<posX+width&&evt->motion.y<posY+height){
+			if(evt->motion.x>=objX-width/2&&evt->motion.y>=objY-height/2&&evt->motion.x<objX+width/2&&evt->motion.y<objY+height/2){
 				hovered=true;
 			}
 			else{

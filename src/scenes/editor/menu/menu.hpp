@@ -4,6 +4,8 @@
 #include "texturemanager.hpp"
 #include "timestep.hpp"
 
+#include "menubutton.hpp"
+#include <map>
 class App;
 class sceneEditor;
 
@@ -13,10 +15,10 @@ private:
 	glm::mat4 projection, model;
 	void setProjection();
 	void exitMenu();
-	float x_target = -1.3;
+	float x_target = -1.2;
 	float y_target = 0.0;
-	float z_target = 0.5;
-	float animspeed = 0.08;
+	float z_target = 0.0;
+	float animspeed = 0.1;
 	int exit_delay=0;
 	
 	bool wasFullscreen;
@@ -33,6 +35,8 @@ private:
 	void actionSaveProject();
 	void actionQuit();
 	
+	std::map<std::string, MenuButton> buttons;
+
 	Timestep step;
 public:
 	App * a;

@@ -8,7 +8,7 @@ project(MPS)
 
 set(TYPE "Release")#Debug, Normal, Release
 set(PLATFORM "Linux")#Linux, Windows
-set(ROOT "./src/")
+set(ROOT "./src/") 
 
 if(TYPE STREQUAL "Debug")
 	set (CMAKE_CXX_FLAGS "-Wall -I ./src -g")
