@@ -78,8 +78,6 @@ SET(PROGRAM_SRCS
 	${ROOT}/scenes/editor/toolbox/tool/pipette.cpp
 	${ROOT}/scenes/editor/toolbox/tool/spray.cpp
 	${ROOT}/scenes/editor/toolbox/tool/tool.cpp
-
-	${ROOT}/modules/module.cpp
 	)
 	 
 if(PLATFORM STREQUAL "Linux")
