@@ -32,12 +32,16 @@ void App::init() {
 
     if(SDL_Init(SDL_INIT_VIDEO)!=0) error("Cannot init SDL");
 	
-	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
-    //SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
-    //SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
-	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_ES
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 	//SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
-	//SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 8);
+	//SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 16);
+    //SDL_GL_SetAttribute(SDL_GL_RED_SIZE,8);
+    //SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,8);
+    //SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,8);
+    
+    
 	
     #ifndef FASTSTART
 	SDL_Surface * splash = surfLoad("splash.png");
@@ -53,21 +57,8 @@ void App::init() {
     SDL_SetWindowShape(loadingwindow, splash, &shapemode);
     SDL_BlitSurface(splash,NULL,loadingwindowsurface,NULL);
     SDL_FreeSurface(splash);
-    SDL_SetWindowOpacity(loadingwindow,0.0);
-    SDL_UpdateWindowSurface(loadingwindow);
     SDL_ShowWindow(loadingwindow);
-
-	int pX,pY;
-	SDL_GetWindowPosition(loadingwindow,&pX,&pY);
-    for(int i=0;i<=26;i+=1){
-        SDL_Event evt;
-        while(SDL_PollEvent(&evt));
-        SDL_SetWindowOpacity(loadingwindow,i/25.0);
-		SDL_SetWindowPosition(loadingwindow,pX,pY+(25-i)/3);
-        SDL_UpdateWindowSurface(loadingwindow);
-        SDL_Delay(20);
-    }
-    SDL_Delay(1500);
+    SDL_UpdateWindowSurface(loadingwindow);
     #endif
 
     if(TTF_Init()==-1) error("Cannot init SDL_ttf");
@@ -88,7 +79,7 @@ void App::init() {
 #ifdef __ANDROID__
     window = SDL_CreateWindow("Moving Picture Studio",0,0,window_w,window_h,SDL_WINDOW_OPENGL);glDisable(GL_DITHER);
 #else
-    window = SDL_CreateWindow("Moving Picture Studio",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,window_w,window_h,SDL_WINDOW_RESIZABLE|SDL_WINDOW_OPENGL|SDL_WINDOW_HIDDEN|SDL_WINDOW_FULLSCREEN_DESKTOP);
+    window = SDL_CreateWindow("Moving Picture Studio",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,window_w,window_h,SDL_WINDOW_RESIZABLE|SDL_WINDOW_OPENGL|SDL_WINDOW_HIDDEN|SDL_WINDOW_MAXIMIZED);
     if(window==NULL) error("Cannot create main OpenGL window");
 #endif
     context = SDL_GL_CreateContext(window);
@@ -106,7 +97,7 @@ void App::init() {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glDisable(GL_DEPTH_TEST);
-	//glEnable(GL_MULTISAMPLE);
+    glDisable(GL_DITHER);
 
     static const GLfloat square_vert_data[] = {0,0, 0,1, 1,1, 0,0, 1,0, 1,1};
 	square_vert = new RBuffer;
@@ -117,8 +108,8 @@ void App::init() {
 	square_uv->bind().setData(sizeof(square_uv_data), square_uv_data, GL_STATIC_DRAW);
 
     for(uint i=0;i<16;i++){
-        glEnableVertexAttribArray(i);//this should be all, but..
-        glVertexAttribPointer(i,2,GL_FLOAT,GL_FALSE,0,(void*)0);//some shitty drivers crash so i must fill with something
+        glEnableVertexAttribArray(i);
+        glVertexAttribPointer(i,2,GL_FLOAT,GL_FALSE,0,(void*)0);//some shitty drivers crash, i must fill this
     }
 	
 
@@ -129,7 +120,7 @@ void App::init() {
 
     App::updateProportions();
 
-    Mix_OpenAudio(44100,MIX_DEFAULT_FORMAT,2,1024);
+    //Mix_OpenAudio(44100,MIX_DEFAULT_FORMAT,2,1024);
 
     fps_text.create();
     updateDebugger();

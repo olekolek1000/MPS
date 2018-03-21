@@ -29,7 +29,7 @@ private:
     void pushEvent(GlobalEvent event);
     float proportions;
 
-    bool fullscreen=true;
+    bool fullscreen=false;
     bool vsync=true;
     bool autoproportions=true;
 

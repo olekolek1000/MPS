@@ -7,8 +7,6 @@
 #include "lib/sdl_image.hpp"
 #include "transform.hpp"
 #include "render/func.hpp"
-#include "menubutton.hpp"
-
 
 #include "tinyfiledialogs.hpp"
 
@@ -22,11 +20,11 @@
 
 #include "error.hpp"
 
-#include "gif.hpp"
+#include "gif.hpp" 
 
 Menu::Menu(sceneEditor * scene){
 	this->scene = scene;
-	this->a = &scene->a;
+	this->a = &scene->a; 
 }
 
 Menu::~Menu(){
@@ -35,6 +33,10 @@ Menu::~Menu(){
 
 void Menu::setProjection(){
 	projection = glm::ortho(0.0f, (float)a->getAreaWidth(), (float)a->getAreaHeight(), 0.0f);
+
+	for(auto iter = buttons.begin(); iter!=buttons.end(); iter++){
+		iter->second.updateObjPos();
+	}
 }
 
 void Menu::exitMenu(){
@@ -91,16 +93,21 @@ void Menu::loop(){
 	float z_prev = z;
 	
 	scene->thMan.addTexture("menu/background","menu/background.png",TEXSPACE_RGB,TEXFILTERING_LINEAR);
-	scene->thMan.addTexture("menu/soon","menu/soon.png",TEXSPACE_RGBA,TEXFILTERING_LINEAR);
 	scene->thMan.addTexture("menu/menubutton","menu/menubutton.png",TEXSPACE_RGBA,TEXFILTERING_LINEAR);
 	
-	std::map<std::string, MenuButton> buttons;
-	buttons["01back"].init(this, 50, "Go back");
-	buttons["saveproject"].init(this, 150, "Save project");
-	buttons["loadproject"].init(this, 250, "Load project");
-	buttons["import"].init(this, 350, "Import");
-	buttons["export"].init(this, 450, "Export");
-	buttons["99quit"].init(this, 550, "Quit");
+	/*sides
+	A===B===C
+	|.......|
+	H...I...D
+	|.......|
+	G===F===E
+	*/
+	buttons["01back"].init(this, 216, 66, 'A', "Go back");
+	buttons["loadproject"].init(this, 216, -150, 'D', "Load project");
+	buttons["saveproject"].init(this, 216, -50, 'D', "Save project");
+	buttons["import"].init(this, 216, 50, 'D', "Import");
+	buttons["export"].init(this, 216, 150, 'D', "Export");
+	buttons["99quit"].init(this, 216, 66, 'G', "Exit");
 
 	step.reset();
 	step.setRate(30);
@@ -119,7 +126,14 @@ void Menu::loop(){
 						}
                     }
                     break;
-			    }
+			    } 
+				case SDL_MOUSEMOTION:{
+					if(exit_delay==0){
+						z_target = -(evt.motion.x-scene->a.getAreaWidth()/2)/(float)scene->a.getAreaWidth()*0.45;
+						y_target = (evt.motion.y-scene->a.getAreaHeight()/2)/(float)scene->a.getAreaHeight()*0.45;
+					}
+					break;
+				}
 			}
 			
 			if(exit_delay==0&&end==false){
@@ -168,7 +182,7 @@ void Menu::loop(){
 			if(exit_delay==0&&end==false){
 				for(auto iter = buttons.begin(); iter!=buttons.end(); iter++){
 					iter->second.update();
-					iter->second.setXPosition(-300+400*(1.0-postarget));
+					//iter->second.setXPosition(-300+400*(1.0-postarget));
 				}
 			}
 			
@@ -240,24 +254,12 @@ void Menu::loop(){
 					iter->second.render(step.getAlpha());
 				}
 			}
-			
-			{//build in progress text
-				a->square_vert->bind().attrib(0,2,GL_FLOAT);
-				a->square_uv->bind().attrib(1,2,GL_FLOAT);
-				xReset(&model);
-				xTranslate(&model, a->getAreaWidth()/2-200+sin(step.getTime())*10,a->getAreaHeight()-80);
-				xScale(&model, 400, 80);
-				scene->thMan["menu/soon"].select();
-				a->shMan["default2d"].select().setM(&model).setP(&projection);
-				a->square_vert->draw(GL_TRIANGLES);
-			}
 		}
-
 		a->updateAll();
 	}
 	scene->thMan.removeTexture("menu/background");
-	scene->thMan.removeTexture("menu/soon");
 	scene->thMan.removeTexture("menu/menubutton");
+	buttons.clear();
 }
 
 void Menu::dialogPrepare(){
