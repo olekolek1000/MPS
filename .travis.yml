@@ -17,5 +17,5 @@ compile:
   - cmake CMakeLists.txt
     cmake --build .
 install_libraries:
-  debian-based: sudo apt install libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libglew-dev libgles2-mesa-dev libglu1-mesa-dev libgml-dev
+  debian-based: sudo apt install libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libglew-dev libgles2-mesa-dev libglu1-mesa-dev libglm-dev
   arch-based: sudo pacman -S sdl2 sdl2_image sdl2_mixer sdl2_ttf glew glm mesa glu
