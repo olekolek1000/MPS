@@ -1,25 +1,20 @@
-#include "menu.hpp"
-#include <vector>
-
-#include "../editor.hpp"
-#include "app.hpp"
-#include "timestep.hpp"
-#include "lib/sdl_image.hpp"
-#include "transform.hpp"
-#include "render/func.hpp"
-
-#include "tinyfiledialogs.hpp"
-
-
-#include "lib/SDL2_rotozoom.hpp"
-
 #include <sstream>
 #include <iostream>
 #include <map>
 #include <fstream>
+#include <vector>
 
+#include "menu.hpp"
+#include "../editor.hpp"
+#include "app.hpp"
+#include "timestep.hpp"
+#include "lib/sdl_image.hpp"
+#include "lib/floats.hpp"
+#include "transform.hpp"
+#include "render/func.hpp"
 #include "error.hpp"
 
+#include "tinyfiledialogs.hpp"
 #include "gif.hpp" 
 
 Menu::Menu(sceneEditor * scene){
@@ -46,6 +41,30 @@ void Menu::exitMenu(){
 	animspeed=0.4;
 	exit_delay=12;
 }
+
+
+const int star_lifetime = 150;
+class Star{
+public:
+	bool active=true;
+	float posX,posY,posZ,velX,velY,velZ;
+	int time=0;
+
+	void init(){
+		velX = ((rand()%1000)/1000.0-0.5)/600.0;
+		velY = ((rand()%1000)/1000.0-0.5)/600.0;
+		velZ = ((rand()%1000)/1000.0-0.5)/600.0;
+	}
+	void update(){
+		time++;
+		if(time>star_lifetime){
+			active=false;
+		}
+		posX=posX+velX;
+		posY=posY+velY;
+		posZ=posZ+velZ;
+	}
+};
 
 void Menu::loop(){
 	SDL_Event evt;
@@ -109,10 +128,14 @@ void Menu::loop(){
 	buttons["export"].init(this, 216, 150, 'D', "Export");
 	buttons["99quit"].init(this, 216, 66, 'G', "Exit");
 
+	float postarget = 1.0;
+
+	vector<Star> stars;
+	vector<Float4> stars_points;//X, Y, Z, intensity
+	RBuffer buf_stars;
+
 	step.reset();
 	step.setRate(30);
-
-	float postarget = 1.0;
 	
 	bool end=false;
 	while(!end){
@@ -129,8 +152,8 @@ void Menu::loop(){
 			    } 
 				case SDL_MOUSEMOTION:{
 					if(exit_delay==0){
-						z_target = -(evt.motion.x-scene->a.getAreaWidth()/2)/(float)scene->a.getAreaWidth()*0.45;
-						y_target = (evt.motion.y-scene->a.getAreaHeight()/2)/(float)scene->a.getAreaHeight()*0.45;
+						z_target = -(evt.motion.x-scene->a.getAreaWidth()/2)/(float)scene->a.getAreaWidth()*0.2;
+						y_target = (evt.motion.y-scene->a.getAreaHeight()/2)/(float)scene->a.getAreaHeight()*0.2;
 					}
 					break;
 				}
@@ -182,7 +205,6 @@ void Menu::loop(){
 			if(exit_delay==0&&end==false){
 				for(auto iter = buttons.begin(); iter!=buttons.end(); iter++){
 					iter->second.update();
-					//iter->second.setXPosition(-300+400*(1.0-postarget));
 				}
 			}
 			
@@ -203,6 +225,21 @@ void Menu::loop(){
 			}
 			if(buttons["99quit"].isClicked()){
 				actionQuit();
+			}
+
+			for(int i=0; i<10; i++){
+				stars.push_back(Star());
+				stars.back().posX = -(rand()%1000)/1000.0;
+				stars.back().posY = (rand()%1000)/1000.0-0.5;
+				stars.back().posZ = (rand()%1000)/1000.0-0.5;
+				stars.back().init();
+			}
+
+			for(int i = (int)stars.size()-1; i>=0; i--){
+				stars[i].update();
+				if(stars[i].active==false){
+					stars.erase(stars.begin()+i);
+				}
 			}
 		}
 
@@ -228,12 +265,6 @@ void Menu::loop(){
 				a->shMan["default2d"].select().setM(&model).setP(&projection);
 				a->square_vert->draw(GL_TRIANGLES);
 			}
-			{//stars
-				xReset(&model);
-				xScale(&model, a->getAreaWidth(),a->getAreaHeight()/2);
-				shStars.select().setM(&model).setP(&projection).setTime(step.getTime()/8.0).setResolution(a->getAreaWidth()/5.0f,a->getAreaHeight()/5.0f);
-				a->square_vert->draw(GL_TRIANGLES);
-			}
 			{//3d screen overlay
 				buf_plane.bind().attrib(0,3,GL_FLOAT);
 				a->square_uv->bind().attrib(1,2,GL_FLOAT);
@@ -247,6 +278,19 @@ void Menu::loop(){
 				
 				sh3dref.select().setP(&tProjection).setV(&tView).setM(&tModel).setTime(SDL_GetTicks());
 				buf_plane.draw(GL_TRIANGLES);
+			}
+			{//stars
+				stars_points.resize(stars.size());
+				for(uint i=0; i<stars.size(); i++){
+					stars_points[i].x = stars[i].posX;
+					stars_points[i].y = stars[i].posY;
+					stars_points[i].z = stars[i].posZ;
+					stars_points[i].w = 1.0 - stars[i].time/(float)star_lifetime;
+				}
+
+				shStars.select().setP(&tProjection).setV(&tView);
+				buf_stars.bind().setData(stars_points.size()*sizeof(Float4), stars_points.data(), GL_DYNAMIC_DRAW).attrib(0, 4, GL_FLOAT).draw(GL_POINTS);
+
 			}
 			if(exit_delay==0&&end==false)
 			{//buttons
