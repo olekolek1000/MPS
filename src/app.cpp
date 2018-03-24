@@ -62,19 +62,7 @@ void App::init() {
     #endif
 
     if(TTF_Init()==-1) error("Cannot init SDL_ttf");
-    std::string fontfile = std::string(std::string(LOC_ROOT)+std::string("Lato-Light.ttf"));
-    font10 = TTF_OpenFont(fontfile.c_str(),10);
-    font16 = TTF_OpenFont(fontfile.c_str(),16);
-    font24 = TTF_OpenFont(fontfile.c_str(),24);
-    font32 = TTF_OpenFont(fontfile.c_str(),32);
-    font64 = TTF_OpenFont(fontfile.c_str(),64);
-    font128 = TTF_OpenFont(fontfile.c_str(),128);
-    if(!font10||!font16||!font32||!font64||!font128) {
-        stringstream ss;
-        ss<<"Cannot load the fonts! SDL_TTF error: "<<endl<<TTF_GetError();
-        error(ss.str());
-        exit(0);
-    }
+    reloadFonts();
 
 #ifdef __ANDROID__
     window = SDL_CreateWindow("Moving Picture Studio",0,0,window_w,window_h,SDL_WINDOW_OPENGL);glDisable(GL_DITHER);
@@ -144,6 +132,29 @@ float App::getProportions() {
 
 void App::setProportions(float prop){
     proportions = prop;
+}
+
+void App::reloadFonts(){
+    std::string fontfile = std::string(std::string(LOC_ROOT)+std::string("Lato-Light.ttf"));
+    if(font10!=NULL)TTF_CloseFont(font10);
+    font10 = TTF_OpenFont(fontfile.c_str(),10/(float)getAreaMultipler());
+    if(font16!=NULL)TTF_CloseFont(font16);
+    font16 = TTF_OpenFont(fontfile.c_str(),16/(float)getAreaMultipler());
+    if(font24!=NULL)TTF_CloseFont(font24);
+    font24 = TTF_OpenFont(fontfile.c_str(),24/(float)getAreaMultipler());
+    if(font32!=NULL)TTF_CloseFont(font32);
+    font32 = TTF_OpenFont(fontfile.c_str(),32/(float)getAreaMultipler());
+    if(font64!=NULL)TTF_CloseFont(font64);
+    font64 = TTF_OpenFont(fontfile.c_str(),64/(float)getAreaMultipler());
+    if(font128!=NULL)TTF_CloseFont(font128);
+    font128 = TTF_OpenFont(fontfile.c_str(),128/(float)getAreaMultipler());
+
+    if(!font10||!font16||!font32||!font64||!font128) {
+        stringstream ss;
+        ss<<"Cannot load the fonts! SDL_TTF error: "<<endl<<TTF_GetError();
+        error(ss.str());
+        exit(0);
+    }
 }
 
 bool App::eventHandle(SDL_Event * evt) {
@@ -233,12 +244,21 @@ int App::getAreaHeight(){
 }
 
 void App::setAreaMultipler(float n){
-    areamultipler=n;
+    if(areamultipler!=n){
+        areamultipler=n;
+        updateProportions();
+        reloadFonts();
+        pushEvent(GlobalEvent::GuiChange);
+    }
+}
+float App::getAreaMultipler(){
+    return areamultipler;
 }
 
 void App::setAutoProportions(bool n){
     autoproportions=n;
 }
+
 bool App::getAutoProportions(){
     return autoproportions;
 }

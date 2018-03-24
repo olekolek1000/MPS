@@ -64,7 +64,7 @@ SET(PROGRAM_SRCS
 	
 	${ROOT}/scenes/editor/menu/menu.cpp
 	${ROOT}/scenes/editor/menu/menubutton.cpp
-	${ROOT}/scenes/editor/menu/tinyfiledialogs.c
+	${ROOT}/scenes/editor/menu/tinyfiledialogs.cpp
 	
 	${ROOT}/scenes/editor/gui/button.cpp
 	${ROOT}/scenes/editor/gui/checkbox.cpp

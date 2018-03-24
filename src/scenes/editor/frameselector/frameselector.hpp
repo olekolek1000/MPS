@@ -4,6 +4,7 @@
 #include "../gui/text.hpp"
 #include "lib/glm.hpp"
 #include "../gui/button.hpp"
+#include "globalevent.hpp"
 
 typedef unsigned int uint;
 
@@ -39,6 +40,7 @@ public:
     void update();
     void render(float alpha);
     bool pushEvent(SDL_Event * evt);
+    bool pushGlobalEvent(GlobalEvent evt);
     int getHeight();
 
     ~frameSelector();

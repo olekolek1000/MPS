@@ -8,14 +8,9 @@
 #include <vector>
 
 #include "render/buffer.hpp"
+#include "globalevent.hpp"
 
 typedef unsigned int uint;
-
-enum class GlobalEvent {
-    Nothing,
-    WindowSizeChange,
-    Exit
-};
 
 class App {
 private:
@@ -26,7 +21,6 @@ private:
     int window_w,window_h;
     int fb_w, fb_h; 
     std::vector<GlobalEvent>events;
-    void pushEvent(GlobalEvent event);
     float proportions;
 
     bool fullscreen=false;
@@ -48,12 +42,13 @@ private:
     void updateDebugger();
     void runApplication();//app_run.cpp
 public:
-    TTF_Font * font10;
-    TTF_Font * font16;
-    TTF_Font * font24;
-    TTF_Font * font32;
-    TTF_Font * font64;
-    TTF_Font * font128;
+    TTF_Font * font10 = NULL;
+    TTF_Font * font16 = NULL;
+    TTF_Font * font24 = NULL;
+    TTF_Font * font32 = NULL;
+    TTF_Font * font64 = NULL;
+    TTF_Font * font128 = NULL;
+    void reloadFonts();
     RBuffer *square_vert, *square_uv;
     SDL_Window * window;
     ShaderManager shMan;
@@ -68,6 +63,7 @@ public:
     int getAreaWidth();
     int getAreaHeight();
     void setAreaMultipler(float n);
+    float getAreaMultipler();
     void setProportions(float prop);
     bool onEvent();
     GlobalEvent getEvent();
@@ -75,6 +71,7 @@ public:
     void setFullscreen(bool state);
     bool isPressed(int scancode);
 	bool isHidden();
+    void pushEvent(GlobalEvent event);
 
     void init();
     void updateAll();

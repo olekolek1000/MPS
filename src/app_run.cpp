@@ -6,6 +6,7 @@
 void App::runApplication() {
     SDL_SetWindowMinimumSize(window, 1280, 720);
 
+
     while(true) {
         if(true){
             sceneEditor editor(*this);

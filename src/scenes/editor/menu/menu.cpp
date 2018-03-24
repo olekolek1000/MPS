@@ -47,22 +47,32 @@ const int star_lifetime = 150;
 class Star{
 public:
 	bool active=true;
-	float posX,posY,posZ,velX,velY,velZ;
+	float posX,posY,posZ,velX,velY,velZ,posX_prev,posY_prev,posZ_prev;
 	int time=0;
 
 	void init(){
 		velX = ((rand()%1000)/1000.0-0.5)/600.0;
-		velY = ((rand()%1000)/1000.0-0.5)/600.0;
+		velY = ((rand()%1000)/1000.0)/600.0;
 		velZ = ((rand()%1000)/1000.0-0.5)/600.0;
+		posX = -(rand()%1000)/1000.0;
+		posY = (rand()%1000)/1000.0-0.5;
+		posZ = ((rand()%1000)/1000.0-0.5)*1.5;
+		posX_prev=posX;
+		posY_prev=posY;
+		posZ_prev=posZ;
 	}
 	void update(){
 		time++;
 		if(time>star_lifetime){
 			active=false;
 		}
+		posX_prev=posX;
+		posY_prev=posY;
+		posZ_prev=posZ;
 		posX=posX+velX;
 		posY=posY+velY;
 		posZ=posZ+velZ;
+		velY=velY-0.000025;
 	}
 };
 
@@ -71,8 +81,8 @@ void Menu::loop(){
 	
 	setProjection();
 	
-	int width = a->getAreaWidth();
-	int height = a->getAreaHeight();
+	int width = a->getWindowWidth();
+	int height = a->getWindowHeight();
 	
 	std::vector<unsigned char> data(width*height*4);
 	glReadBuffer(GL_BACK);
@@ -131,6 +141,10 @@ void Menu::loop(){
 	float postarget = 1.0;
 
 	vector<Star> stars;
+	for(int i=0;i<800;i++){
+		stars.push_back(Star());
+		stars.back().init();
+	}
 	vector<Float4> stars_points;//X, Y, Z, intensity
 	RBuffer buf_stars;
 
@@ -152,8 +166,8 @@ void Menu::loop(){
 			    } 
 				case SDL_MOUSEMOTION:{
 					if(exit_delay==0){
-						z_target = -(evt.motion.x-scene->a.getAreaWidth()/2)/(float)scene->a.getAreaWidth()*0.2;
-						y_target = (evt.motion.y-scene->a.getAreaHeight()/2)/(float)scene->a.getAreaHeight()*0.2;
+						z_target = -(evt.motion.x*scene->a.getAreaMultipler()-scene->a.getAreaWidth()/2)/(float)scene->a.getAreaWidth()*0.2;
+						y_target = (evt.motion.y*scene->a.getAreaMultipler()-scene->a.getAreaHeight()/2)/(float)scene->a.getAreaHeight()*0.2;
 					}
 					break;
 				}
@@ -227,11 +241,8 @@ void Menu::loop(){
 				actionQuit();
 			}
 
-			for(int i=0; i<10; i++){
+			for(int i=0; i<15; i++){
 				stars.push_back(Star());
-				stars.back().posX = -(rand()%1000)/1000.0;
-				stars.back().posY = (rand()%1000)/1000.0-0.5;
-				stars.back().posZ = (rand()%1000)/1000.0-0.5;
 				stars.back().init();
 			}
 
@@ -282,9 +293,9 @@ void Menu::loop(){
 			{//stars
 				stars_points.resize(stars.size());
 				for(uint i=0; i<stars.size(); i++){
-					stars_points[i].x = stars[i].posX;
-					stars_points[i].y = stars[i].posY;
-					stars_points[i].z = stars[i].posZ;
+					stars_points[i].x = alphize(step.getAlpha(),stars[i].posX_prev,stars[i].posX);
+					stars_points[i].y = alphize(step.getAlpha(),stars[i].posY_prev,stars[i].posY);
+					stars_points[i].z = alphize(step.getAlpha(),stars[i].posZ_prev,stars[i].posZ);
 					stars_points[i].w = 1.0 - stars[i].time/(float)star_lifetime;
 				}
 

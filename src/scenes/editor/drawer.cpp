@@ -461,8 +461,8 @@ bool Drawer::pushEvent(SDL_Event * evt){
 				else{
 					rotating=false;
 				}
-				glm::vec3 win = glm::vec3(mouseX, scene->a.getAreaHeight()-mouseY,0.0);
-				glm::vec4 viewport = glm::vec4(0,0,scene->a.getAreaWidth(), scene->a.getAreaHeight());
+				glm::vec3 win = glm::vec3(mouseX, scene->a.getWindowHeight()-mouseY,0.0);
+				glm::vec4 viewport = glm::vec4(0,0,scene->a.getWindowWidth(), scene->a.getWindowHeight());
 				glm::vec3 proj = glm::unProject(win, model, projection, viewport);
 				drawX = proj.x*currentFrame->getWidth();
 				drawY = proj.y*currentFrame->getHeight(); 
@@ -536,7 +536,7 @@ void Drawer::setZoomPixelPerfect(int n){
 }
 
 void Drawer::updateViewport(){
-    projection = glm::ortho(0.0f,(float)scene->a.getAreaWidth(),(float)scene->a.getAreaHeight(),0.0f);
+    projection = glm::ortho(0.0f,(float)scene->a.getWindowWidth(),(float)scene->a.getWindowHeight(),0.0f);
 
 	scene->shMan["overlay"].select().setUniform("OVERLAY_RES", currentFrame->getWidth(), currentFrame->getHeight());
     scene->shMan["overlaybg"].select().setUniform("OVERLAY_RES", currentFrame->getWidth(), currentFrame->getHeight()).setUniform("ZOOM", cameraZoomAlpha);
@@ -576,7 +576,7 @@ void Drawer::render(float alpha){
     }
 
 	xReset(&model);
-	xTranslate(&model,round((scene->a.getAreaWidth()/2)+cameraX*cameraZoomAlpha),round((scene->a.getAreaHeight()/2)+cameraY*cameraZoomAlpha));
+	xTranslate(&model,round((scene->a.getWindowWidth()/2)+cameraX*cameraZoomAlpha),round((scene->a.getWindowHeight()/2)+cameraY*cameraZoomAlpha));
 	xScale(&model, cameraZoomAlpha, cameraZoomAlpha);
 	
 	float rot = SDL_atan2(alphize(alpha, cameraRotSmoothPrev.x,cameraRotSmooth.x),alphize(alpha, cameraRotSmoothPrev.y,cameraRotSmooth.y));
