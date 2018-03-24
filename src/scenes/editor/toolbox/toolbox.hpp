@@ -5,6 +5,7 @@
 #include "tool/tool.hpp"
 #include "scenes/editor/gui/text.hpp"
 #include "scenes/editor/gui/button.hpp"
+#include "globalevent.hpp"
 #include <vector>
 
 typedef unsigned int uint;
@@ -45,6 +46,7 @@ public:
     Tool * getPreviousTool();
     void setCurrentTool(Tool * tool);
     void setCurrentTool(uint index);
+    bool pushGlobalEvent(GlobalEvent evt);
     bool pushEvent(SDL_Event * evt);
 	void reloadTextures();
 

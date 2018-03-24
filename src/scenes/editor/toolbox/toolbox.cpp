@@ -173,7 +173,7 @@ bool Toolbox::pushEvent(SDL_Event * evt){
     bool used=false;
 
     if(evt->type==SDL_MOUSEBUTTONDOWN){
-        if(evt->button.x<toolboxWidth&&evt->button.y<toolboxHeight){
+        if(evt->button.x*scene->a.getAreaMultipler()<toolboxWidth&&evt->button.y*scene->a.getAreaMultipler()<toolboxHeight){
             used=true;
         }
     }
@@ -208,6 +208,21 @@ bool Toolbox::pushEvent(SDL_Event * evt){
                 setCurrentTool(i);
             }
         }
+    }
+
+    return used;
+}
+
+bool Toolbox::pushGlobalEvent(GlobalEvent evt){
+    bool used=false;
+
+    switch(evt){
+        case GlobalEvent::GuiChange:{
+            setCurrentTool(currentTool);//update text
+            used=true;
+            break;
+        }
+        default:break;
     }
 
     return used;

@@ -28,15 +28,17 @@ The ideas are also welcome ;)
 -Tool: Pipette<br>
 -Zoomable viewport<br>
 -Dynamic Rotatable viewport<br>
+-Scalable GUI<br>
 
 <b>===Partially done (Works fine, but there may be a lot of changes in the future):</b><br>
 -Toolbox<br>
 -Color selector<br>
 -Ghosting<br>
 -Theme manager<br>
-
+-Menu
 
 <b>===To do:</b><br>
+-Layer support<br>
 -Import GIF<br>
 -Export PNG strip<br>
 -"Play animation" button<br>
@@ -46,25 +48,27 @@ The ideas are also welcome ;)
 -Tool: Rectangle<br>
 -Tool: Select<br>
 -Better pencil/line drawing (circles instead of squares)<br>
--Menu (save/load etc.)<br>
 -Copy/paste<br>
 -Resize image<br>
 -Compressed history (less RAM usage, more history actions)<br>
 -Change key bindings<br>
+-Settings (in menu)<br>
 
 <b>===In the distant future:</b><br>
--Layer support<br>
 -Tablet pressure support (I'm waiting for the SDL library)<br>
 -Mac support<br>
 
 
 <b>===Controls:</b><br>
 Left Shift: Rotate viewport<br>
-LMB: Use tool (draw)<br>
-MMB: Pick color<br>
-RMB: Drag viewport<br>
-Mouse wheel: Zoom in/out<br>
-1/2/3/4/5/6/7/8/9: Scale viewport to (1:1, 2:1, 3:1 etc.) and reset viewport rotation<br>
+
+In drawing area:<br>
+\LMB: Use tool (draw)<br>
+-\MMB: Pick color<br>
+--\RMB: Drag viewport<br>
+---\Mouse wheel: Zoom in/out<br>
+----\1/2/3/4/5/6/7/8/9: Scale viewport to (1:1, 2:1, 3:1 etc.) and reset viewport rotation<br>
+
 Space: Toggle ghosting visibility<br>
 CTRL+Z: Undo<br>
 CTRL+Y: Redo<br>
@@ -74,5 +78,6 @@ F3: Show FPS<br>
 F4: Toggle fullscreen<br>
 F5: Toggle VSync<br>
 Esc: Open menu (work in progress)<br>
+-/+ - Scale GUI by 0.05x<br>
 
-End: Restart application (for debugging purposes)<br>
+End: Restart application (for testing purposes)<br>

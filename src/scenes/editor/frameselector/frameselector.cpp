@@ -31,7 +31,7 @@ bool frameSelector::pushEvent(SDL_Event * evt){
 
     switch(evt->type){
         case SDL_MOUSEBUTTONDOWN:{
-            if(evt->button.y>scene->a.getAreaHeight()-height){
+            if(evt->button.y*scene->a.getAreaMultipler()>scene->a.getAreaHeight()-height){
                 used=true;
             }
             break;
@@ -72,6 +72,21 @@ bool frameSelector::pushEvent(SDL_Event * evt){
         else{
             but_newframetype.setTexture(&scene->thMan["fs/opt_duplicate"]);
         }
+    }
+
+    return used;
+}
+
+bool frameSelector::pushGlobalEvent(GlobalEvent evt){
+    bool used=false;
+
+    switch(evt){
+        case GlobalEvent::GuiChange:{
+            updateCurrentFrameText();
+            used=true;
+            break;
+        }
+        default:break;
     }
 
     return used;

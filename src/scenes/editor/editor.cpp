@@ -101,6 +101,18 @@ void sceneEditor::loop(){
 							openMenu();
 							break;
 						}
+						case SDLK_EQUALS:{
+							if(a.getAreaMultipler()>0.5){
+								a.setAreaMultipler(a.getAreaMultipler()-0.05);
+							}
+							break;
+						}
+						case SDLK_MINUS:{
+							if(a.getAreaMultipler()<2.0){
+								a.setAreaMultipler(a.getAreaMultipler()+0.05);
+							}
+							break;
+						}
                     }
                     break;
 			    }
@@ -115,7 +127,8 @@ void sceneEditor::loop(){
 			}
 		}
 		while(a.onEvent()){
-			switch(a.getEvent()){
+			GlobalEvent evt = a.getEvent();
+			switch(evt){
 				case GlobalEvent::WindowSizeChange:{
 					setProjection();
 					break;
@@ -128,7 +141,10 @@ void sceneEditor::loop(){
 				default:{
 					break;
 				}
-			}
+			} 
+			toolbox.pushGlobalEvent(evt);
+			frameselector.pushGlobalEvent(evt);
+			colorselector.pushGlobalEvent(evt);
 		}
 
 		while(step.onUpdate())

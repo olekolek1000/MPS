@@ -107,14 +107,14 @@ GuiText& GuiText::render(){
         int x,y;
 		switch(alignX){
 			case 0:{x=posX;break;}
-			case 1:{x=posX-width/2;break;}
-			case 2:{x=posX-width;break;}
+			case 1:{x=posX-width*scene->a.getAreaMultipler()/2;break;}
+			case 2:{x=posX-width*scene->a.getAreaMultipler();break;}
 			default:{x=0;break;}
 		}
 		switch(alignY){
 			case 0:{y=posY;break;}
-			case 1:{y=posY-height/2;break;}
-			case 2:{y=posY-height;break;}
+			case 1:{y=posY-height*scene->a.getAreaMultipler()/2;break;}
+			case 2:{y=posY-height*scene->a.getAreaMultipler();break;}
 			default:{y=0;break;}
 		}
 
@@ -123,7 +123,7 @@ GuiText& GuiText::render(){
         if(angle!=0.0){
             xRotate((glm::mat4*)model, angle/57.296);
         }
-        xScale((glm::mat4*)model,width, height);
+        xScale((glm::mat4*)model,width*scene->a.getAreaMultipler(), height*scene->a.getAreaMultipler());
         scene->shGui.select();
         glBindTexture(GL_TEXTURE_2D, texture);
         scene->shGui.setM((glm::mat4*)model);

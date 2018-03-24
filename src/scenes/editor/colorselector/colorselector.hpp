@@ -3,6 +3,7 @@
 #include "texturemanager.hpp"
 #include "lib/glm.hpp"
 #include "../gui/text.hpp"
+#include "globalevent.hpp"
 
 typedef unsigned int uint;
 
@@ -49,5 +50,6 @@ public:
 
     void render();
     bool pushEvent(SDL_Event * evt);
+    bool pushGlobalEvent(GlobalEvent evt);
     ~colorSelector();
 };

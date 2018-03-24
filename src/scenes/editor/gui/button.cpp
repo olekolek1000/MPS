@@ -51,7 +51,7 @@ bool GuiButton::pushEvent(SDL_Event * evt){
     switch(evt->type){
         case SDL_MOUSEBUTTONDOWN:{
             if(evt->button.button==SDL_BUTTON_LEFT){
-                if(evt->button.x>=posX&&evt->button.y>=posY&&evt->button.x<posX+width&&evt->button.y<posY+height){
+                if(evt->button.x*scene->a.getAreaMultipler()>=posX&&evt->button.y*scene->a.getAreaMultipler()>=posY&&evt->button.x*scene->a.getAreaMultipler()<posX+width&&evt->button.y*scene->a.getAreaMultipler()<posY+height){
                     used=true;
                     pressed=true;
                 }
@@ -61,7 +61,7 @@ bool GuiButton::pushEvent(SDL_Event * evt){
         case SDL_MOUSEBUTTONUP:{
             if(evt->button.button==SDL_BUTTON_LEFT){
                 if(pressed){
-                    if(evt->button.x>=posX&&evt->button.y>=posY&&evt->button.x<posX+width&&evt->button.y<posY+height){
+                    if(evt->button.x*scene->a.getAreaMultipler()>=posX&&evt->button.y*scene->a.getAreaMultipler()>=posY&&evt->button.x*scene->a.getAreaMultipler()<posX+width&&evt->button.y*scene->a.getAreaMultipler()<posY+height){
                         used=true;
                         clicked=true;
                     }
