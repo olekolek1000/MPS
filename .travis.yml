@@ -1,0 +1,21 @@
+name: Moving Picture Studio
+language: cpp
+compiler: gcc (g++)
+author: olekolek1000
+libraries:
+  - SDL2
+  - SDL2_image
+  - SDL2_mixer
+  - SDL2_ttf
+  - GLEW (libGLESv2)
+  - GLM
+  - mesa
+  - GLU
+compile:
+  - ./compile.sh
+    or
+  - cmake CMakeLists.txt
+    cmake --build .
+install_libraries:
+  debian-based: sudo apt install libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libglew-dev libgles2-mesa-dev libglu1-mesa-dev libglm-dev
+  arch-based: sudo pacman -S sdl2 sdl2_image sdl2_mixer sdl2_ttf glew glm mesa glu
