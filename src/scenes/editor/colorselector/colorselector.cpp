@@ -226,8 +226,8 @@ void colorSelector::render(){
     }
     {//hue colors point
         xReset(&model);
-        xTranslate(&model, colorsX + (saturation/255.0)*selectorheight - pointtexture.getWidth()/2, (1.0-value/255.0)*selectorheight - pointtexture.getHeight()/2);
-        xScale(&model,pointtexture.getWidth(), pointtexture.getHeight());
+        xTranslate(&model, colorsX + (saturation/255.0)*selectorheight - 10, (1.0-value/255.0)*selectorheight - 10);
+        xScale(&model,20, 20);
         pointtexture.select();
         sh.setM(&model);
 
