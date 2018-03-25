@@ -75,14 +75,14 @@ void ThemeManager::loadTheme(std::string name){
 
     addTexture("background","background.png",RGB);
     addTexture("button","button.png",RGBA);
-    addTexture("cs/point","colorselector/point.png",RGBA,NEAREST);
+    addTexture("cs/point","colorselector/point.png",RGBA);
     addTexture("cs/scroll","colorselector/scroll.png",RGBA,NEAREST);
     addTexture("fs/background1","frameselector/background1.png",RGBA);
     addTexture("fs/background_top","frameselector/background_top.png",RGBA);
-    addTexture("fs/opt_blank","frameselector/opt_blank.png",RGBA, NEAREST);
-    addTexture("fs/opt_duplicate","frameselector/opt_duplicate.png",RGBA, NEAREST);
-    addTexture("fs/newframe","frameselector/newframe.png",RGBA, NEAREST);
-    addTexture("fs/removeframe","frameselector/removeframe.png",RGBA, NEAREST);
+    addTexture("fs/opt_blank","frameselector/opt_blank.png",RGBA);
+    addTexture("fs/opt_duplicate","frameselector/opt_duplicate.png",RGBA);
+    addTexture("fs/newframe","frameselector/newframe.png",RGBA);
+    addTexture("fs/removeframe","frameselector/removeframe.png",RGBA);
     addTexture("icons/down","icons/down.png",RGBA);
     addTexture("icons/left","icons/left.png",RGBA);
     addTexture("icons/up","icons/up.png",RGBA);
