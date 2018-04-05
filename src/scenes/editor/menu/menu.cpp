@@ -3,6 +3,7 @@
 #include <map>
 #include <fstream>
 #include <vector>
+#include <list>
 
 #include "menu.hpp"
 #include "../editor.hpp"
@@ -16,6 +17,7 @@
 
 #include "tinyfiledialogs.hpp"
 #include "gif.hpp" 
+
 
 Menu::Menu(sceneEditor * scene){
 	this->scene = scene;
@@ -34,16 +36,17 @@ void Menu::setProjection(){
 	}
 }
 
+
 void Menu::exitMenu(){
 	x_target=-0.757;
 	y_target=0.0;
 	z_target=0.0;
 	animspeed=0.4;
-	exit_delay=12;
+	exit_delay=exit_delay_start;
 }
 
 
-const int star_lifetime = 150;
+const int star_lifetime = 500;
 class Star{
 public:
 	bool active=true;
@@ -51,10 +54,10 @@ public:
 	int time=0;
 
 	void init(){
-		velX = ((rand()%1000)/1000.0-0.5)/600.0;
-		velY = ((rand()%1000)/1000.0)/600.0;
-		velZ = ((rand()%1000)/1000.0-0.5)/600.0;
-		posX = -(rand()%1000)/1000.0;
+		velX = ((rand()%1000)/1000.0-0.5)/1200.0;
+		velY = ((rand()%1000)/1000.0)/1200.0;
+		velZ = ((rand()%1000)/1000.0-0.5)/1200.0;
+		posX = (-(rand()%1000)/1000.0)*1.3;
 		posY = (rand()%1000)/1000.0-0.5;
 		posZ = ((rand()%1000)/1000.0-0.5)*1.5;
 		posX_prev=posX;
@@ -72,7 +75,7 @@ public:
 		posX=posX+velX;
 		posY=posY+velY;
 		posZ=posZ+velZ;
-		velY=velY-0.000025;
+		velY=velY+0.0000008;
 	}
 };
 
@@ -123,6 +126,7 @@ void Menu::loop(){
 	
 	scene->thMan.addTexture("menu/background","menu/background.png",TEXSPACE_RGB,TEXFILTERING_LINEAR);
 	scene->thMan.addTexture("menu/menubutton","menu/menubutton.png",TEXSPACE_RGBA,TEXFILTERING_LINEAR);
+	scene->thMan.addTexture("menu/star","menu/star.png",TEXSPACE_RGBA,TEXFILTERING_LINEAR);
 	
 	/*sides
 	A===B===C
@@ -140,13 +144,13 @@ void Menu::loop(){
 
 	float postarget = 1.0;
 
-	vector<Star> stars;
-	for(int i=0;i<800;i++){
-		stars.push_back(Star());
-		stars.back().init();
-	}
-	vector<Float4> stars_points;//X, Y, Z, intensity
-	RBuffer buf_stars;
+	list<Star> stars;
+	vector<float> stars_data;
+	vector<Float3> stars_positions;
+	vector<Float2> stars_uv;
+	RBuffer buf_stars_data;
+	RBuffer buf_stars_positions;
+	RBuffer buf_stars_uv;
 
 	step.reset();
 	step.setRate(30);
@@ -197,8 +201,7 @@ void Menu::loop(){
 			}
 		}
 
-		while(step.onUpdate())
-		{//update
+		while(step.onUpdate()){//update
 			x_prev=x;
 			y_prev=y;
 			z_prev=z;
@@ -239,17 +242,17 @@ void Menu::loop(){
 			}
 			if(buttons["99quit"].isClicked()){
 				actionQuit();
-			}
+			} 
 
-			for(int i=0; i<15; i++){
+			for(int i=0; i<1; i++){
 				stars.push_back(Star());
 				stars.back().init();
 			}
-
-			for(int i = (int)stars.size()-1; i>=0; i--){
-				stars[i].update();
-				if(stars[i].active==false){
-					stars.erase(stars.begin()+i);
+ 
+			for(auto i = stars.begin(); i != stars.end(); i++){
+				i->update();
+				if(i->active==false){
+					i = stars.erase(i);
 				}
 			}
 		}
@@ -260,7 +263,7 @@ void Menu::loop(){
 			glClearColor(0.0,0.0,0.0,1.0);
 			glClear(GL_COLOR_BUFFER_BIT);
 			
-			glm::mat4 tProjection = glm::perspective(45.15f,a->getProportions(),0.1f,100.0f);
+			glm::mat4 tProjection = glm::perspective(45.15f,a->getProportions(),0.005f,100.0f);
 			glm::mat4 tView = glm::lookAt(glm::vec3(alphize(step.getAlpha(),x_prev,x),alphize(step.getAlpha(),y_prev,y),alphize(step.getAlpha(),z_prev,z)),glm::vec3(0,0,0),glm::vec3(0,1,0));
 			glm::mat4 tModel;
 		
@@ -291,17 +294,52 @@ void Menu::loop(){
 				buf_plane.draw(GL_TRIANGLES);
 			}
 			{//stars
-				stars_points.resize(stars.size());
-				for(uint i=0; i<stars.size(); i++){
-					stars_points[i].x = alphize(step.getAlpha(),stars[i].posX_prev,stars[i].posX);
-					stars_points[i].y = alphize(step.getAlpha(),stars[i].posY_prev,stars[i].posY);
-					stars_points[i].z = alphize(step.getAlpha(),stars[i].posZ_prev,stars[i].posZ);
-					stars_points[i].w = 1.0 - stars[i].time/(float)star_lifetime;
+				stars_data.resize(stars.size()*6);
+				stars_positions.resize(stars.size()*6);
+				stars_uv.resize(stars.size()*6);
+				int loop=0;
+				float x,y,z,intensity,size;
+				for (auto i = stars.begin(); i != stars.end(); i++){
+					float intfab = 1.0-fabs(1.0-i->time/(float)star_lifetime*2);//intensity
+
+					size = 0.01;
+
+					x=alphize(step.getAlpha(),i->posX_prev,i->posX);
+					y=alphize(step.getAlpha(),i->posY_prev,i->posY);
+					z=alphize(step.getAlpha(),i->posZ_prev,i->posZ);
+
+					stars_positions[loop*6 +0] = {x,y-size,z-size};
+					stars_positions[loop*6 +1] = {x,y+size,z-size};
+					stars_positions[loop*6 +2] = {x,y+size,z+size};
+					stars_positions[loop*6 +3] = {x,y-size,z-size};
+					stars_positions[loop*6 +4] = {x,y+size,z+size};
+					stars_positions[loop*6 +5] = {x,y-size,z+size};
+
+					stars_uv[loop*6 +0] = {0,0};
+					stars_uv[loop*6 +1] = {0,1};
+					stars_uv[loop*6 +2] = {1,1};
+					stars_uv[loop*6 +3] = {0,0};
+					stars_uv[loop*6 +4] = {1,1};
+					stars_uv[loop*6 +5] = {1,0};
+
+					intensity = (intfab)*(exit_delay>0||end==true ? (exit_delay/(float)exit_delay_start) : (1.0));
+					stars_data[loop*6 +0] = intensity;
+					stars_data[loop*6 +1] = intensity;
+					stars_data[loop*6 +2] = intensity;
+					stars_data[loop*6 +3] = intensity;
+					stars_data[loop*6 +4] = intensity;
+					stars_data[loop*6 +5] = intensity;
+					
+					loop++;
 				}
 
 				shStars.select().setP(&tProjection).setV(&tView);
-				buf_stars.bind().setData(stars_points.size()*sizeof(Float4), stars_points.data(), GL_DYNAMIC_DRAW).attrib(0, 4, GL_FLOAT).draw(GL_POINTS);
-
+				buf_stars_positions.bind().setData(stars_positions.size()*sizeof(Float3), stars_positions.data(), GL_DYNAMIC_DRAW).attrib(0, 3, GL_FLOAT);
+				buf_stars_uv.bind().setData(stars_uv.size()*sizeof(Float2), stars_uv.data(), GL_DYNAMIC_DRAW).attrib(1, 2, GL_FLOAT);
+				buf_stars_data.bind().setData(stars_data.size()*sizeof(float), stars_data.data(), GL_DYNAMIC_DRAW).attrib(2, 1, GL_FLOAT);
+				
+				scene->thMan["menu/star"].select();
+				buf_stars_positions.draw(GL_TRIANGLES);
 			}
 			if(exit_delay==0&&end==false)
 			{//buttons
@@ -314,6 +352,7 @@ void Menu::loop(){
 	}
 	scene->thMan.removeTexture("menu/background");
 	scene->thMan.removeTexture("menu/menubutton");
+	scene->thMan.removeTexture("menu/star");
 	buttons.clear();
 }
 
@@ -360,7 +399,7 @@ void Menu::actionExport(){
 					GifWriter writer;
 					GifBegin(&writer, name, width, height, delay, 8, false);
 					for(int i=0; i<scene->frameMan.getFrameCount(); i++){
-						SDL_Surface * overlay = scene->frameMan.getFrame(i)->getOverlay();
+						SDL_Surface * overlay = scene->frameMan.getFrame(i)->getSelectedLayer()->getCanvas();
 						GifWriteFrame(&writer, (const uint8_t*)overlay->pixels, overlay->w, overlay->h, delay, 8, false);
 					}
 					GifEnd(&writer);
@@ -421,8 +460,8 @@ void Menu::actionLoadProject(){
 							file.read((char*)&height, sizeof(int));//height
 							scene->frameMan.selectFrame(scene->frameMan.getFrameCount());
 							scene->frameMan.createFrame(width, height);
-							scene->frameMan.getFrame(i)->forceUpdate();
-							file.read((char*)scene->frameMan.getFrame(i)->getOverlay()->pixels, width*height*4);//pixels
+							scene->frameMan.getFrame(i)->getSelectedLayer()->forceUpdate();
+							file.read((char*)scene->frameMan.getFrame(i)->getSelectedLayer()->getCanvas()->pixels, width*height*4);//pixels
 						}
 						scene->changeFrame(0);
 						exitMenu();
@@ -465,9 +504,9 @@ void Menu::actionSaveProject(){
 				int height = frame->getHeight();
 				file.write((char*)&width, sizeof(int));//width
 				file.write((char*)&height, sizeof(int));//height
-				file.write((char*)frame->getOverlay()->pixels, width*height*4);//pixels
+				file.write((char*)frame->getSelectedLayer()->getCanvas()->pixels, width*height*4);//pixels
 			}
-			
+
 			file.close();
 		}
 		else{

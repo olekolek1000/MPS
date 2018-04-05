@@ -16,7 +16,7 @@ void Drawer::historyCreateSnapshot(){
     }
 
     HistoryCell * cell = new HistoryCell;
-    cell->create(currentFrame->getOverlay());
+    cell->create(currentFrame->getSelectedLayer()->getCanvas());
  
     history.push_back(cell);
 
@@ -34,8 +34,8 @@ void Drawer::historyUpdate(){
         error("Different undo image sizes, this option is still unsupported, SORRY :/");
     }
     else{
-        memcpy(currentFrame->getOverlay()->pixels,cell->getRaw(),cell->getRawSize());
-        currentFrame->needUpdate=true;
+        memcpy(currentFrame->getSelectedLayer()->getCanvas()->pixels,cell->getRaw(),cell->getRawSize());
+        currentFrame->getSelectedLayer()->forceUpdate();
     }
 }
 
@@ -70,14 +70,14 @@ void Drawer::activeClear(){
 
 void Drawer::activeBlit(float alpha){
     if(alpha>0.9){
-        SDL_BlitSurface(activeOverlay,NULL,currentFrame->getOverlay(),NULL);
+        SDL_BlitSurface(activeOverlay,NULL,currentFrame->getSelectedLayer()->getCanvas(),NULL);
     }
     else{
         SDL_SetSurfaceAlphaMod(activeOverlay, glm::clamp((int)(alpha*255.0),0,255));
-        SDL_BlitSurface(activeOverlay,NULL,currentFrame->getOverlay(),NULL);
+        SDL_BlitSurface(activeOverlay,NULL,currentFrame->getSelectedLayer()->getCanvas(),NULL);
     }
 
-    currentFrame->needUpdate=true;
+    currentFrame->getSelectedLayer()->forceUpdate();
     activeClear();
 }
 
@@ -211,10 +211,17 @@ void Drawer::reloadTextures(){
 void Drawer::init(sceneEditor * scene){
     this->scene = scene;
     this->toolbox = &scene->toolbox;
+
+    cameraX=0;
+    cameraY=0;
+    cameraZoom=0;
+    cameraZoomAlpha=0;
+    cameraZoomSmooth=0;
+    cameraZoomSmoothPrev=0;
+    cameraRotSmooth={1,1};
 	
     glGenTextures(1,&activeOverlayTex);
 	updateBorders();
-    color = 0xFF000000;//black
 }
 
 Drawer::~Drawer(){
@@ -223,16 +230,16 @@ Drawer::~Drawer(){
     SDL_FreeSurface(activeOverlay);
 }
 
-
+#include <iostream>
 void Drawer::setCurrentFrame(Frame * frame){
     this->currentFrame = frame;
     if(activeOverlay == NULL){
-        activeOverlay = SDL_CreateRGBSurface(0, frame->getOverlay()->w, frame->getOverlay()->h, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
+        activeOverlay = SDL_CreateRGBSurface(0, frame->getWidth(), frame->getHeight(), 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
     }
     else{
-        if(activeOverlay->w!=frame->getOverlay()->w||activeOverlay->h!=frame->getOverlay()->h){
+        if(activeOverlay->w!=frame->getWidth()||activeOverlay->h!=frame->getHeight()){
             SDL_FreeSurface(activeOverlay);
-            activeOverlay = SDL_CreateRGBSurface(0, frame->getOverlay()->w, frame->getOverlay()->h, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
+            activeOverlay = SDL_CreateRGBSurface(0, frame->getWidth(), frame->getHeight(), 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
         }
     }
     SDL_SetSurfaceBlendMode(activeOverlay, SDL_BLENDMODE_BLEND);
@@ -304,18 +311,18 @@ void Drawer::activeDrawLine(int startX, int startY, int endX, int endY, int thic
 }
 
 void Drawer::drawPoint(int x, int y){
-    if(x>=0&&y>=0&&x<currentFrame->overlay->w&&y<currentFrame->overlay->h){
-        putpixel(currentFrame->overlay, x, y, color);
+    if(x>=0&&y>=0&&x<currentFrame->getWidth()&&y<currentFrame->getHeight()){
+        putpixel(currentFrame->getSelectedLayer()->getCanvas(), x, y, color);
     }
-    currentFrame->needUpdate=true;
+    currentFrame->getSelectedLayer()->forceUpdate();
 }
 
 void Drawer::drawRectangle(int x, int y, int w, int h){
     SDL_Rect rect;
     rect.x=x;rect.y=y;rect.w=w;rect.h=h;
-    SDL_FillRect(currentFrame->overlay, &rect, color);
+    SDL_FillRect(currentFrame->getSelectedLayer()->getCanvas(), &rect, color);
 
-    currentFrame->needUpdate=true;
+    currentFrame->getSelectedLayer()->forceUpdate();
 }
 
 void Drawer::drawLine(int startX, int startY, int endX, int endY, int thickness){
@@ -350,13 +357,13 @@ void Drawer::drawLine(int startX, int startY, int endX, int endY, int thickness)
             }
         }
     }
-    currentFrame->needUpdate=true;
+    currentFrame->getSelectedLayer()->forceUpdate();
 }
 
 
 int Drawer::getPoint(int x, int y){
-    if(x>=0&&y>=0&&x<currentFrame->overlay->w&&y<currentFrame->overlay->h){
-        return getpixel(currentFrame->overlay, x, y);
+    if(x>=0&&y>=0&&x<currentFrame->getWidth()&&y<currentFrame->getHeight()){
+        return getpixel(currentFrame->getSelectedLayer()->getCanvas(), x, y);
     }
     return 0;
 }
@@ -422,7 +429,7 @@ bool Drawer::pushEvent(SDL_Event * evt){
             if(evt->button.button==SDL_BUTTON_MIDDLE){
                 int pixel = getPoint(drawX, drawY);
                 Uint8 r,g,b;
-                SDL_GetRGB(pixel, currentFrame->overlay->format, &r,&g,&b);
+                SDL_GetRGB(pixel, currentFrame->getSelectedLayer()->getCanvas()->format, &r,&g,&b);
                 scene->colorselector.setColor(r,g,b);
             }
             break;
@@ -502,13 +509,12 @@ bool Drawer::pushEvent(SDL_Event * evt){
         }
     }
 
-    return true;
+    return true; 
 }
 
 void Drawer::setCameraPosition(float x, float y){
     cameraX=x;
     cameraY=y;
-	updateViewport();
 }
 
 Float2 Drawer::getCameraPosition(){
@@ -560,9 +566,10 @@ void Drawer::update(){
 		cameraZoom=0.02;
 	}
 }
-
+#include <iostream>
 
 void Drawer::render(float alpha){
+    
     if(cameraZoomSmooth-cameraZoom<0.01&&cameraZoomSmooth-cameraZoom>-0.01){
         if(cameraZoomSmooth!=cameraZoom){
             cameraZoomSmooth=cameraZoom;
@@ -573,7 +580,7 @@ void Drawer::render(float alpha){
     else{
         cameraZoomAlpha = alphize(alpha, cameraZoomSmoothPrev,cameraZoomSmooth);
         updateViewport();
-    }
+    } 
 
 	xReset(&model);
 	xTranslate(&model,round((scene->a.getWindowWidth()/2)+cameraX*cameraZoomAlpha),round((scene->a.getWindowHeight()/2)+cameraY*cameraZoomAlpha));
@@ -588,7 +595,6 @@ void Drawer::render(float alpha){
 	
 	xScale(&model, currentFrame->getWidth(), currentFrame->getHeight());
 
-
     scene->shMan["overlaybg"].select().setP(&projection).setM(&model);
 	scene->a.square_vert->bind().attrib(0,2,GL_FLOAT);
 	scene->a.square_uv->bind().attrib(1,2,GL_FLOAT);
@@ -597,37 +603,41 @@ void Drawer::render(float alpha){
     Shader & overlaysh = scene->shMan["overlay"];
     overlaysh.select().setP(&projection).setM(&model);
 
-    for(int i=0;i<=ghostback;i++)
-    {//ghosts back
+    for(int i=1;i<=ghostback;i++)
+    {//ghosting back
         if(currentFrame->getIndex()-i>=0){
             if(currentFrame->getWidth()==scene->frameMan.getFrame(currentFrame->getIndex()-i)->getWidth()&&
                 currentFrame->getHeight()==scene->frameMan.getFrame(currentFrame->getIndex()-i)->getHeight()
             ){
                 overlaysh.setUniform("ALPHA",((ghostback-i+1)/(float)ghostback)*ghostopacity);
-                scene->frameMan.getFrame(currentFrame->getIndex()-i)->bindTexture();
+                scene->frameMan.getFrame(currentFrame->getIndex()-i)->getSelectedLayer()->bindTexture();
                 scene->a.square_vert->draw(GL_TRIANGLES);
             }
         }
-    }
-    for(int i=0;i<=ghostfront;i++)
-    {//ghosts front
+    } 
+    for(int i=1;i<=ghostfront;i++)
+    {//ghosting front
         if(currentFrame->getIndex()+i<scene->frameMan.getFrameCount()){
             if(currentFrame->getWidth()==scene->frameMan.getFrame(currentFrame->getIndex()+i)->getWidth()&&
                 currentFrame->getHeight()==scene->frameMan.getFrame(currentFrame->getIndex()+i)->getHeight()
             ){
                 overlaysh.setUniform("ALPHA",((ghostfront-i+1)/(float)ghostfront)*ghostopacity);
-                scene->frameMan.getFrame(currentFrame->getIndex()+i)->bindTexture();
+                scene->frameMan.getFrame(currentFrame->getIndex()+i)->getSelectedLayer()->bindTexture();
                 scene->a.square_vert->draw(GL_TRIANGLES);
             }
         }
     }
-    {//current frame
-        overlaysh.setUniform("ALPHA",1.0f);
-        currentFrame->bindTexture();
-        scene->a.square_vert->draw(GL_TRIANGLES);
+
+    overlaysh.setUniform("ALPHA",1.0f);
+    for(int i=0; i<=currentFrame->getSelectedLayerIndex();i++){//layers back and selected layer
+        if(currentFrame->getLayer(i)->isVisible()){
+            currentFrame->getLayer(i)->bindTexture();
+            scene->a.square_vert->draw(GL_TRIANGLES);
+        }
     }
 
-    {//active
+
+    {//active (drawing now)
         glBindTexture(GL_TEXTURE_2D, activeOverlayTex);
         if(activeNeedUpdate){
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, activeOverlay->w, activeOverlay->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, activeOverlay->pixels);
@@ -639,11 +649,16 @@ void Drawer::render(float alpha){
         overlaysh.setUniform("ALPHA", activealpha);
         scene->a.square_vert->draw(GL_TRIANGLES);
     }
+
+    overlaysh.setUniform("ALPHA",1.0f);
+    for(int i=currentFrame->getSelectedLayerIndex()+1; i<currentFrame->getLayerCount();i++){//layers front
+        if(currentFrame->getLayer(i)->isVisible()){
+            currentFrame->getLayer(i)->bindTexture();
+            scene->a.square_vert->draw(GL_TRIANGLES);
+        }
+    }
 	
 	{//borders
-		//Shader & overlaysh = scene->a.shMan["color2d"];
-		//overlaysh.select().setP(&projection).setM(&model).setUniform("COLOR",1.0,0.0,0.0,1.0);
-		
 		Shader & border = scene->shMan["overlayborder"];
 		border.select().setP(&projection).setM(&model);
 		
@@ -694,7 +709,7 @@ void Drawer::render(float alpha){
 		
 		scene->a.square_vert->bind().attrib(0,2,GL_FLOAT);
 		scene->a.square_uv->bind().attrib(1,2,GL_FLOAT);
-        currentFrame->bindTexture();
+        currentFrame->getSelectedLayer()->bindTexture();
 		scene->a.square_vert->draw(GL_TRIANGLES);
 		
 		scene->shMan["overlayborder"].select().setM(&mdl);

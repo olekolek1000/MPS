@@ -19,6 +19,7 @@ private:
 	float y_target = 0.0;
 	float z_target = 0.0;
 	float animspeed = 0.1;
+	int exit_delay_start=12;
 	int exit_delay=0;
 	
 	bool wasFullscreen;

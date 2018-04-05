@@ -24,7 +24,7 @@ void Pipette::eventMouseMove(int x, int y){
 void Pipette::eventMouseDown(){
     int pixel = drawer->getPoint(x, y);
     Uint8 r,g,b;
-    SDL_GetRGB(pixel, frameMan->getCurrentFrame()->getOverlay()->format, &r,&g,&b);
+    SDL_GetRGB(pixel, frameMan->getCurrentFrame()->getSelectedLayer()->getCanvas()->format, &r,&g,&b);
     colorselector->setColor(r,g,b);
     toolbox->setCurrentTool(toolbox->getPreviousTool());
 }
@@ -61,7 +61,7 @@ void Pipette::render(){
         pixel_prev=pixel;
         pixel = drawer->getPoint(x, y);
         Uint8 r,g,b;
-        SDL_GetRGB(pixel, frameMan->getCurrentFrame()->getOverlay()->format, &r,&g,&b);
+        SDL_GetRGB(pixel, frameMan->getCurrentFrame()->getSelectedLayer()->getCanvas()->format, &r,&g,&b);
         if(pixel_prev!=pixel){
             scaleMul=0.5;
         }

@@ -10,6 +10,7 @@
 #include "error.hpp"
 #include "menu/menu.hpp"
 
+
 void sceneEditor::setProjection(){
     int w = a.getAreaWidth();
     int h = a.getAreaHeight();
@@ -21,7 +22,8 @@ void sceneEditor::setProjection(){
 	guiProjection = glm::ortho(0.0f, (float)a.getAreaWidth(), (float)a.getAreaHeight(), 0.0f);
 	shGui.select();shGui.setP(&guiProjection);
 	shGuiColor.select();shGuiColor.setP(&guiProjection);
-	
+
+
 	drawer.updateViewport();
 }
   
@@ -57,11 +59,12 @@ void sceneEditor::load(){
     frameMan.createFrame(320, 240);
     frameMan.selectFrame(0);
 
-    drawer.init(this);drawer.setCurrentFrame(frameMan.getCurrentFrame());
+
+    drawer.init(this);drawer.setCurrentFrame(frameMan.getCurrentFrame());drawer.setCameraPosition(-320/2,-240/2);drawer.setZoomPixelPerfect(2);
     toolbox.init(this);
     colorselector.init(this);
     frameselector.init(this);
-
+	layerMan.init(this);layerMan.setCurrentFrame(frameMan.getCurrentFrame());
 
     step.setRate(30);
     setProjection();
@@ -121,7 +124,9 @@ void sceneEditor::loop(){
 			if(!toolbox.pushEvent(&evt)){
 				if(!colorselector.pushEvent(&evt)){
 					if(!frameselector.pushEvent(&evt)){
-						drawer.pushEvent(&evt);
+						if(!layerMan.pushEvent(&evt)){
+							drawer.pushEvent(&evt);
+						}
 					}
 				}
 			}
@@ -146,14 +151,13 @@ void sceneEditor::loop(){
 			frameselector.pushGlobalEvent(evt);
 			colorselector.pushGlobalEvent(evt);
 		}
-
 		while(step.onUpdate())
 		{//update
             drawer.update();
 		    toolbox.update();
             frameselector.update();
+			layerMan.update();
 		}
-
 		if(!a.isHidden())
 		{//render
 			a.shMan.setP(&projection);
@@ -181,8 +185,8 @@ void sceneEditor::loop(){
             toolbox.render();
             colorselector.render();
             frameselector.render(step.getAlpha());
+			layerMan.render();
 		}
-		
 		if(menuopenrequest){
 			menuopenrequest=false;
 			Menu menu(this);
@@ -198,6 +202,7 @@ void sceneEditor::loop(){
 
 void sceneEditor::changeFrame(int n){
     frameMan.selectFrame(n);
+	layerMan.setCurrentFrame(frameMan.getCurrentFrame());
     drawer.setCurrentFrame(frameMan.getCurrentFrame());
     drawer.updateViewport();
 }

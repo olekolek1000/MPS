@@ -25,7 +25,7 @@ char * HistoryCell::getRaw(){
 
 void HistoryCell::free(){
     if(loaded){
-        delete[]raw;
+        delete[] raw;
         loaded=false;
     }
 }

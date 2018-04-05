@@ -2,13 +2,15 @@
 #I'm not an CMake expert. 
 #You can help me if you want :P
 
-cmake_minimum_required(VERSION 2.8.12)
+cmake_minimum_required(VERSION 3.0)
 
 project(MPS)
 
+
 set(TYPE "Release")#Debug, Normal, Release
-set(PLATFORM "Linux")#Linux, Windows
+set(PLATFORM "Windows")#Linux, Windows
 set(ROOT "./src/") 
+
 
 if(TYPE STREQUAL "Debug")
 	set (CMAKE_CXX_FLAGS "-Wall -I ./src -g")
@@ -59,6 +61,7 @@ SET(PROGRAM_SRCS
 	${ROOT}/scenes/editor/framemanager.cpp
 	${ROOT}/scenes/editor/history.cpp
 	${ROOT}/scenes/editor/thememanager.cpp
+	${ROOT}/scenes/editor/layermanager.cpp
 	${ROOT}/scenes/editor/colorselector/colorselector.cpp
 	${ROOT}/scenes/editor/frameselector/frameselector.cpp
 	
@@ -104,7 +107,7 @@ if(PLATFORM STREQUAL "Linux")
 	#target_link_libraries (MPS -lGLESv2)
 	target_link_libraries (MPS -no-pie)
 	target_link_libraries (MPS -lpthread)
-	target_link_libraries (MPS -ldl)
+
 endif() 
 
 if(PLATFORM STREQUAL "Windows")
