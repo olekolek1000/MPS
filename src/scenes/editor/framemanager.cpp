@@ -5,7 +5,7 @@ typedef unsigned int uint;
 int FrameManager::getFrameCount(){
     return (int)frames.size();
 }
-
+#include <iostream>
 void FrameManager::createFrame(int w, int h){
     Frame * frame = new Frame;
     frame->load(w,h);
@@ -22,8 +22,8 @@ void FrameManager::createFrame(int w, int h){
 void FrameManager::duplicateFrame(){
     Frame * frame = new Frame;
     frame->load(getCurrentFrame()->getWidth(),getCurrentFrame()->getHeight());
-    SDL_BlitSurface(getCurrentFrame()->overlay,NULL,frame->overlay,NULL);
-    frame->needUpdate=true;
+    SDL_BlitSurface(getCurrentFrame()->getSelectedLayer()->getCanvas(),NULL,frame->getSelectedLayer()->getCanvas(),NULL);
+    frame->getSelectedLayer()->forceUpdate();
     if(getCurrentFrameIndex()<getFrameCount()){
         frames.insert(frames.begin()+getCurrentFrameIndex()+1, frame);
     }

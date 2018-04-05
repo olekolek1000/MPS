@@ -168,7 +168,7 @@ void frameSelector::render(float alpha){
                 else{
                     xScale(&model,frameHeight*proportions, frameHeight);
                 }
-                scene->frameMan.getFrame(i)->bindTexture();
+                scene->frameMan.getFrame(i)->getSelectedLayer()->bindTexture();
 
                 shColor.select();
                 shColor.setM(&model);

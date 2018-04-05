@@ -38,9 +38,10 @@ bool Timestep::onUpdate(){
         accumulator-=delta;
         loopnum++;
 
-        if(loopnum>2){//cannot keep up!
+        if(loopnum>3){//cannot keep up!
+            reset();
             loopnum=0;
-            return false;
+            return true;
         }
 
         return true;

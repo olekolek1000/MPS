@@ -83,6 +83,11 @@ void ThemeManager::loadTheme(std::string name){
     addTexture("fs/opt_duplicate","frameselector/opt_duplicate.png",RGBA);
     addTexture("fs/newframe","frameselector/newframe.png",RGBA);
     addTexture("fs/removeframe","frameselector/removeframe.png",RGBA);
+
+    addTexture("ls/select","layerselector/select.png",RGBA);
+    addTexture("ls/visible","layerselector/visible.png", RGBA);
+    addTexture("ls/invisible","layerselector/invisible.png",RGBA);
+
     addTexture("icons/down","icons/down.png",RGBA);
     addTexture("icons/left","icons/left.png",RGBA);
     addTexture("icons/up","icons/up.png",RGBA);

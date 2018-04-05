@@ -12,6 +12,7 @@
 #include "drawer.hpp"
 #include "colorselector/colorselector.hpp"
 #include "frameselector/frameselector.hpp"
+#include "layermanager.hpp"
 #include <map>
 
 class sceneEditor{
@@ -38,6 +39,7 @@ public:
     Toolbox toolbox;
 	colorSelector colorselector;
 	frameSelector frameselector;
+	LayerManager layerMan;
 
 	std::map<std::string, SDL_Cursor*>cursors;
 	void setCursor(std::string name);

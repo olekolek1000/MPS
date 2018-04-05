@@ -31,10 +31,10 @@ void App::init() {
 	}
 
     if(SDL_Init(SDL_INIT_VIDEO)!=0) error("Cannot init SDL");
-	
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
+	 
+	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
+    //SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
+    //SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 	//SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
 	//SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 16);
     //SDL_GL_SetAttribute(SDL_GL_RED_SIZE,8);
@@ -88,6 +88,7 @@ void App::init() {
     glDisable(GL_DITHER);
     glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
     glEnable(GL_POINT_SMOOTH);
+    glEnable(GL_LINE_SMOOTH);
 
     static const GLfloat square_vert_data[] = {0,0, 0,1, 1,1, 0,0, 1,0, 1,1};
 	square_vert = new RBuffer;
@@ -298,8 +299,7 @@ void App::updateWindow() {
 			texture2d.setUniform("COLOR", 1,1,1,1).setM(&model);
 			glDrawArrays(GL_TRIANGLES, 0, 2*3);
 		}
-		
-		glFinish();
+		//glFinish();
 		SDL_GL_SwapWindow(window);
 	}
     keystate = SDL_GetKeyboardState(NULL);

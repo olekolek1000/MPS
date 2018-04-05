@@ -36,22 +36,22 @@ private:
     Frame * currentFrame = NULL;
     Toolbox * toolbox;
     Uint8 r=0,g=0,b=0;
-    int color;
+    int color = 0xFF000000;//black
     sceneEditor * scene;
     glm::mat4 projection, model;
 
     bool dragging=false;
 	bool rotating=false;
-    Float2 dragCameraStart={0,0};
-    Float2 dragStart={0,0};
-    Float2 dragEnd={0,0};
+    Float2 dragCameraStart={0.0,0.0};
+    Float2 dragStart={0.0,0.0};
+    Float2 dragEnd={0.0,0.0};
 
-    float cameraX=0;
-    float cameraY=0;
-    float cameraZoom=1.0;
-    float cameraZoomSmooth=1.0;
-    float cameraZoomSmoothPrev=1.0;
-    float cameraZoomAlpha=1.0;
+    float cameraX;
+    float cameraY;
+    float cameraZoom;
+    float cameraZoomSmooth;
+    float cameraZoomSmoothPrev; 
+    float cameraZoomAlpha;
 	
 	RBuffer bordercoordbuf;
 	RBuffer bordercolorbuf;
