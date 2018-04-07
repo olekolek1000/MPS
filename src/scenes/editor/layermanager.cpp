@@ -59,6 +59,7 @@ bool LayerManager::pushEvent(SDL_Event *evt){
                 if(cells[i].but_set.isClicked()){
                     scene->drawer.historyClear();
                     currentFrame->selectLayer(i);
+                    scene->drawer.historyCreateSnapshot();
                 }
                 used = true;
             }

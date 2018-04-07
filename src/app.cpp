@@ -205,6 +205,10 @@ bool App::eventHandle(SDL_Event * evt) {
 						hidden=true;
 						break;
 					}
+                    case SDL_WINDOWEVENT_EXPOSED:{//redraw window
+                        SDL_GL_SwapWindow(window);
+                        break;
+                    }
 				}
 				break;
 			}
@@ -270,7 +274,7 @@ bool App::isHidden(){
 
 void App::updateWindow() {
 	if(hidden){
-		SDL_Delay(150);
+		SDL_Delay(100);
 	}
 	else{
 		#ifdef USE_FRAMEBUFFER

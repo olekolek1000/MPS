@@ -311,8 +311,14 @@ void Drawer::activeDrawLine(int startX, int startY, int endX, int endY, int thic
 }
 
 void Drawer::drawPoint(int x, int y){
+    SDL_Surface * canvas = currentFrame->getSelectedLayer()->getCanvas();
     if(x>=0&&y>=0&&x<currentFrame->getWidth()&&y<currentFrame->getHeight()){
-        putpixel(currentFrame->getSelectedLayer()->getCanvas(), x, y, color);
+        if(erase){
+            putpixel(canvas, x, y, 0);
+        }
+        else{
+            putpixel(canvas, x, y, color);
+        }
     }
     currentFrame->getSelectedLayer()->forceUpdate();
 }
@@ -366,6 +372,10 @@ int Drawer::getPoint(int x, int y){
         return getpixel(currentFrame->getSelectedLayer()->getCanvas(), x, y);
     }
     return 0;
+}
+
+void Drawer::setErase(bool n){
+    erase=n;
 }
 
 bool Drawer::pushEvent(SDL_Event * evt){

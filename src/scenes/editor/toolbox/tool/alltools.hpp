@@ -5,3 +5,4 @@
 #include "floodfill.hpp"
 #include "pipette.hpp"
 #include "line.hpp"
+#include "eraser.hpp"
