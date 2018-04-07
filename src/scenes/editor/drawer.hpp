@@ -63,6 +63,7 @@ private:
     int ghostback = 4;
     int ghostfront = 4;
     float ghostopacity = 0.2;
+    bool erase=false;
 
     int drawX=0,drawY=0;
 
@@ -104,6 +105,8 @@ public:
     void activeDrawPoint(int x, int y);
     void activeDrawRectangle(int x, int y, int w, int h);
     void activeDrawLine(int startX, int startY, int endX, int endY, int thickness);
+
+    void setErase(bool n);
 
     int getPoint(int x, int y);
 

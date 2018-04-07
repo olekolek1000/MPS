@@ -54,6 +54,7 @@ void Toolbox::init(sceneEditor * scene){
     createTool(new Spray);
     createTool(new FloodFill);
     createTool(new Pipette);
+    createTool(new Eraser);
 	
 	reloadTextures();
 

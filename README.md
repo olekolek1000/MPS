@@ -3,7 +3,7 @@
 <img src="http://mps.olekolek1000.pl/github/logo.png">
 
 This is a stop-motion animation program which is made to be <b>MODERN</b>, <b>EASY</b>, <b>MULTIPLATFORM</b> and <b>FAST</b>.
-This project is currently under HEAVY DEVELOPMENT.
+This project is currently under <b>HEAVY DEVELOPMENT</b>.
 
 ![img_screenshot](http://mps.olekolek1000.pl/github/screenshot.png)
 
@@ -17,6 +17,7 @@ Please report any bugs and problems in this program. It helps a lot!
 The ideas are also welcome ;)
 
 <b>===Done:</b><br>
+-Layer support<br>
 -Open/Save Project<br>
 -Export to GIF<br>
 -Frame selector (Create/remove frame, duplicate frame)<br>
@@ -26,6 +27,7 @@ The ideas are also welcome ;)
 -Tool: Spray<br>
 -Tool: Bucket fill<br>
 -Tool: Pipette<br>
+-Tool: Eraser<br>
 -Zoomable viewport<br>
 -Dynamic Rotatable viewport<br>
 -Scalable GUI<br>
@@ -38,11 +40,9 @@ The ideas are also welcome ;)
 -Menu
 
 <b>===To do:</b><br>
--Layer support<br>
 -Import GIF<br>
 -Export PNG strip<br>
 -"Play animation" button<br>
--Tool: Eraser<br>
 -Tool: Brush (draw using any image)<br>
 -Tool: Circle<br>
 -Tool: Rectangle<br>

@@ -257,6 +257,7 @@ void Menu::loop(){
 			}
 		}
 
+		if(!scene->a.isHidden())
 		{//render
 			scene->shGui.select();scene->shGui.setP(&projection);
 		

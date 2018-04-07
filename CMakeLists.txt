@@ -8,7 +8,7 @@ project(MPS)
 
 
 set(TYPE "Release")#Debug, Normal, Release
-set(PLATFORM "Windows")#Linux, Windows
+set(PLATFORM "Linux")#Linux, Windows
 set(ROOT "./src/") 
 
 
@@ -81,6 +81,7 @@ SET(PROGRAM_SRCS
 	${ROOT}/scenes/editor/toolbox/tool/pipette.cpp
 	${ROOT}/scenes/editor/toolbox/tool/spray.cpp
 	${ROOT}/scenes/editor/toolbox/tool/tool.cpp
+	${ROOT}/scenes/editor/toolbox/tool/eraser.cpp
 	)
 	 
 if(PLATFORM STREQUAL "Linux")
