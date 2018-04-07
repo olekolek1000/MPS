@@ -31,6 +31,7 @@ The ideas are also welcome ;)
 -Scalable GUI<br>
 
 <b>===Partially done (Works fine, but there may be a lot of changes in the future):</b><br>
+-Layer support<br>
 -Toolbox<br>
 -Color selector<br>
 -Ghosting<br>
@@ -38,7 +39,6 @@ The ideas are also welcome ;)
 -Menu
 
 <b>===To do:</b><br>
--Layer support<br>
 -Import GIF<br>
 -Export PNG strip<br>
 -"Play animation" button<br>
