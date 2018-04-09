@@ -17,7 +17,6 @@ Please report any bugs and problems in this program. It helps a lot!
 The ideas are also welcome ;)
 
 <b>===Done:</b><br>
--Layer support<br>
 -Open/Save Project<br>
 -Export to GIF<br>
 -Frame selector (Create/remove frame, duplicate frame)<br>
