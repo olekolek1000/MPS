@@ -14,8 +14,6 @@
 
 void texRenderText(Texture & tex, TTF_Font * font, const char*text, SDL_Color color, bool blend=true);
 
-GLuint texLoad(std::string lok, int colorspace, int filtering);
-
 SDL_Surface * surfLoad(std::string lok);
 
 #endif // TEXLOAD_H_INCLUDED

@@ -54,6 +54,7 @@ bool Pencil::pushEvent(SDL_Event * evt){
 
 
 void Pencil::render(){
+    drawer->setBrushCircleSize(box.getValue());
 	box.setPosition(toolbox->getSettingsX(),toolbox->getSettingsY()).setSize(toolbox->getWidth(),75);
     box.render();
 }

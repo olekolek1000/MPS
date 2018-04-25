@@ -43,7 +43,7 @@ bool frameSelector::pushEvent(SDL_Event * evt){
     }
     if(but_newframe.isClicked()){
         if(newFrameType==0){
-            scene->frameMan.createFrame(scene->frameMan.getCurrentFrame()->getWidth(),scene->frameMan.getCurrentFrame()->getHeight());
+            scene->frameMan.createFrame(scene->frameMan.getCurrentFrame()->getWidth(),scene->frameMan.getCurrentFrame()->getHeight())->createLayer();
         }
         else{
             scene->frameMan.duplicateFrame();

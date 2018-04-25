@@ -277,9 +277,13 @@ void Drawer::activeDrawRectangle(int x, int y, int w, int h){
 
 void Drawer::activeDrawLine(int startX, int startY, int endX, int endY, int thickness){
     int nowX,nowY;
-    int iterations = sqrt(pow(endX-startX,2)+pow(endY-startY,2))*4+1;
+    int iterations = sqrt(pow(endX-startX,2)+pow(endY-startY,2))+1;
+    int xx,yy;
     float delta;
-    for(int i=0;i<iterations;i++){
+    int width = currentFrame->getWidth();
+    int height = currentFrame->getHeight();
+    
+    for(int i=0; i<iterations; i++){
         delta = i/(float)iterations;
         nowX = round(startX*(delta) + endX*(1.0-delta));
         nowY = round(startY*(delta) + endY*(1.0-delta));
@@ -288,21 +292,13 @@ void Drawer::activeDrawLine(int startX, int startY, int endX, int endY, int thic
             activeDrawPoint(nowX, nowY);
         }
         else{
-            if(i==0||i==iterations){
-                for(int y=0;y<thickness;y++){
-                    for(int x=0;x<thickness;x++){
-                        activeDrawPoint(nowX+x-thickness/2, nowY+y-thickness/2);
+            for(int y=0;y<=thickness;y++){
+                yy=nowY+y-thickness/2;
+                for(int x=0;x<=thickness;x++){
+                    xx=nowX+x-thickness/2;
+                    if( xx>=0&&yy>=0&&xx<width&&yy<height&&getpixel(activeOverlay, xx, yy) != (uint)color && sqrt(pow(x-thickness/2,2)+pow(y-thickness/2,2))<(thickness+0.25)/2.0){
+                        activeDrawPoint(xx, yy);
                     }
-                }
-            }
-            else{
-                for(int x=0;x<thickness;x++){
-                    activeDrawPoint(nowX+x-thickness/2, nowY-thickness/2);
-                    activeDrawPoint(nowX+x-thickness/2, nowY+thickness/2-1);
-                }
-                for(int y=0;y<thickness;y++){
-                    activeDrawPoint(nowX-thickness/2,nowY+y-thickness/2);
-                    activeDrawPoint(nowX+thickness/2-1,nowY+y-thickness/2);
                 }
             }
         }
@@ -332,10 +328,10 @@ void Drawer::drawRectangle(int x, int y, int w, int h){
 }
 
 void Drawer::drawLine(int startX, int startY, int endX, int endY, int thickness){
-    int nowX,nowY;
+    int nowX,nowY,xx,yy;
     int iterations = sqrt(pow(endX-startX,2)+pow(endY-startY,2))*4+1;
     float delta;
-    for(int i=0;i<iterations;i++){
+    for(int i=0; i<iterations; i++){
         delta = i/(float)iterations;
         nowX = round(startX*(delta) + endX*(1.0-delta));
         nowY = round(startY*(delta) + endY*(1.0-delta));
@@ -344,21 +340,13 @@ void Drawer::drawLine(int startX, int startY, int endX, int endY, int thickness)
             drawPoint(nowX, nowY);
         }
         else{
-            if(i==0||i==iterations){
-                for(int y=0;y<thickness;y++){
-                    for(int x=0;x<thickness;x++){
-                        drawPoint(nowX+x-thickness/2, nowY+y-thickness/2);
+            for(int y=0;y<=thickness;y++){
+                yy=nowY+y-thickness/2;
+                for(int x=0;x<=thickness;x++){
+                    xx=nowX+x-thickness/2;
+                    if( getpixel(activeOverlay, xx, yy) != (uint)color && sqrt(pow(x-thickness/2,2)+pow(y-thickness/2,2))<(thickness+0.25)/2.0){
+                        drawPoint(xx, yy);
                     }
-                }
-            }
-            else{
-                for(int x=0;x<thickness;x++){
-                    drawPoint(nowX+x-thickness/2, nowY-thickness/2);
-                    drawPoint(nowX+x-thickness/2, nowY+thickness/2-1);
-                }
-                for(int y=0;y<thickness;y++){
-                    drawPoint(nowX-thickness/2,nowY+y-thickness/2);
-                    drawPoint(nowX+thickness/2-1,nowY+y-thickness/2);
                 }
             }
         }
@@ -523,6 +511,10 @@ bool Drawer::pushEvent(SDL_Event * evt){
 }
 
 void Drawer::setCameraPosition(float x, float y){
+    if(x>0)x=0;
+    if(y>0)y=0;
+    if(x<-currentFrame->getWidth())x=-currentFrame->getWidth();
+    if(y<-currentFrame->getHeight())y=-currentFrame->getHeight();
     cameraX=x;
     cameraY=y;
 }
@@ -544,6 +536,10 @@ void Drawer::zoomOut(float n){
 }
 
 void Drawer::setZoomPixelPerfect(int n){
+    if(cameraZoomSmooth!=cameraZoomSmoothPrev){
+        cameraZoomSmooth=cameraZoomSmoothPrev=cameraZoomAlpha=cameraZoom;
+        cameraRotSmooth=cameraRotSmoothPrev=cameraRotAlpha=cameraRot;
+    }
 	cameraRot.x=0.0;
 	cameraRot.y=1.0;
 	cameraZoom = n;
@@ -580,7 +576,7 @@ void Drawer::update(){
 
 void Drawer::render(float alpha){
     
-    if(cameraZoomSmooth-cameraZoom<0.01&&cameraZoomSmooth-cameraZoom>-0.01){
+    if(cameraZoomSmooth-cameraZoom<0.001&&cameraZoomSmooth-cameraZoom>-0.001){
         if(cameraZoomSmooth!=cameraZoom){
             cameraZoomSmooth=cameraZoom;
             cameraZoomAlpha=cameraZoom;
@@ -686,6 +682,20 @@ void Drawer::render(float alpha){
 		scene->a.square_uv->bind().attrib(1,2,GL_FLOAT);
 		scene->a.square_vert->draw(GL_TRIANGLES);
     }
+
+    if(brushCircleSize>0&&drawX>=0&&drawY>=0&&drawX<currentFrame->getWidth()&&drawY<currentFrame->getHeight())
+    {//brush circle
+        Shader & shCircle = scene->shMan["brushcircle"];
+        glm::mat4 mdl;
+        xReset(&mdl);
+        xTranslate(&mdl, mouseX, mouseY);
+        xScale(&mdl, brushCircleSize * cameraZoomAlpha, brushCircleSize * cameraZoomAlpha);
+        xTranslate(&mdl,-0.5,-0.5);
+        shCircle.select().setP(&projection).setM(&mdl);
+        scene->a.square_vert->bind().attrib(0,2,GL_FLOAT);
+		scene->a.square_uv->bind().attrib(1,2,GL_FLOAT);
+		scene->a.square_vert->draw(GL_TRIANGLES);
+    }
 	
 	
 	
@@ -727,4 +737,8 @@ void Drawer::render(float alpha){
 		bordercolorbuf.bind().attrib(1,4,GL_FLOAT);
 		bordercoordbuf.draw(GL_TRIANGLES);
 	}
+}
+
+void Drawer::setBrushCircleSize(int n){
+    brushCircleSize = n;
 }

@@ -17,7 +17,7 @@
 
 #include "tinyfiledialogs.hpp"
 #include "gif.hpp" 
-
+#include "pixel.hpp"
 
 Menu::Menu(sceneEditor * scene){
 	this->scene = scene;
@@ -135,12 +135,12 @@ void Menu::loop(){
 	|.......|
 	G===F===E
 	*/
-	buttons["01back"].init(this, 216, 66, 'A', "Go back");
+	buttons["back"].init(this, 216, 66, 'A', "Go back");
 	buttons["loadproject"].init(this, 216, -150, 'D', "Load project");
 	buttons["saveproject"].init(this, 216, -50, 'D', "Save project");
 	buttons["import"].init(this, 216, 50, 'D', "Import");
 	buttons["export"].init(this, 216, 150, 'D', "Export");
-	buttons["99quit"].init(this, 216, 66, 'G', "Exit");
+	buttons["exit"].init(this, 216, 66, 'G', "Exit");
 
 	float postarget = 1.0;
 
@@ -225,7 +225,7 @@ void Menu::loop(){
 				}
 			}
 			
-			if(buttons["01back"].isClicked()){
+			if(buttons["back"].isClicked()){
 				actionBack();
 			}
 			if(buttons["loadproject"].isClicked()){
@@ -240,8 +240,8 @@ void Menu::loop(){
 			if(buttons["export"].isClicked()){
 				actionExport();
 			}
-			if(buttons["99quit"].isClicked()){
-				actionQuit();
+			if(buttons["exit"].isClicked()){
+				actionExit();
 			} 
 
 			for(int i=0; i<1; i++){
@@ -386,8 +386,8 @@ void Menu::actionExport(){
 	bool end=false;
 	while(!end){
 		end=true;
-		const char * patterns[2] = { "*.gif", "*.png" };
-		const char * name = tinyfd_saveFileDialog("Export animation...", NULL, 2, patterns, NULL);
+		const char * patterns[1] = { "*.gif" };
+		const char * name = tinyfd_saveFileDialog("Export animation...", NULL, 1, patterns, NULL);
 		if(name!=NULL){
 			string str_name = string(name);
 			if(str_name.size()>4){
@@ -400,8 +400,13 @@ void Menu::actionExport(){
 					GifWriter writer;
 					GifBegin(&writer, name, width, height, delay, 8, false);
 					for(int i=0; i<scene->frameMan.getFrameCount(); i++){
-						SDL_Surface * overlay = scene->frameMan.getFrame(i)->getSelectedLayer()->getCanvas();
+						Frame * frame = scene->frameMan.getFrame(i);
+						SDL_Surface * overlay = SDL_CreateRGBSurface(0, width, height, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
+						for(int j=0; j<frame->getLayerCount(); j++){
+							SDL_BlitSurface(frame->getLayer(j)->getCanvas(), NULL, overlay, NULL);
+						}
 						GifWriteFrame(&writer, (const uint8_t*)overlay->pixels, overlay->w, overlay->h, delay, 8, false);
+						SDL_FreeSurface(overlay);
 					}
 					GifEnd(&writer);
 				}
@@ -447,30 +452,33 @@ void Menu::actionLoadProject(){
 				int fileVersion;
 				file.read((char*)&fileVersion, sizeof(int));
 				
-				switch(fileVersion){
-					case 1:{
-						int frameCount;
-						file.read((char*)&frameCount, sizeof(int));
-						
-						scene->frameMan.clearFrames();
-						//frames
-						for(int i=0; i<frameCount; i++){
-							int width;
-							file.read((char*)&width, sizeof(int));//width
-							int height;
-							file.read((char*)&height, sizeof(int));//height
-							scene->frameMan.selectFrame(scene->frameMan.getFrameCount());
-							scene->frameMan.createFrame(width, height);
-							scene->frameMan.getFrame(i)->getSelectedLayer()->forceUpdate();
-							file.read((char*)scene->frameMan.getFrame(i)->getSelectedLayer()->getCanvas()->pixels, width*height*4);//pixels
-						}
-						scene->changeFrame(0);
-						exitMenu();
-						break;
+				if(fileVersion == Menu::fileVersion){//current version
+					int frameCount;
+					file.read((char*)&frameCount, sizeof(int));
+					
+					scene->frameMan.clearFrames();
+					//frames
+					for(int i=0; i<frameCount; i++){
+						int width;
+						file.read((char*)&width, sizeof(int));//width
+						int height;
+						file.read((char*)&height, sizeof(int));//height
+						int layerCount;
+						file.read((char*)&layerCount, sizeof(int));//layer count
+
+						scene->frameMan.selectFrame(scene->frameMan.getFrameCount());
+						scene->frameMan.createFrame(width, height);
+						for(int j=0; j<layerCount; j++){
+							scene->frameMan.getFrame(i)->createLayer();
+							file.read((char*)scene->frameMan.getFrame(i)->getLayer(j)->getCanvas()->pixels, width*height*4);//layer pixels
+							scene->frameMan.getFrame(i)->getLayer(j)->forceUpdate();
+						}			
 					}
-					default:{
-						error("File version not supported. Upgrade your program.");
-					}
+					scene->changeFrame(0);
+					exitMenu();
+				}
+				else{
+					error("File version not supported. Supported version: "+to_string(Menu::fileVersion)+". Your version: "+to_string(fileVersion));
 				}
 			}
 			
@@ -503,9 +511,16 @@ void Menu::actionSaveProject(){
 				Frame * frame = scene->frameMan.getFrame(i);
 				int width = frame->getWidth();
 				int height = frame->getHeight();
+
 				file.write((char*)&width, sizeof(int));//width
 				file.write((char*)&height, sizeof(int));//height
-				file.write((char*)frame->getSelectedLayer()->getCanvas()->pixels, width*height*4);//pixels
+
+				int layercount = frame->getLayerCount();
+				file.write((char*)&layercount, sizeof(int));//layer count
+
+				for(int j=0; j<layercount; j++){
+					file.write((char*)frame->getLayer(j)->getCanvas()->pixels, width*height*4);//layer pixels
+				}
 			}
 
 			file.close();
@@ -516,6 +531,6 @@ void Menu::actionSaveProject(){
 	}
 	dialogEnd();
 }
-void Menu::actionQuit(){
+void Menu::actionExit(){
 	exit(0);
 }

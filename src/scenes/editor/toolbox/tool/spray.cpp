@@ -59,6 +59,7 @@ void Spray::update(){
 	box_intensity.update();
 }
 void Spray::render(){
+    drawer->setBrushCircleSize(box_size.getValue());
 	box_intensity.setPosition(toolbox->getSettingsX(),toolbox->getSettingsY()).setSize(toolbox->getWidth(),45);
 	box_intensity.render();
 	

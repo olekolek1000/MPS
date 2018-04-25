@@ -131,7 +131,6 @@ void Frame::load(int w, int h){
     selectedLayerIndex=0;
     width=w;
     height=h;
-    createLayer();
     
     loaded=true;
 }
