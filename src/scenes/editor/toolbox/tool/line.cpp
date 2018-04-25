@@ -48,7 +48,7 @@ void Line::render(){
         drawer->activeDrawLine(startX,startY,x,y,box.getValue());
         moved=false;
     }
-
+    drawer->setBrushCircleSize(box.getValue());
     box.setPosition(toolbox->getSettingsX(),toolbox->getSettingsY()).setSize(toolbox->getWidth(),75);
     box.render();
 }

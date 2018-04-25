@@ -14,7 +14,7 @@ private:
     void updateIndexes();
 public:
     int getFrameCount();
-    void createFrame(int w, int h);
+    Frame * createFrame(int w, int h);
     void duplicateFrame();
     void removeFrame();
     void clearFrames();

@@ -55,6 +55,7 @@ bool Eraser::pushEvent(SDL_Event * evt){
 
 
 void Eraser::render(){
+    drawer->setBrushCircleSize(box.getValue());
 	box.setPosition(toolbox->getSettingsX(),toolbox->getSettingsY()).setSize(toolbox->getWidth(),75);
     box.render();
 }

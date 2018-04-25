@@ -146,6 +146,7 @@ void Toolbox::setCurrentTool(uint index){
         setSettingsHeight(0);
         currentTool = tools[index];
         currentTool->select();
+        scene->drawer.setBrushCircleSize(0);
         textCurrentTool.changeText(currentTool->getIconName(),scene->a.font16,255,255,255);
     }
 }

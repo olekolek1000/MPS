@@ -10,7 +10,6 @@
 #include "error.hpp"
 #include "menu/menu.hpp"
 
-
 void sceneEditor::setProjection(){
     int w = a.getAreaWidth();
     int h = a.getAreaHeight();
@@ -50,17 +49,18 @@ void sceneEditor::load(){
 
     shGuiColor.load("editor/guicolor.vsh","editor/guicolor.fsh");
     shGuiColor.createUniform("COLOR");
-	
+
 	shMan["overlay"].load("editor/overlay.vsh","editor/overlay.fsh").createUniform("OVERLAY_RES").createUniform("ALPHA");
     shMan["overlaybg"].load("editor/overlaybg.vsh","editor/overlaybg.fsh").createUniform("OVERLAY_RES").createUniform("ZOOM");
     shMan["overlaygrid"].load("editor/overlaygrid.vsh","editor/overlaygrid.fsh").createUniform("OVERLAY_RES").createUniform("ZOOM");
-	shMan["overlayborder"].load("editor/overlayborder.vsh","editor/overlayborder.fsh").setAttrib(0, "inPosition").setAttrib(1, "inTexcoord");
+	shMan["overlayborder"].load("editor/overlayborder.vsh","editor/overlayborder.fsh");
+	shMan["brushcircle"].load("editor/brushcircle.vsh","editor/brushcircle.fsh");
 
-    frameMan.createFrame(320, 240);
+    frameMan.createFrame(640, 480)->createLayer();
     frameMan.selectFrame(0);
 
 
-    drawer.init(this);drawer.setCurrentFrame(frameMan.getCurrentFrame());drawer.setCameraPosition(-320/2,-240/2);drawer.setZoomPixelPerfect(2);
+    drawer.init(this);drawer.setCurrentFrame(frameMan.getCurrentFrame());drawer.setCameraPosition(-640/2,-480/2);drawer.setZoomPixelPerfect(1);
     toolbox.init(this);
     colorselector.init(this);
     frameselector.init(this);

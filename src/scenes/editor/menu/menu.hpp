@@ -26,7 +26,7 @@ private:
 	void dialogPrepare();
 	void dialogEnd();
 	
-	int fileVersion = 1;
+	int fileVersion = 2;
 	const char * filePrefix = "Moving Picture Studio Project";
 	
 	void actionBack();
@@ -34,7 +34,7 @@ private:
 	void actionExport();
 	void actionLoadProject();
 	void actionSaveProject();
-	void actionQuit();
+	void actionExit();
 	
 	std::map<std::string, MenuButton> buttons;
 

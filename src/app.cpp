@@ -7,6 +7,7 @@
 #include "lib/sdl_ttf.hpp"
 #include "defines.hpp"
 #include <sstream> 
+#include <chrono>
 
 #include "lib/sdl_image.hpp"
 
@@ -217,9 +218,16 @@ bool App::eventHandle(SDL_Event * evt) {
     return p;
 }
 
-
+uint64_t micros()
+{
+    uint64_t us = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
+    return us; 
+} 
+#include <iostream>
 void App::updateAll() {
     App::updateWindow();
+    fps_frametime = micros()-fps_frametime_last;
+    fps_frametime_last = micros();
 }
 
 void App::updateProportions(){
@@ -357,7 +365,7 @@ void App::blitFramebuffer(Framebuffer * buffer){
 
 void App::updateDebugger(){
     stringstream ss;
-    ss<<fps<<" FPS";
+    ss<<fps<<" FPS, "<<fps_frametime/1000.0<<"ms";
     texRenderText(fps_text,font16,ss.str().c_str(),SDL_Color{255,255,255},false);
 }
 

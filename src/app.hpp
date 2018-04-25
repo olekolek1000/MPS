@@ -33,6 +33,9 @@ private:
     uint fps_last=0;
     uint fps_frames=0;
     uint fps=0;
+    uint64_t fps_frametime = 0;
+    uint64_t fps_frametime_last = 0;
+
     bool debugger=false;
     Texture fps_text;
 

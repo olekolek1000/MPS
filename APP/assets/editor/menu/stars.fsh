@@ -13,7 +13,7 @@ uniform vec2 RESOLUTION;
 
 void main()
 {
-	gl_FragColor.rgba = texture(tex, UV).rgba;
+	gl_FragColor.rgba = texture2D(tex, UV).rgba;
 	gl_FragColor.a*=intensity;
 
 }
