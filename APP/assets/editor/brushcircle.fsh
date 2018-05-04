@@ -23,7 +23,7 @@ void main()
 	else{
 		float intensity;
 		if(dist<(limit+1.0)/2.0){
-			intensity = clamp(sin(atan2(UV.x-0.5, UV.y-0.5)*12.0+TIME*2.0)*5.0, 0.8, 1.0);
+			intensity = clamp(sin(atan(UV.x-0.5, UV.y-0.5)*12.0+TIME*2.0)*5.0, 0.8, 1.0);
 		}
 		else{
 			intensity = 0.0;
