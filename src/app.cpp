@@ -42,8 +42,6 @@ void App::init() {
     //SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,8);
     //SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,8);
     
-    
-	
     #ifndef FASTSTART
 	SDL_Surface * splash = surfLoad("splash.png");
 	if(!splash){
@@ -112,7 +110,8 @@ void App::init() {
 
     App::updateProportions();
 
-    //Mix_OpenAudio(44100,MIX_DEFAULT_FORMAT,2,1024);
+    //Mix_OpenAudio(44100,MIX_DEFAULT_FORMAT,2,16);
+
 
     fps_text.create();
     updateDebugger();
@@ -285,6 +284,7 @@ void App::updateWindow() {
 		SDL_Delay(100);
 	}
 	else{
+        glDisable(GL_DEPTH_TEST);
 		#ifdef USE_FRAMEBUFFER
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		#endif

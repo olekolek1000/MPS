@@ -7,6 +7,10 @@
 #include "render/func.hpp"
 #include "render/buffer.hpp"
 
+#include "gui/text.hpp"
+
+#include <sstream>
+
 void Drawer::historyCreateSnapshot(){
     if(historypos<(int)history.size()){
         for(int i=historypos+1;i<(int)history.size();i++){
@@ -219,6 +223,9 @@ void Drawer::init(sceneEditor * scene){
     cameraZoomSmooth=0;
     cameraZoomSmoothPrev=0;
     cameraRotSmooth={1,1};
+    
+    textAngle = new GuiText;
+    textAngle->init(scene);
 	
     glGenTextures(1,&activeOverlayTex);
 	updateBorders();
@@ -228,6 +235,7 @@ Drawer::~Drawer(){
     historyClear();
     glDeleteTextures(1,&activeOverlayTex);
     SDL_FreeSurface(activeOverlay);
+    delete textAngle;
 }
 
 #include <iostream>
@@ -269,7 +277,18 @@ void Drawer::activeDrawPoint(int x, int y){
 
 void Drawer::activeDrawRectangle(int x, int y, int w, int h){
     SDL_Rect rect;
-    rect.x=x;rect.y=y;rect.w=w;rect.h=h;
+    if(w>=0){
+        rect.x=x;rect.w=w;
+    }
+    else{
+        rect.x=x+w;rect.w=-w;
+    }
+    if(h>=0){
+        rect.y=y;rect.h=h;
+    }
+    else{
+        rect.y=y+h;rect.h=-h;
+    }
     SDL_FillRect(activeOverlay, &rect, color);
 
     activeNeedUpdate=true;
@@ -543,7 +562,7 @@ void Drawer::setZoomPixelPerfect(int n){
 	cameraRot.x=0.0;
 	cameraRot.y=1.0;
 	cameraZoom = n;
-	animationSpeed=0.175;
+	animationSpeed=animationSpeedDefault/1.5;
     updateViewport();
 }
 
@@ -708,7 +727,7 @@ void Drawer::render(float alpha){
 		xScale(&mdl, 1.0,1.0);
 		shColor.setM(&mdl);
 		linebuf.bind();
-		float data[]={rotationStart.x,rotationStart.y,(float)mouseX,(float)mouseY};
+		float data[]={rotationStart.x*scene->a.getAreaMultipler(),rotationStart.y*scene->a.getAreaMultipler(),(float)mouseX*scene->a.getAreaMultipler(),(float)mouseY*scene->a.getAreaMultipler()};
 		linebuf.setData(sizeof(data),data,GL_DYNAMIC_DRAW);
 		linebuf.attrib(0,2,GL_FLOAT);
 		
@@ -736,6 +755,14 @@ void Drawer::render(float alpha){
 		bordercoordbuf.bind().attrib(0,2,GL_FLOAT);
 		bordercolorbuf.bind().attrib(1,4,GL_FLOAT);
 		bordercoordbuf.draw(GL_TRIANGLES);
+
+        float rot = SDL_atan2(cameraRot.x,cameraRot.y)*(180.0 / M_PI);
+        std::stringstream ss;
+        ss<<"Rot: "<<((int)(rot*10))/10.0<<"°";
+        textAngle->changeText(ss.str(), scene->a.font24, 0, 0, 0);
+        textAngle->setPosition((float)(mouseX)*scene->a.getAreaMultipler(), (float)(mouseY)*scene->a.getAreaMultipler());
+        textAngle->setRotation(rot);
+        textAngle->render();
 	}
 }
 
