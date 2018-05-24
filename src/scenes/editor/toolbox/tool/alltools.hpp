@@ -6,3 +6,4 @@
 #include "pipette.hpp"
 #include "line.hpp"
 #include "eraser.hpp"
+#include "rectangle.hpp"

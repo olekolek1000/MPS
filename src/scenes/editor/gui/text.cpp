@@ -2,7 +2,7 @@
 #include "lib/opengl.hpp"
 #include "transform.hpp"
 #include "../editor.hpp"
-
+#include "error.hpp"
 #include "render/func.hpp"
 
 int GuiText::getWidth(){
@@ -22,14 +22,17 @@ GuiText& GuiText::changeText(std::string text, TTF_Font * font, Uint8 r, Uint8 g
     }
 
     SDL_Surface * textsurf = TTF_RenderUTF8_Blended(font, text.c_str(), SDL_Color{r,g,b});
+    if(textsurf==NULL){
+        error("Text render failure: "+text);
+    }
     TTF_SizeUTF8(font, text.c_str(), &width, &height);
 
     SDL_Surface * converted = SDL_ConvertSurfaceFormat(textsurf, SDL_PIXELFORMAT_ABGR8888, 0);
 
     glBindTexture(GL_TEXTURE_2D, texture);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, converted->pixels);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
     SDL_FreeSurface(textsurf);
     SDL_FreeSurface(converted);

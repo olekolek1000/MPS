@@ -105,7 +105,7 @@ void sceneEditor::loop(){
 							break;
 						}
 						case SDLK_EQUALS:{
-							if(a.getAreaMultipler()>0.5){
+							if(a.getAreaMultipler()>0.1){
 								a.setAreaMultipler(a.getAreaMultipler()-0.05);
 							}
 							break;

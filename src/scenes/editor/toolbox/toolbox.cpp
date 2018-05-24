@@ -51,11 +51,12 @@ void Toolbox::init(sceneEditor * scene){
 
     createTool(new Pencil);
     createTool(new Line);
+    createTool(new Rectangle);
     createTool(new Spray);
     createTool(new FloodFill);
     createTool(new Pipette);
     createTool(new Eraser);
-	
+    
 	reloadTextures();
 
     butUndo.init(scene,10,75,48,48).setTexture(&scene->thMan["icons/undo"]);

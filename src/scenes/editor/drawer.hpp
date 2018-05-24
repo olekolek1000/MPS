@@ -29,7 +29,7 @@ public:
     int getHeight();
 };
 
-
+class GuiText;
 
 class Drawer{
 private:
@@ -56,6 +56,7 @@ private:
 	RBuffer bordercoordbuf;
 	RBuffer bordercolorbuf;
 	RBuffer linebuf;
+    GuiText * textAngle;
 	void updateBorders();
 	
 	Float2 cameraRot={0,1},cameraRotSmooth={0,1},cameraRotSmoothPrev={0,1},cameraRotAlpha={0,1},rotationStart={0,1};
