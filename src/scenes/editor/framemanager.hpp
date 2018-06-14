@@ -16,9 +16,9 @@ public:
     int getFrameCount();
     Frame * createFrame(int w, int h);
     void duplicateFrame();
-    void removeFrame();
+    bool removeFrame();
+    bool removeFrame(int n);
     void clearFrames();
-    void removeFrame(int n);
     void selectFrame(int n);
     Frame * getFrame(int index);
     Frame * getCurrentFrame();

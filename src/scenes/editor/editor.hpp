@@ -13,6 +13,7 @@
 #include "colorselector/colorselector.hpp"
 #include "frameselector/frameselector.hpp"
 #include "layermanager.hpp"
+#include "actionlog.hpp"
 #include <map>
 
 class sceneEditor{
@@ -25,6 +26,7 @@ public:
     glm::mat4 guiProjection, projection, model;
 
     Shader shGui;
+	Shader shGuiAlpha;
 	Shader shGuiColor;
 
 	ThemeManager thMan;
@@ -40,6 +42,7 @@ public:
 	colorSelector colorselector;
 	frameSelector frameselector;
 	LayerManager layerMan;
+	ActionLog actionlog;
 
 	std::map<std::string, SDL_Cursor*>cursors;
 	void setCursor(std::string name);

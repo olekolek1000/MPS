@@ -149,6 +149,7 @@ void Toolbox::setCurrentTool(uint index){
         currentTool->select();
         scene->drawer.setBrushCircleSize(0);
         textCurrentTool.changeText(currentTool->getIconName(),scene->a.font16,255,255,255);
+        scene->actionlog.addMessage(std::string("Tool \""+currentTool->getIconName()+"\" selected.").c_str());
     }
 }
 

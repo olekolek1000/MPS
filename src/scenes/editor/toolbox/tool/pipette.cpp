@@ -11,6 +11,8 @@
 #include "transform.hpp"
 #include "lib/glm.hpp"
 #include <stack>
+#include <sstream>
+#include <iomanip>
 
 void Pipette::init(){
     iconName = "pipette";
@@ -62,8 +64,15 @@ void Pipette::render(){
         pixel = drawer->getPoint(x, y);
         Uint8 r,g,b;
         SDL_GetRGB(pixel, frameMan->getCurrentFrame()->getSelectedLayer()->getCanvas()->format, &r,&g,&b);
+
         if(pixel_prev!=pixel){
             scaleMul=0.5;
+            std::stringstream ss;
+            ss<<"Color: "<<(int)r<<", "<<(int)g<<", "<<(int)b<<" #";
+            ss<<setfill('0') << setw(2) << std::hex << (int)r;
+            ss<<setfill('0') << setw(2) << std::hex << (int)g;
+            ss<<setfill('0') << setw(2) << std::hex << (int)b;
+            scene->actionlog.addMessage(ss.str().c_str());
         }
 
         glm::mat4 model;

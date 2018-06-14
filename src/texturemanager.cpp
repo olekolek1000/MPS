@@ -5,8 +5,6 @@
 #include "error.hpp"
 #include "defines.hpp"
 
-#include "lib/SDL2_rotozoom.hpp"//tymczasowo chyba, trzeba odwracac tekstury
-
 void Texture::create(){
     if(loaded){
         free();

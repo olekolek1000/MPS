@@ -66,7 +66,7 @@ int FrameManager::getCurrentFrameIndex(){
     return currentframe;
 }
 
-void FrameManager::removeFrame(int n){
+bool FrameManager::removeFrame(int n){
     if(getFrameCount()>1){
         int c;
         if(n<0){
@@ -83,16 +83,20 @@ void FrameManager::removeFrame(int n){
         frames.erase(frames.begin()+c);
 
         updateIndexes();
+        return true;
     }
+    return false;
 }
 
-void FrameManager::removeFrame(){
+bool FrameManager::removeFrame(){
     if(getFrameCount()>1){
         delete frames[getCurrentFrameIndex()];
         frames.erase(frames.begin()+getCurrentFrameIndex());
 
         updateIndexes();
+        return true;
     }
+    return false;
 }
 
 Frame * FrameManager::getFrame(int index){

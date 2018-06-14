@@ -46,14 +46,22 @@ void Drawer::historyUpdate(){
 void Drawer::historyUndo(){
     if(historypos>0){
         historypos--;
+        scene->actionlog.addMessage("Undo");
         historyUpdate();
     }
+    else{
+        scene->actionlog.addMessage("Nothing to undo! :(");
+    } 
 }
-
+ 
 void Drawer::historyRedo(){
     if(historypos<(int)history.size()-1){
         historypos++;
+        scene->actionlog.addMessage("Redo");
         historyUpdate();
+    }
+    else{
+        scene->actionlog.addMessage("Nothing to redo! :(");
     }
 }
 
@@ -348,7 +356,7 @@ void Drawer::drawRectangle(int x, int y, int w, int h){
 
 void Drawer::drawLine(int startX, int startY, int endX, int endY, int thickness){
     int nowX,nowY,xx,yy;
-    int iterations = sqrt(pow(endX-startX,2)+pow(endY-startY,2))*4+1;
+    int iterations = sqrt(pow(endX-startX,2)+pow(endY-startY,2))+1;
     float delta;
     for(int i=0; i<iterations; i++){
         delta = i/(float)iterations;
@@ -448,6 +456,7 @@ bool Drawer::pushEvent(SDL_Event * evt){
                 Uint8 r,g,b;
                 SDL_GetRGB(pixel, currentFrame->getSelectedLayer()->getCanvas()->format, &r,&g,&b);
                 scene->colorselector.setColor(r,g,b);
+                scene->actionlog.addMessage("Picked color.");
             }
             break;
         }
@@ -545,24 +554,34 @@ Float2 Drawer::getCameraPosition(){
 void Drawer::zoomIn(float n){
     cameraZoom = cameraZoom * (1.0+n);
 	animationSpeed=animationSpeedDefault;
+    std::stringstream ss;
+    ss<<"Zoom: "<<cameraZoom*100<<"%";
+    scene->actionlog.addMessage(ss.str().c_str(), 0.5f);
     updateViewport();
 }
 
 void Drawer::zoomOut(float n){
     cameraZoom = cameraZoom * (1.0-n);
 	animationSpeed=animationSpeedDefault;
+    std::stringstream ss;
+    ss<<"Zoom: "<<cameraZoom*100<<"%";
+    scene->actionlog.addMessage(ss.str().c_str(), 0.5f);
     updateViewport();
 }
 
 void Drawer::setZoomPixelPerfect(int n){
+    std::stringstream ss;
     if(cameraZoomSmooth!=cameraZoomSmoothPrev){
         cameraZoomSmooth=cameraZoomSmoothPrev=cameraZoomAlpha=cameraZoom;
         cameraRotSmooth=cameraRotSmoothPrev=cameraRotAlpha=cameraRot;
+        ss<<"Skipped animation. ";
     }
 	cameraRot.x=0.0;
 	cameraRot.y=1.0;
 	cameraZoom = n;
 	animationSpeed=animationSpeedDefault/1.5;
+    ss<<"Pixel-Perfect Zoom: "<<cameraZoom*100<<"%";
+    scene->actionlog.addMessage(ss.str().c_str());
     updateViewport();
 }
 

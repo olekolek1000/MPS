@@ -99,10 +99,27 @@ GuiText& GuiText::setAlign(char x, char y){
 	return *this;
 }
 
+GuiText& GuiText::setAlpha(float n){
+    alpha = n;
+    return *this;
+}
 
 GuiText& GuiText::setRotation(float angle){
     this->angle = angle;
 	return *this;
+}
+
+GuiText& GuiText::setBackgroundColor(Float4 n){
+    backgroundColor = n;
+    return *this;
+}
+
+GuiText& GuiText::setBackgroundColor(float r, float g, float b, float a){
+    backgroundColor.x = r;
+    backgroundColor.y = g;
+    backgroundColor.z = b;
+    backgroundColor.w = a;
+    return *this;
 }
 
 GuiText& GuiText::render(){
@@ -127,12 +144,26 @@ GuiText& GuiText::render(){
             xRotate((glm::mat4*)model, angle/57.296);
         }
         xScale((glm::mat4*)model,width*scene->a.getAreaMultipler(), height*scene->a.getAreaMultipler());
-        scene->shGui.select();
-        glBindTexture(GL_TEXTURE_2D, texture);
-        scene->shGui.setM((glm::mat4*)model);
+
         scene->a.square_vert->bind().attrib(0,2,GL_FLOAT);
 		scene->a.square_uv->bind().attrib(1,2,GL_FLOAT);
+        if(backgroundColor.w!=0.0f){
+            scene->shGuiColor.select().setM((glm::mat4*)model).setUniform("COLOR", backgroundColor.x, backgroundColor.y, backgroundColor.z, backgroundColor.w);
+            scene->a.square_vert->draw(GL_TRIANGLES);
+        }
+
+        if(alpha==1.0){
+            scene->shGui.select().setM((glm::mat4*)model);
+        }
+        else{
+            scene->shGuiAlpha.select().setM((glm::mat4*)model).setUniform("ALPHA", alpha);
+        }
+        glBindTexture(GL_TEXTURE_2D, texture);
 		scene->a.square_vert->draw(GL_TRIANGLES);
     }
 	return *this;
+}
+
+std::string GuiText::getText(){
+    return text;
 }

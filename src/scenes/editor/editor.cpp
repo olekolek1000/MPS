@@ -19,9 +19,9 @@ void sceneEditor::setProjection(){
 	shMan.setResolution(w, h);
 
 	guiProjection = glm::ortho(0.0f, (float)a.getAreaWidth(), (float)a.getAreaHeight(), 0.0f);
-	shGui.select();shGui.setP(&guiProjection);
-	shGuiColor.select();shGuiColor.setP(&guiProjection);
-
+	shGui.select().setP(&guiProjection);
+	shGuiColor.select().setP(&guiProjection);
+	shGuiAlpha.select().setP(&guiProjection);
 
 	drawer.updateViewport();
 }
@@ -37,18 +37,21 @@ sceneEditor::~sceneEditor(){
     cursors.clear();
 } 
 
+SDL_Cursor * newcursor(std::string location, int x, int y){
+	SDL_Surface * surf = surfLoad(location);
+	SDL_Cursor * cur = SDL_CreateColorCursor(surf, x, y);
+	SDL_FreeSurface(surf);
+	return cur;
+}
+
 void sceneEditor::load(){
-    cursors["arrow"] = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW);
-    cursors["crosshair"] = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR);
-    cursors["hand"] = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_HAND);
-    SDL_Surface * surf = surfLoad("editor/dragcursor.png");
-    cursors["drag"] = SDL_CreateColorCursor(surf, 12, 12);
-    SDL_FreeSurface(surf);
+    cursors["arrow"] = newcursor("editor/arrowcursor.png", 4, 0);
+    cursors["crosshair"] = newcursor("editor/crosshaircursor.png", 16, 16);
+    cursors["drag"] = newcursor("editor/dragcursor.png", 16, 16);
 
     shGui.load("editor/gui.vsh","editor/gui.fsh");
-
-    shGuiColor.load("editor/guicolor.vsh","editor/guicolor.fsh");
-    shGuiColor.createUniform("COLOR");
+	shGuiAlpha.load("editor/guialpha.vsh","editor/guialpha.fsh").createUniform("ALPHA");
+    shGuiColor.load("editor/guicolor.vsh","editor/guicolor.fsh").createUniform("COLOR");
 
 	shMan["overlay"].load("editor/overlay.vsh","editor/overlay.fsh").createUniform("OVERLAY_RES").createUniform("ALPHA");
     shMan["overlaybg"].load("editor/overlaybg.vsh","editor/overlaybg.fsh").createUniform("OVERLAY_RES").createUniform("ZOOM");
@@ -59,12 +62,15 @@ void sceneEditor::load(){
     frameMan.createFrame(640, 480)->createLayer();
     frameMan.selectFrame(0);
 
-
+	actionlog.init(this);
     drawer.init(this);drawer.setCurrentFrame(frameMan.getCurrentFrame());drawer.setCameraPosition(-640/2,-480/2);drawer.setZoomPixelPerfect(1);
     toolbox.init(this);
     colorselector.init(this);
     frameselector.init(this);
 	layerMan.init(this);layerMan.setCurrentFrame(frameMan.getCurrentFrame());
+
+	actionlog.addMessage("Program started successfully.", 3.0f);
+	actionlog.addMessage("Press ESC to open menu.", 3.0f);
 
     step.setRate(30);
     setProjection();
@@ -94,6 +100,7 @@ void sceneEditor::loop(){
 						case SDLK_RETURN:{
 							thMan.loadTheme("default");
 							thMan.reloadThemes(this);
+							actionlog.addMessage("Theme reloaded and changed to Default");
 							break;
 						}
 						case SDLK_END:{
@@ -150,6 +157,7 @@ void sceneEditor::loop(){
 			toolbox.pushGlobalEvent(evt);
 			frameselector.pushGlobalEvent(evt);
 			colorselector.pushGlobalEvent(evt);
+			actionlog.pushGlobalEvent(evt);
 		}
 		while(step.onUpdate())
 		{//update
@@ -186,6 +194,7 @@ void sceneEditor::loop(){
             colorselector.render();
             frameselector.render(step.getAlpha());
 			layerMan.render();
+			actionlog.render();
 		}
 		if(menuopenrequest){
 			menuopenrequest=false;
