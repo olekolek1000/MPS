@@ -56,7 +56,9 @@ bool frameSelector::pushEvent(SDL_Event * evt){
         used=true;
     }
     if(but_removeframe.isClicked()){
-        scene->frameMan.removeFrame();
+        if(!scene->frameMan.removeFrame()){
+            scene->actionlog.addMessage("Cannot remove frame");
+        }
         scene->changeFrame(scene->frameMan.getCurrentFrameIndex());
         updateCurrentFrameText();
     }
@@ -68,9 +70,11 @@ bool frameSelector::pushEvent(SDL_Event * evt){
         newFrameType=!newFrameType;
         if(newFrameType==0){
             but_newframetype.setTexture(&scene->thMan["fs/opt_blank"]);
+            scene->actionlog.addMessage("New frame type: BLANK");
         }
         else{
             but_newframetype.setTexture(&scene->thMan["fs/opt_duplicate"]);
+            scene->actionlog.addMessage("New frame type: DUPLICATE");
         }
     }
 

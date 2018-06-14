@@ -1,6 +1,6 @@
 #WARNING
-#I'm not an CMake expert. 
-#You can help me if you want :P
+#I'm not the CMake expert. 
+#You can help me if you want.
 
 cmake_minimum_required(VERSION 3.0)
 
@@ -62,6 +62,7 @@ SET(PROGRAM_SRCS
 	${ROOT}/scenes/editor/history.cpp
 	${ROOT}/scenes/editor/thememanager.cpp
 	${ROOT}/scenes/editor/layermanager.cpp
+	${ROOT}/scenes/editor/actionlog.cpp
 	${ROOT}/scenes/editor/colorselector/colorselector.cpp
 	${ROOT}/scenes/editor/frameselector/frameselector.cpp
 	
@@ -82,6 +83,7 @@ SET(PROGRAM_SRCS
 	${ROOT}/scenes/editor/toolbox/tool/spray.cpp
 	${ROOT}/scenes/editor/toolbox/tool/tool.cpp
 	${ROOT}/scenes/editor/toolbox/tool/eraser.cpp
+	${ROOT}/scenes/editor/toolbox/tool/rectangle.cpp
 	)
 	 
 if(PLATFORM STREQUAL "Linux")

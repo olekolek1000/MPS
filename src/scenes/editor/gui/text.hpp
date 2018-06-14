@@ -2,6 +2,7 @@
 
 #include <string>
 #include "lib/sdl_ttf.hpp"
+#include "lib/floats.hpp"
 
 class sceneEditor;
 
@@ -20,7 +21,9 @@ private:
     int posY;
     char alignX=false;
     char alignY=false;
+    float alpha=1.0;
     float angle=0.0;
+    Float4 backgroundColor = {0.0f,0.0f,0.0f,0.0f};
 	void construct();
 public:
     GuiText();
@@ -31,10 +34,14 @@ public:
     int getWidth();
     int getHeight();
     float getProportions();
+    std::string getText();
 
     GuiText& render();
     GuiText& setRotation(float angle);
     GuiText& setPosition(int x, int y);
+    GuiText& setAlpha(float n);
+    GuiText& setBackgroundColor(float r, float g, float b, float a);
+    GuiText& setBackgroundColor(Float4 n);
 	
 	GuiText& setAlign(char x, char y);
 	GuiText& setXAlign(char n);

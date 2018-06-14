@@ -29,6 +29,7 @@ void FloodFill::eventMouseUp(){
 
 
 void FloodFill::floodfill(int posX, int posY){
+    int count = 0;
     struct coordinate{
         int x, y;
     };
@@ -40,12 +41,14 @@ void FloodFill::floodfill(int posX, int posY){
         drawqueue.pop();
         if(top.x>=0 && top.y>=0 && top.x< scene->frameMan.getCurrentFrame()->getWidth() && top.y < scene->frameMan.getCurrentFrame()->getHeight() && oldcolor == scene->drawer.getPoint(top.x,top.y)){
             scene->drawer.drawPoint(top.x, top.y);
+            count++;
             drawqueue.push({top.x, top.y + 1});
             drawqueue.push({top.x, top.y - 1});
             drawqueue.push({top.x + 1, top.y});
             drawqueue.push({top.x - 1, top.y});
         }
     }
+    scene->actionlog.addMessage(std::string("Filled "+std::to_string(count)+" pixels.").c_str());
 }
 
 
