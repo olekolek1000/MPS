@@ -11,24 +11,25 @@ set(TYPE "Release")#Debug, Normal, Release
 set(PLATFORM "Linux")#Linux, Windows
 set(ROOT "./src/") 
 
-
 if(TYPE STREQUAL "Debug")
-	set (CMAKE_CXX_FLAGS "-Wall -I ./src -g")
+	set (CMAKE_CXX_FLAGS "-Wall -I ./src -g -std=c++11")
 endif()
 if(TYPE STREQUAL "Normal")
-	set (CMAKE_CXX_FLAGS "-Wall -I ./src")
+	set (CMAKE_CXX_FLAGS "-Wall -I ./src -std=c++11")
 endif()
 if(TYPE STREQUAL "Release")
-	set (CMAKE_CXX_FLAGS "-Wall -I ./src -O3 -s")
+	set (CMAKE_CXX_FLAGS "-Wall -I ./src -O3 -std=c++11")
 endif()
 
 if(PLATFORM STREQUAL "Linux")
 	set( CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "" )
 	set( CMAKE_SHARED_LIBRARY_LINK_CXX_FLAGS "" )
+	#set( CMAKE_C_COMPILER /usr/bin/zapcc)
+	#set( CMAKE_CXX_COMPILER /usr/bin/zapcc++ )
 	set( CMAKE_C_COMPILER gcc )
 	set( CMAKE_CXX_COMPILER g++ )
 endif()
-if(PLATFORM STREQUAL "Windows")
+if(PLATFORM STREQUAL "Windows") 
 	set( CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "-static-libgcc -static-libstdc++" )
 	set( CMAKE_SHARED_LIBRARY_LINK_CXX_FLAGS "-static-libgcc -static-libstdc++" )
 	set( CMAKE_C_COMPILER x86_64-w64-mingw32-gcc )
@@ -50,6 +51,7 @@ SET(PROGRAM_SRCS
 	${ROOT}/texturemanager.cpp
 	${ROOT}/timestep.cpp
 	${ROOT}/transform.cpp
+	${ROOT}/fps.cpp
 	${ROOT}/lib/SDL2_rotozoom.cpp
 	
 	${ROOT}/render/buffer.cpp
@@ -57,7 +59,7 @@ SET(PROGRAM_SRCS
 
 	${ROOT}/scenes/editor/drawer.cpp
 	${ROOT}/scenes/editor/editor.cpp
-	${ROOT}/scenes/editor/frame.cpp
+	${ROOT}/scenes/editor/frame.cpp 
 	${ROOT}/scenes/editor/framemanager.cpp
 	${ROOT}/scenes/editor/history.cpp
 	${ROOT}/scenes/editor/thememanager.cpp
@@ -108,7 +110,6 @@ if(PLATFORM STREQUAL "Linux")
 	target_link_libraries (MPS -lGLEW)
 	target_link_libraries (MPS -lGL)
 	#target_link_libraries (MPS -lGLESv2)
-	target_link_libraries (MPS -no-pie)
 	target_link_libraries (MPS -lpthread)
 
 endif() 

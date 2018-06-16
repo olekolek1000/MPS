@@ -143,7 +143,7 @@ void Toolbox::setCurrentTool(Tool * tool){
 }
 
 void Toolbox::setCurrentTool(uint index){
-    if(index>=0&&index<tools.size()){
+    if((int)index>=0&&(int)index<(int)tools.size()){
         setSettingsHeight(0);
         currentTool = tools[index];
         currentTool->select();

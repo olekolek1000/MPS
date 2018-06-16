@@ -12,7 +12,7 @@ class sceneEditor;
 
 class frameSelector{
     sceneEditor * scene;
-    glm::mat4 model;
+    glm::mat4 model; 
     uint linebuffer;
     GuiText text_currentframe;
     GuiButton but_newframe;
@@ -30,7 +30,6 @@ class frameSelector{
     int topHeight=48;
 
     int height = 100;
-    bool down=false;
     bool used=false;//events
 
     void updateCurrentFrameText();

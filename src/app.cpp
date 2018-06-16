@@ -32,6 +32,7 @@ void App::init() {
 	}
 
     if(SDL_Init(SDL_INIT_VIDEO)!=0) error("Cannot init SDL");
+
 	 
 	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
     //SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
@@ -66,7 +67,7 @@ void App::init() {
 #ifdef __ANDROID__
     window = SDL_CreateWindow("Moving Picture Studio",0,0,window_w,window_h,SDL_WINDOW_OPENGL);glDisable(GL_DITHER);
 #else
-    window = SDL_CreateWindow("Moving Picture Studio",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,window_w,window_h,SDL_WINDOW_RESIZABLE|SDL_WINDOW_OPENGL|SDL_WINDOW_HIDDEN|SDL_WINDOW_MAXIMIZED);
+    window = SDL_CreateWindow("Moving Picture Studio",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,window_w,window_h,SDL_WINDOW_RESIZABLE|SDL_WINDOW_OPENGL|SDL_WINDOW_HIDDEN|SDL_WINDOW_FULLSCREEN_DESKTOP);
     if(window==NULL) error("Cannot create main OpenGL window");
 #endif
     context = SDL_GL_CreateContext(window);
@@ -75,6 +76,10 @@ void App::init() {
         glewInit();
     #endif // GLEW_STATIC
     if(context==NULL) error("Cannot create OpenGL context");
+
+    SDL_DisplayMode current;
+    SDL_GetCurrentDisplayMode(SDL_GetWindowDisplayIndex(window), &current);
+    fps_limit_hz = current.refresh_rate;
 
     SDL_GL_SetSwapInterval(vsync);
     SDL_GetWindowSize(window,&window_w,&window_h);
@@ -174,18 +179,45 @@ bool App::eventHandle(SDL_Event * evt) {
 					}
 					case SDLK_F4: {
 						setFullscreen(!isFullscreen());
+                        updateDebugger();
+                        pushEvent(GlobalEvent::FullscreenToggle);
 						break;
 					}
 					case SDLK_F3:{
 						debugger=!debugger;
 						updateDebugger();
+                        pushEvent(GlobalEvent::DebuggerToggle);
 						break;
 					}
 					case SDLK_F5:{
 						vsync=!vsync;
 						SDL_GL_SetSwapInterval(vsync);
+                        updateDebugger();
+                        pushEvent(GlobalEvent::VSyncToggle);
 						break;
 					}
+                    case SDLK_F6:{
+                        fps_limit=!fps_limit;
+                        updateDebugger();
+                        pushEvent(GlobalEvent::FPSLimitToggle);
+                        break;
+                    }
+                    case SDLK_F7:{
+                        if(fps_limit_hz>5){
+                            fps_limit_hz-=5;
+                        }
+                        updateDebugger();
+                        pushEvent(GlobalEvent::FPSLimit);
+                        break;
+                    }
+                    case SDLK_F8:{
+                        if(fps_limit_hz<500){
+                            fps_limit_hz+=5;
+                        }
+                        updateDebugger();
+                        pushEvent(GlobalEvent::FPSLimit);
+                        break;
+                    }
 				}
 				break;
 			}
@@ -217,14 +249,18 @@ bool App::eventHandle(SDL_Event * evt) {
     return p;
 }
 
-uint64_t micros()
-{
+uint64_t micros() {
     uint64_t us = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
     return us; 
 } 
-#include <iostream>
+
+
 void App::updateAll() {
     App::updateWindow();
+    if(isFPSLimitActive()){
+        fpstimer.end();
+        fpstimer.start(getFPSLimit());
+    }
     fps_frametime = micros()-fps_frametime_last;
     fps_frametime_last = micros();
 }
@@ -365,7 +401,13 @@ void App::blitFramebuffer(Framebuffer * buffer){
 
 void App::updateDebugger(){
     stringstream ss;
-    ss<<fps<<" FPS, "<<fps_frametime/1000.0<<"ms";
+    ss<<fps<<" FPS, "<<fps_frametime/1000.0<<"ms, VSync: "<<vsync<<", Fullscreen: "<<fullscreen;
+    if(fps_limit){
+        ss<<", FPS limit: "<<fps_limit_hz;
+    }
+    else{
+        ss<<", FPS limit: no";
+    }
     texRenderText(fps_text,font16,ss.str().c_str(),SDL_Color{255,255,255},false);
 }
 
@@ -420,4 +462,18 @@ bool App::isPressed(int scancode){
     return keystate[scancode];
 }
 
+bool App::isDebuggerOpened(){
+    return debugger;
+}
 
+bool App::isVSyncActive(){
+    return vsync;
+}
+
+bool App::isFPSLimitActive(){
+    return fps_limit;
+}
+
+uint App::getFPSLimit(){
+    return fps_limit_hz;
+}

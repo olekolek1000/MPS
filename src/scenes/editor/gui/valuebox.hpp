@@ -28,9 +28,6 @@ private:
     int holdtime=0;
 	sceneEditor * scene;
 
-    bool pressed=false;
-    bool clicked=false;
-
 	void initInterface();
 	void updateSize();
 	void updateValue();
