@@ -76,7 +76,7 @@ private:
     uint activeOverlayTex;
     bool activeNeedUpdate=true;
     float activealpha=1.0;
-	
+	 
 	float animationSpeed;
 	float animationSpeedDefault=0.5;
 

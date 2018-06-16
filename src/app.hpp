@@ -9,6 +9,7 @@
 
 #include "render/buffer.hpp"
 #include "globalevent.hpp"
+#include "fps.hpp"
 
 typedef unsigned int uint;
 
@@ -22,9 +23,10 @@ private:
     int fb_w, fb_h; 
     std::vector<GlobalEvent>events;
     float proportions;
+    Fps fpstimer;
 
-    bool fullscreen=false;
-    bool vsync=true;
+    bool fullscreen=true;
+    bool vsync=false;
     bool autoproportions=true;
 
     int areawidth=1, areaheight=1;
@@ -32,13 +34,15 @@ private:
 
     uint fps_last=0;
     uint fps_frames=0;
+    uint fps_limit_hz=0;
+    bool fps_limit=true;
     uint fps=0;
     uint64_t fps_frametime = 0;
     uint64_t fps_frametime_last = 0;
 
-    bool debugger=false;
+    bool debugger = false;
     Texture fps_text;
-
+ 
     const Uint8 * keystate;
 
     void updateProportions();
@@ -72,9 +76,14 @@ public:
     GlobalEvent getEvent();
     bool isFullscreen();
     void setFullscreen(bool state);
+    bool isDebuggerOpened();
+    bool isVSyncActive();
+    bool isFPSLimitActive();
+    uint getFPSLimit();
     bool isPressed(int scancode);
 	bool isHidden();
     void pushEvent(GlobalEvent event);
+    void setFpsLimit(uint n);
 
     void init();
     void updateAll();

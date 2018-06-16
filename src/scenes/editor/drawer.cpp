@@ -44,23 +44,22 @@ void Drawer::historyUpdate(){
 }
 
 void Drawer::historyUndo(){
-    if(historypos>0){
+    if(historypos>0){ 
         historypos--;
-        scene->actionlog.addMessage("Undo");
+        scene->actionlog.addMessage("Undo"); 
         historyUpdate();
-    }
+    } 
     else{
         scene->actionlog.addMessage("Nothing to undo! :(");
     } 
-}
- 
+} 
 void Drawer::historyRedo(){
     if(historypos<(int)history.size()-1){
         historypos++;
         scene->actionlog.addMessage("Redo");
         historyUpdate();
     }
-    else{
+    else{ 
         scene->actionlog.addMessage("Nothing to redo! :(");
     }
 }

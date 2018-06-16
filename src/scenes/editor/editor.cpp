@@ -10,6 +10,8 @@
 #include "error.hpp"
 #include "menu/menu.hpp"
 
+#include <sstream>
+
 void sceneEditor::setProjection(){
     int w = a.getAreaWidth();
     int h = a.getAreaHeight();
@@ -148,6 +150,29 @@ void sceneEditor::loop(){
 				case GlobalEvent::Exit:{
 				    exit(0);
 					end=true;
+					break;
+				}
+				case GlobalEvent::DebuggerToggle:{
+					std::stringstream ss;ss<<"Debugger: ";a.isDebuggerOpened() ? ss<<"YES" : ss<<"NO";
+					actionlog.addMessage(ss.str().c_str());
+					break;
+				}
+				case GlobalEvent::FullscreenToggle:{
+					std::stringstream ss;ss<<"Fullscreen: ";a.isFullscreen() ? ss<<"YES" : ss<<"NO";
+					actionlog.addMessage(ss.str().c_str());
+					break;
+				}
+				case GlobalEvent::VSyncToggle:{
+					std::stringstream ss;ss<<"VSync: ";a.isVSyncActive() ? ss<<"YES" : ss<<"NO";
+					actionlog.addMessage(ss.str().c_str());
+					break;
+				}
+				case GlobalEvent::FPSLimitToggle:{//go to next
+				}
+				case GlobalEvent::FPSLimit:{
+					std::stringstream ss;ss<<"FPS limit: ";a.isFPSLimitActive() ? ss<<"YES" : ss<<"NO";
+					ss<<", limit: "<<a.getFPSLimit();
+					actionlog.addMessage(ss.str().c_str());
 					break;
 				}
 				default:{

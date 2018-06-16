@@ -7,7 +7,6 @@ float alphize(float alpha, float prev, float var);
 
 class Timestep{
 private:
-    int frame=0;
     int fcheck=SDL_GetTicks();
     int loopnum=0;
 
