@@ -4,6 +4,7 @@
 #include <fstream>
 #include <vector>
 #include <list>
+#include <sstream>
 
 #include "menu.hpp"
 #include "../editor.hpp"
@@ -20,6 +21,10 @@
 
 #include "export/gif.hpp"
 #include "exportinfo.hpp"
+
+#include "../version.hpp"
+#include "../gui/text.hpp"
+
 
 Menu::Menu(sceneEditor * scene){
 	this->scene = scene;
@@ -97,6 +102,12 @@ void Menu::loop(){
 	tex.update(data.data(),width,height,TEXSPACE_RGBA);
 	data.clear();
 
+	GuiText text;
+	{
+		std::stringstream ss;
+		ss<<"[Moving Picture Studio ver. "<<VERSION_STRING<<", "<<__DATE__<<" "<<__TIME__<<"]";
+		text.init(scene).changeText(ss.str(), scene->a.font24, 255, 255, 255).setAlign(1, 0);
+	}
 	
 	float plane[] = {
 		 0.0, -0.5, -0.5,
@@ -349,6 +360,13 @@ void Menu::loop(){
 				for(auto iter = buttons.begin(); iter!=buttons.end(); iter++){
 					iter->second.render(step.getAlpha());
 				}
+			}
+			if(exit_delay==0&&end==false&&step.getTime()>0.5)
+			{//version text
+				float alpha = step.getTime()-0.5;
+				if(alpha<0.0)alpha=0.0;
+				if(alpha>1.0)alpha=1.0;
+				text.setPosition(scene->a.getAreaWidth()/2, 0).setAlpha(alpha).setBackgroundColor(0.0,0.0,0.0,alpha/3.0).render();
 			}
 		}
 		a->updateAll();
