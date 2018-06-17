@@ -12,6 +12,8 @@ class sceneEditor;
 
 class Menu{
 private:
+	friend class ExporterGIF;
+
 	glm::mat4 projection, model;
 	void setProjection();
 	void exitMenu();
@@ -35,6 +37,10 @@ private:
 	void actionLoadProject();
 	void actionSaveProject();
 	void actionExit();
+	void createLoading();
+	void updateLoadingStatus(int frame);
+	void freeLoading();
+	SDL_Window * loadingWindow;
 	
 	std::map<std::string, MenuButton> buttons;
 

@@ -48,7 +48,7 @@ void FloodFill::floodfill(int posX, int posY){
             drawqueue.push({top.x - 1, top.y});
         }
     }
-    scene->actionlog.addMessage(std::string("Filled "+std::to_string(count)+" pixels.").c_str());
+    scene->actionlog.addMessage(std::string("Filled "+std::to_string(count)+ (count==1 ? " pixel." : " pixels.")  ).c_str());
 }
 
 
