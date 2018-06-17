@@ -38,7 +38,7 @@ private:
 	std::vector<GuiButton*>buttons;
     std::vector<Tool*>tools;
     void createTool(Tool * tool);
-public:
+public: 
     void init(sceneEditor * scene);
     void update();
     void render();

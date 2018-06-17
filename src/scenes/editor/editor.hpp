@@ -30,20 +30,19 @@ public:
 	Shader shGuiColor;
 
 	ThemeManager thMan;
-	ShaderManager shMan;
+	ShaderManager shMan; 
 	FramebufferManager fbMan;
 	Timestep step;
-	
-	Texture tex_render;
 
+	Texture tex_render;
+ 
 	FrameManager frameMan;
 	Drawer drawer;
-    Toolbox toolbox;
+    Toolbox toolbox; 
 	colorSelector colorselector;
 	frameSelector frameselector;
 	LayerManager layerMan;
 	ActionLog actionlog;
-
 	std::map<std::string, SDL_Cursor*>cursors;
 	void setCursor(std::string name);
 	void openMenu();

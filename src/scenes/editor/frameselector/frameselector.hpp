@@ -32,10 +32,10 @@ class frameSelector{
     int height = 100;
     bool used=false;//events
 
-    void updateCurrentFrameText();
 public:
     void init(sceneEditor * scene);
 
+    void updateCurrentFrameText();
     void update();
     void render(float alpha);
     bool pushEvent(SDL_Event * evt);

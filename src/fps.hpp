@@ -1,9 +1,9 @@
 #pragma once
 class Fps{
 public:
-    unsigned short fps;
-    unsigned int tick_prev;
-    unsigned int frame;
+    short fps;
+    int tick_prev;
+    int frame;
     bool frameskip;
 
     Fps();

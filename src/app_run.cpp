@@ -42,7 +42,7 @@ void App::runApplication() {
                 loadingwindow=NULL;
             }
             #endif
-            SDL_GL_MakeCurrent(window, context);
+            makeGLCurrent();
             editor.loop();
         }
     }

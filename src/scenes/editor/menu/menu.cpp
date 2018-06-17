@@ -16,8 +16,10 @@
 #include "error.hpp"
 
 #include "tinyfiledialogs.hpp"
-#include "gif.hpp" 
 #include "pixel.hpp"
+
+#include "export/gif.hpp"
+#include "exportinfo.hpp"
 
 Menu::Menu(sceneEditor * scene){
 	this->scene = scene;
@@ -391,29 +393,24 @@ void Menu::actionExport(){
 		if(name!=NULL){
 			string str_name = string(name);
 			if(str_name.size()>4){
-				string str_ext = str_name.substr( str_name.length() - 4 );
+				std::string str_ext = str_name.substr( str_name.length() - 4 );
+
+				ExportInfo info;
+				info.name = name;
+
+				createLoading();
+
 				if(str_ext==".gif"){
-					int delay = 15;
-					int width = scene->frameMan.getFrame(0)->getWidth();
-					int height = scene->frameMan.getFrame(0)->getHeight();
-					
-					GifWriter writer;
-					GifBegin(&writer, name, width, height, delay, 8, false);
-					for(int i=0; i<scene->frameMan.getFrameCount(); i++){
-						Frame * frame = scene->frameMan.getFrame(i);
-						SDL_Surface * overlay = SDL_CreateRGBSurface(0, width, height, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
-						for(int j=0; j<frame->getLayerCount(); j++){
-							SDL_BlitSurface(frame->getLayer(j)->getCanvas(), NULL, overlay, NULL);
-						}
-						GifWriteFrame(&writer, (const uint8_t*)overlay->pixels, overlay->w, overlay->h, delay, 8, false);
-						SDL_FreeSurface(overlay);
-					}
-					GifEnd(&writer);
+					ExporterGIF e;
+					e.start(this, &info);
 				}
 				else{
 					error("Invalid file extension");
 					end=false;
 				}
+
+				freeLoading();
+				scene->a.makeGLCurrent();
 			}
 			else{
 				error("Invalid filename");
@@ -455,10 +452,10 @@ void Menu::actionLoadProject(){
 				if(fileVersion == Menu::fileVersion){//current version
 					int frameCount;
 					file.read((char*)&frameCount, sizeof(int));
-					
+
 					scene->frameMan.clearFrames();
 					//frames
-					for(int i=0; i<frameCount; i++){
+					for(int i=0; i<frameCount/5; i++){
 						int width;
 						file.read((char*)&width, sizeof(int));//width
 						int height;
@@ -472,9 +469,11 @@ void Menu::actionLoadProject(){
 							scene->frameMan.getFrame(i)->createLayer();
 							file.read((char*)scene->frameMan.getFrame(i)->getLayer(j)->getCanvas()->pixels, width*height*4);//layer pixels
 							scene->frameMan.getFrame(i)->getLayer(j)->forceUpdate();
-						}			
+						}
 					}
 					scene->changeFrame(0);
+					scene->frameselector.updateCurrentFrameText();
+
 					exitMenu();
 				}
 				else{
@@ -506,6 +505,8 @@ void Menu::actionSaveProject(){
 			file.write((char*)&fileVersion, sizeof(int));
 			file.write((char*)&frameCount, sizeof(int));
 			
+			createLoading();
+
 			//frames
 			for(int i=0; i<frameCount; i++){
 				Frame * frame = scene->frameMan.getFrame(i);
@@ -521,7 +522,11 @@ void Menu::actionSaveProject(){
 				for(int j=0; j<layercount; j++){
 					file.write((char*)frame->getLayer(j)->getCanvas()->pixels, width*height*4);//layer pixels
 				}
+				updateLoadingStatus(i);
 			}
+
+			freeLoading();
+			scene->a.makeGLCurrent();
 
 			file.close();
 		}
@@ -533,4 +538,32 @@ void Menu::actionSaveProject(){
 }
 void Menu::actionExit(){
 	exit(0);
+}
+
+void Menu::updateLoadingStatus(int frame){
+	SDL_Event evt;
+	while(SDL_PollEvent(&evt)){
+		if(evt.type==SDL_QUIT){
+			//HALT todo
+		}
+	}
+	SDL_Surface * surf = SDL_GetWindowSurface(loadingWindow);
+
+	SDL_FillRect(surf,NULL,SDL_MapRGB(surf->format, 0, 0, 255));
+
+	SDL_Rect rect;
+	rect.x=0;rect.y=0;
+	rect.w=(frame/(float)scene->frameMan.getFrameCount())*200;
+	rect.h=50;
+	SDL_FillRect(surf, &rect, SDL_MapRGB(surf->format, 0, 255, 255));
+
+	SDL_UpdateWindowSurface(loadingWindow);
+}
+
+void Menu::createLoading(){
+	loadingWindow = SDL_CreateWindow("Operation in progress", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 200, 50, 0);
+}
+
+void Menu::freeLoading(){
+	SDL_DestroyWindow(loadingWindow);
 }

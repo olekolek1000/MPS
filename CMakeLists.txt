@@ -71,6 +71,8 @@ SET(PROGRAM_SRCS
 	${ROOT}/scenes/editor/menu/menu.cpp
 	${ROOT}/scenes/editor/menu/menubutton.cpp
 	${ROOT}/scenes/editor/menu/tinyfiledialogs.cpp
+
+	${ROOT}/scenes/editor/menu/export/gif.cpp
 	
 	${ROOT}/scenes/editor/gui/button.cpp
 	${ROOT}/scenes/editor/gui/checkbox.cpp
@@ -111,6 +113,7 @@ if(PLATFORM STREQUAL "Linux")
 	target_link_libraries (MPS -lGL)
 	#target_link_libraries (MPS -lGLESv2)
 	target_link_libraries (MPS -lpthread)
+	target_link_libraries (MPS -no-pie)
 
 endif() 
 

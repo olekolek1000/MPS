@@ -84,6 +84,7 @@ public:
 	bool isHidden();
     void pushEvent(GlobalEvent event);
     void setFpsLimit(uint n);
+    void makeGLCurrent();
 
     void init();
     void updateAll();

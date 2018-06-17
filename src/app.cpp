@@ -477,3 +477,7 @@ bool App::isFPSLimitActive(){
 uint App::getFPSLimit(){
     return fps_limit_hz;
 }
+
+void App::makeGLCurrent(){
+    SDL_GL_MakeCurrent(window, context);
+}
