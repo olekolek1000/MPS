@@ -175,6 +175,11 @@ void sceneEditor::loop(){
 					actionlog.addMessage(ss.str().c_str());
 					break;
 				}
+				case GlobalEvent::GuiChange:{
+					std::stringstream ss;ss<<"GUI size: "<<(1.0/a.getAreaMultipler()*100)<<"%";
+					actionlog.addMessage(ss.str().c_str());
+					break;
+				}
 				default:{
 					break;
 				}

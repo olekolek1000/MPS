@@ -111,7 +111,6 @@ if(PLATFORM STREQUAL "Linux")
 	target_link_libraries (MPS -lSDL2_ttf)
 	target_link_libraries (MPS -lGLEW)
 	target_link_libraries (MPS -lGL)
-	#target_link_libraries (MPS -lGLESv2)
 	target_link_libraries (MPS -lpthread)
 	target_link_libraries (MPS -no-pie)
 

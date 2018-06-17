@@ -2,6 +2,8 @@
 
 <img src="http://mps.olekolek1000.pl/github/logo.png">
 
+<b><a href="http://mps.olekolek1000.pl/">MAIN WEBPAGE</a></b>
+
 This is a stop-motion animation program which is made to be <b>MODERN</b>, <b>EASY</b>, <b>MULTIPLATFORM</b> and <b>FAST</b>.
 This project is currently under <b>HEAVY DEVELOPMENT</b>.
 
@@ -37,6 +39,7 @@ The ideas are also welcome ;)
 -Color selector<br>
 -Ghosting<br>
 -Theme manager<br>
+-Tool: Rectangle<br>
 -Menu
 
 <b>===To do:</b><br>
@@ -45,9 +48,7 @@ The ideas are also welcome ;)
 -"Play animation" button<br>
 -Tool: Brush (draw using any image)<br>
 -Tool: Circle<br>
--Tool: Rectangle<br>
 -Tool: Select<br>
--Better pencil/line drawing (circles instead of squares)<br>
 -Copy/paste<br>
 -Resize image<br>
 -Compressed history (less RAM usage, more history actions)<br>
@@ -63,11 +64,11 @@ The ideas are also welcome ;)
 Left Shift: Rotate viewport<br>
 
 In drawing area:<br>
-\LMB: Use tool (draw)<br>
--\MMB: Pick color<br>
---\RMB: Drag viewport<br>
----\Mouse wheel: Zoom in/out<br>
-----\1/2/3/4/5/6/7/8/9: Scale viewport to (1:1, 2:1, 3:1 etc.) and reset viewport rotation<br>
+LMB: Use tool (draw)<br>
+--MMB: Pick color<br>
+--RMB: Drag viewport<br>
+--Mouse wheel: Zoom in/out<br>
+--1/2/3/4/5/6/7/8/9: Scale viewport to (1:1, 2:1, 3:1 etc.) and reset viewport rotation<br>
 
 Space: Toggle ghosting visibility<br>
 CTRL+Z: Undo<br>
@@ -77,7 +78,10 @@ Left/Right: Change frames<br>
 F3: Show FPS<br>
 F4: Toggle fullscreen<br>
 F5: Toggle VSync<br>
-Esc: Open menu (work in progress)<br>
--/+ - Scale GUI by 0.05x<br>
+F6: Toggle FPS limit
+F7: Decrease FPS limit
+F8: Increase FPS limit
+Esc: Open menu<br>
+-/+ - Scale GUI<br>
 
 End: Restart application (for testing purposes)<br>
