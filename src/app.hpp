@@ -10,6 +10,7 @@
 #include "render/buffer.hpp"
 #include "globalevent.hpp"
 #include "fps.hpp"
+#include "configmanager.hpp"
 
 typedef unsigned int uint;
 
@@ -25,8 +26,8 @@ private:
     float proportions;
     Fps fpstimer;
 
-    bool fullscreen=true;
-    bool vsync=false;
+    bool fullscreen;
+    bool vsync;
     bool autoproportions=true;
 
     int areawidth=1, areaheight=1;
@@ -35,7 +36,7 @@ private:
     uint fps_last=0;
     uint fps_frames=0;
     uint fps_limit_hz=0;
-    bool fps_limit=true;
+    bool fps_limit;
     uint fps=0;
     uint64_t fps_frametime = 0;
     uint64_t fps_frametime_last = 0;
@@ -59,6 +60,7 @@ public:
     RBuffer *square_vert, *square_uv;
     SDL_Window * window;
     ShaderManager shMan;
+    ConfigManager config;
 
     int getWindowWidth();
     int getWindowHeight();

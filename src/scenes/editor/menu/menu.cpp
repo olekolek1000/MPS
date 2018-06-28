@@ -167,7 +167,8 @@ void Menu::loop(){
 
 	step.reset();
 	step.setRate(30);
-	
+	step.setSpeed(scene->a.config.getvarF("animationSpeed"));
+
 	bool end=false;
 	while(!end){
 		while(a->eventHandle(&evt)){
