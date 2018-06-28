@@ -47,9 +47,9 @@ SDL_Cursor * newcursor(std::string location, int x, int y){
 }
 
 void sceneEditor::load(){
-    cursors["arrow"] = newcursor("editor/arrowcursor.png", 4, 0);
-    cursors["crosshair"] = newcursor("editor/crosshaircursor.png", 16, 16);
-    cursors["drag"] = newcursor("editor/dragcursor.png", 16, 16);
+    cursors["arrow"] = newcursor("editor/arrowcursor.png", a.config.getvarI("cursor_arrow_centerX"),a.config.getvarI("cursor_arrow_centerY"));
+    cursors["crosshair"] = newcursor("editor/crosshaircursor.png", a.config.getvarI("cursor_crosshair_centerX"),a.config.getvarI("cursor_crosshair_centerY"));
+    cursors["drag"] = newcursor("editor/dragcursor.png", a.config.getvarI("cursor_drag_centerX"),a.config.getvarI("cursor_drag_centerY"));
 
     shGui.load("editor/gui.vsh","editor/gui.fsh");
 	shGuiAlpha.load("editor/guialpha.vsh","editor/guialpha.fsh").createUniform("ALPHA");
@@ -61,11 +61,11 @@ void sceneEditor::load(){
 	shMan["overlayborder"].load("editor/overlayborder.vsh","editor/overlayborder.fsh");
 	shMan["brushcircle"].load("editor/brushcircle.vsh","editor/brushcircle.fsh");
 
-    frameMan.createFrame(640, 480)->createLayer();
+    frameMan.createFrame(a.config.getvarI("newframe_width"), a.config.getvarI("newframe_height"))->createLayer();
     frameMan.selectFrame(0);
 
 	actionlog.init(this);
-    drawer.init(this);drawer.setCurrentFrame(frameMan.getCurrentFrame());drawer.setCameraPosition(-640/2,-480/2);drawer.setZoomPixelPerfect(1);
+    drawer.init(this);drawer.setCurrentFrame(frameMan.getCurrentFrame());drawer.setCameraPosition(-a.config.getvarI("newframe_width")/2.0, -a.config.getvarI("newframe_height")/2.0);drawer.setZoomPixelPerfect(1);
     toolbox.init(this);
     colorselector.init(this);
     frameselector.init(this);
@@ -75,6 +75,7 @@ void sceneEditor::load(){
 	actionlog.addMessage("Press ESC to open menu.", 3.0f);
 
     step.setRate(30);
+	step.setSpeed(a.config.getvarF("animationSpeed"));
     setProjection();
 }
 

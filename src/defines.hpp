@@ -1,10 +1,6 @@
 #pragma once
 
-#ifdef __ANDROID__
-    #define LOC_ROOT ""
-#else
-    #define LOC_ROOT "../assets/"
-#endif
+extern char* LOC_ROOT;
  
 //#define FASTSTART 
 //#define USE_FRAMEBUFFER

@@ -2,28 +2,42 @@
 #include "lib/opengl.hpp"
 #include "error.hpp"
 #include "transform.hpp"
-#include "lib/sdl_mixer.hpp"
 #include "texload.hpp"
 #include "lib/sdl_ttf.hpp"
 #include "defines.hpp"
 #include <sstream> 
+#include <iostream>
 #include <chrono>
 
 #include "lib/sdl_image.hpp"
-
 #include "render/buffer.hpp"
 
 using namespace std;
 
+//for defines.hpp
+char* LOC_ROOT = NULL;
+
 void App::init() {
-  
-    window_w=1280;
-    window_h=720;
-    App::proportions = 16.0/9.0;
+    ConfigManager config_root;
+    if(config_root.open("assetlocation.txt")==false){
+        error("Cannot open file \"assetlocation.txt\"");
+    }
+    std::string rootloc = config_root.getvarS("location");
+    LOC_ROOT = new char[rootloc.size()+1];
+    memcpy((void*)LOC_ROOT, rootloc.c_str(), rootloc.size());
+    LOC_ROOT[rootloc.size()]='\0';
+    config_root.close();
+
+    if(config.open("config.txt")==false){
+        error("Cannot open file \"config.txt\"");
+    }
+
+    window_w=config.getvarI("windowWidth");
+    window_h=config.getvarI("windowHeight");
 
 	SDL_version ver;
 	SDL_GetVersion(&ver);
-	if(ver.minor==0){
+	if(ver.major==2&&ver.minor==0){
 		if(ver.patch<7){
 			stringstream ss;
 			ss<<"Required SDL version: 2.0.7. You have "<<(int)ver.major<<"."<<(int)ver.minor<<"."<<(int)ver.patch<<endl<<"The program may not work correctly.";
@@ -32,7 +46,6 @@ void App::init() {
 	}
 
     if(SDL_Init(SDL_INIT_VIDEO)!=0) error("Cannot init SDL");
-
 	 
 	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
     //SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
@@ -42,7 +55,7 @@ void App::init() {
     //SDL_GL_SetAttribute(SDL_GL_RED_SIZE,8);
     //SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,8);
     //SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,8);
-    
+
     #ifndef FASTSTART
 	SDL_Surface * splash = surfLoad("splash.png");
 	if(!splash){
@@ -67,31 +80,68 @@ void App::init() {
 #ifdef __ANDROID__
     window = SDL_CreateWindow("Moving Picture Studio",0,0,window_w,window_h,SDL_WINDOW_OPENGL);glDisable(GL_DITHER);
 #else
-    window = SDL_CreateWindow("Moving Picture Studio",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,window_w,window_h,SDL_WINDOW_RESIZABLE|SDL_WINDOW_OPENGL|SDL_WINDOW_HIDDEN|SDL_WINDOW_FULLSCREEN_DESKTOP);
+    //scene->actionlog.addMessage(std::string("Filled "+std::to_string(count)+ (count==1 ? " pixel." : " pixels.")  ).c_str());
+
+    unsigned flags = SDL_WINDOW_RESIZABLE|SDL_WINDOW_OPENGL|SDL_WINDOW_HIDDEN|SDL_WINDOW_ALLOW_HIGHDPI;
+    if(config.getvarI("windowFullscreen")){
+        flags += SDL_WINDOW_FULLSCREEN_DESKTOP;
+        fullscreen=true;
+    }
+    else{
+        if(config.getvarI("windowBorderless")) flags += SDL_WINDOW_BORDERLESS;
+        if(config.getvarI("windowAlwaysOnTop")) flags += SDL_WINDOW_ALWAYS_ON_TOP;
+        if(config.getvarI("windowMaximized")) flags += SDL_WINDOW_MAXIMIZED;
+        fullscreen=false;
+    }
+    
+
+    window = SDL_CreateWindow(config.getvarS("windowTitle").c_str(),
+                                            SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,
+                                            window_w,
+                                            window_h,
+                                            flags);
+    SDL_GetWindowSize(window, &window_w, &window_h);
+    App::proportions = (float)window_w/(float)window_h;
     if(window==NULL) error("Cannot create main OpenGL window");
 #endif
     context = SDL_GL_CreateContext(window);
     #ifdef GLEW_STATIC
         glewExperimental=true;
         glewInit();
-    #endif // GLEW_STATIC
+    #endif
     if(context==NULL) error("Cannot create OpenGL context");
 
-    SDL_DisplayMode current;
-    SDL_GetCurrentDisplayMode(SDL_GetWindowDisplayIndex(window), &current);
-    fps_limit_hz = current.refresh_rate;
 
     SDL_GL_SetSwapInterval(vsync);
-    SDL_GetWindowSize(window,&window_w,&window_h);
-    window_w_prev=window_w;window_h_prev=window_h;
+
+    if(config.getvarS("guiDPI")=="auto"){
+        float dpi;
+        if(SDL_GetDisplayDPI(SDL_GetWindowDisplayIndex(window), NULL, &dpi, NULL)==0){
+            App::setAreaMultipler(96.0/dpi);
+        }
+    }
+    else{
+        App::setAreaMultipler(96.0/config.getvarF("guiDPI"));
+    }
+
+    vsync = config.getvarI("vsync");
+    fps_limit = config.getvarI("fpslimit");
+
+    if(config.getvarS("fpslimit_fps")=="auto"){
+        SDL_DisplayMode current;
+        SDL_GetCurrentDisplayMode(SDL_GetWindowDisplayIndex(window), &current);
+        fps_limit_hz = current.refresh_rate;
+    }
+    else{
+        fps_limit_hz = config.getvarI("fpslimit_fps");
+    }
+    
     keystate = SDL_GetKeyboardState(NULL);
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_DITHER);
-    glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
-    glEnable(GL_POINT_SMOOTH);
     glEnable(GL_LINE_SMOOTH);
 
     static const GLfloat square_vert_data[] = {0,0, 0,1, 1,1, 0,0, 1,0, 1,1};
@@ -106,7 +156,6 @@ void App::init() {
         glEnableVertexAttribArray(i);
         glVertexAttribPointer(i,2,GL_FLOAT,GL_FALSE,0,(void*)0);//some shitty drivers crash, i must fill this
     }
-	
 
     shMan["default"].load("shaders/default.vsh","shaders/default.fsh");
     shMan["default2d"].load("shaders/default2d.vsh","shaders/default2d.fsh");
@@ -115,13 +164,13 @@ void App::init() {
 
     App::updateProportions();
 
-    //Mix_OpenAudio(44100,MIX_DEFAULT_FORMAT,2,16);
-
-
     fps_text.create();
     updateDebugger();
 
     App::runApplication();
+
+    config.close();
+    delete[] LOC_ROOT;
 }
 
 int App::getWindowWidth() {

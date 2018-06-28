@@ -43,7 +43,6 @@ SET(PROGRAM_SRCS
 	${ROOT}/error.cpp
 	${ROOT}/framebuffermanager.cpp
 	${ROOT}/main.cpp
-	${ROOT}/musicload.cpp
 	${ROOT}/pixel.cpp
 	${ROOT}/shaderload.cpp
 	${ROOT}/shadermanager.cpp
@@ -53,6 +52,7 @@ SET(PROGRAM_SRCS
 	${ROOT}/transform.cpp
 	${ROOT}/fps.cpp
 	${ROOT}/lib/SDL2_rotozoom.cpp
+	${ROOT}/configmanager.cpp
 	
 	${ROOT}/render/buffer.cpp
 	${ROOT}/render/func.cpp
@@ -107,7 +107,6 @@ if(PLATFORM STREQUAL "Linux")
 	target_link_libraries (MPS -lSDL2main)
 	target_link_libraries (MPS -lSDL2)
 	target_link_libraries (MPS -lSDL2_image)
-	target_link_libraries (MPS -lSDL2_mixer)
 	target_link_libraries (MPS -lSDL2_ttf)
 	target_link_libraries (MPS -lGLEW)
 	target_link_libraries (MPS -lGL)
@@ -123,7 +122,6 @@ if(PLATFORM STREQUAL "Windows")
 	target_link_libraries (MPS -lSDL2main)
 	target_link_libraries (MPS -lSDL2)
 	target_link_libraries (MPS -lSDL2_image)
-	target_link_libraries (MPS -lSDL2_mixer)
 	target_link_libraries (MPS -lSDL2_ttf)
 	target_link_libraries (MPS -lglew32s)
 	target_link_libraries (MPS -lopengl32)
