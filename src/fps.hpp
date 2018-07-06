@@ -1,10 +1,10 @@
 #pragma once
 class Fps{
 public:
-    short fps;
-    int tick_prev;
-    int frame;
-    bool frameskip;
+    int fps=0;
+    int tick_prev=0;
+    int frame=0;
+    bool frameskip=false;
 
     Fps();
     void start(int fps);
