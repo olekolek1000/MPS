@@ -3,7 +3,9 @@ project(MPS)
 
 set(PLATFORM "Linux")#Linux, Windows
 set(ROOT "./src/") 
-set (CMAKE_CXX_FLAGS "-Wall -I ./src -std=c++11")
+set (CMAKE_CXX_FLAGS "-Wall -I ./src -O3 -std=c++11")
+
+add_definitions(-DInstall=${Install})
 
 if(PLATFORM STREQUAL "Linux")
 	set( CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "" )

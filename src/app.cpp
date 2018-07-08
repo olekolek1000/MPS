@@ -19,13 +19,21 @@ char* LOC_ROOT = NULL;
 
 void App::init() {
     ConfigManager config_root;
-    #ifdef __linux__
-	if(config_root.open("/usr/bin/assetlocation.txt")==false){
-	    error("Cannot open file \"assetlocation.txt\"");
-	}
+    #ifdef Install
+    
+        #define InstallVar Install
+        if(InstallVar == true) {
+            if(config_root.open("/usr/bin/assetlocation.txt")==false){
+                error("Cannot open file \"/usr/bin/assetlocation.txt\"");
+            }
+        } else {
+            if(config_root.open("assetlocation.txt")==false){
+                error("Cannot open file \"assetlocation.txt\"");
+            }
+        }
     #else
-	if(config_root.open("assetlocation.txt")==false){
-            error("Cannot open file \"assetlocation.txt\"");
+        if(config_root.open("assetlocation.txt")==false){
+                error("Cannot open file \"assetlocation.txt\"");
         }
     #endif
     std::string rootloc = config_root.getvarS("location");
