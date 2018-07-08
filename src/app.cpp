@@ -20,7 +20,6 @@ char* LOC_ROOT = NULL;
 void App::init() {
     ConfigManager config_root;
     #ifdef Install
-    
         #define InstallVar Install
         if(InstallVar == true) {
             if(config_root.open("/usr/bin/assetlocation.txt")==false){
@@ -94,8 +93,6 @@ void App::init() {
 #ifdef __ANDROID__
     window = SDL_CreateWindow("Moving Picture Studio",0,0,window_w,window_h,SDL_WINDOW_OPENGL);glDisable(GL_DITHER);
 #else
-    //scene->actionlog.addMessage(std::string("Filled "+std::to_string(count)+ (count==1 ? " pixel." : " pixels.")  ).c_str());
-
     unsigned flags = SDL_WINDOW_RESIZABLE|SDL_WINDOW_OPENGL|SDL_WINDOW_HIDDEN|SDL_WINDOW_ALLOW_HIGHDPI;
     if(config.getvarI("windowFullscreen")){
         flags += SDL_WINDOW_FULLSCREEN_DESKTOP;
@@ -126,8 +123,6 @@ void App::init() {
     if(context==NULL) error("Cannot create OpenGL context");
 
 
-    SDL_GL_SetSwapInterval(vsync);
-
     if(config.getvarS("guiDPI")=="auto"){
         float dpi;
         if(SDL_GetDisplayDPI(SDL_GetWindowDisplayIndex(window), NULL, &dpi, NULL)==0){
@@ -139,6 +134,7 @@ void App::init() {
     }
 
     vsync = config.getvarI("vsync");
+    SDL_GL_SetSwapInterval(vsync);
     fps_limit = config.getvarI("fpslimit");
 
     if(config.getvarS("fpslimit_fps")=="auto"){
@@ -149,6 +145,7 @@ void App::init() {
     else{
         fps_limit_hz = config.getvarI("fpslimit_fps");
     }
+    if(fps_limit_hz<20)fps_limit_hz=20;//are there displays with <20 Hz?
     
     keystate = SDL_GetKeyboardState(NULL);
 
@@ -168,7 +165,7 @@ void App::init() {
 
     for(uint i=0;i<16;i++){
         glEnableVertexAttribArray(i);
-        glVertexAttribPointer(i,2,GL_FLOAT,GL_FALSE,0,(void*)0);//some shitty drivers crash, i must fill this
+        glVertexAttribPointer(i,2,GL_FLOAT,GL_FALSE,0,(void*)0);//prevents crash on old nvidia drivers on MS Windows (Thank you, NVIDIA!)
     }
 
     shMan["default"].load("shaders/default.vsh","shaders/default.fsh");
@@ -315,8 +312,7 @@ bool App::eventHandle(SDL_Event * evt) {
 uint64_t micros() {
     uint64_t us = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
     return us; 
-} 
-
+}
 
 void App::updateAll() {
     App::updateWindow();
@@ -424,8 +420,8 @@ void App::updateWindow() {
     }
 
     fps_frames++;
-    if(fps_last+1000<SDL_GetTicks()) {
-        fps_last=SDL_GetTicks();
+    if(fps_last+1000<(int)SDL_GetTicks()) {
+        fps_last=(int)SDL_GetTicks();
         fps=fps_frames-1;
         fps_frames=0;
         if(debugger&&!hidden){
@@ -537,7 +533,7 @@ bool App::isFPSLimitActive(){
     return fps_limit;
 }
 
-uint App::getFPSLimit(){
+int App::getFPSLimit(){
     return fps_limit_hz;
 }
 

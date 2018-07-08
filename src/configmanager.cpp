@@ -25,13 +25,21 @@ bool ConfigManager::open(const char* filename){
                 }
             }
         }
+        closed=false;
         return true;
     }
     return false;
 }
 
 void ConfigManager::close(){
+    if(!closed){
+        file.close();
+        closed=true;
+    }
+}
 
+ConfigManager::~ConfigManager(){
+    close();
 }
 
 std::string ConfigManager::getvarS(const char* n){

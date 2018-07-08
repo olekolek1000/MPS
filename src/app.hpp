@@ -24,7 +24,6 @@ private:
     int fb_w, fb_h; 
     std::vector<GlobalEvent>events;
     float proportions;
-    Fps fpstimer;
 
     bool fullscreen;
     bool vsync;
@@ -33,22 +32,24 @@ private:
     int areawidth=1, areaheight=1;
     float areamultipler=1.0;
 
-    uint fps_last=0;
-    uint fps_frames=0;
-    uint fps_limit_hz=0;
+    int fps_last=0;
+    int fps_frames=0;
+    int fps_limit_hz=0;
     bool fps_limit;
-    uint fps=0;
+    int fps=0;
     uint64_t fps_frametime = 0;
     uint64_t fps_frametime_last = 0;
+    Fps fpstimer;
 
     bool debugger = false;
     Texture fps_text;
- 
+    
     const Uint8 * keystate;
 
     void updateProportions();
     void updateDebugger();
     void runApplication();//app_run.cpp
+
 public:
     TTF_Font * font10 = NULL;
     TTF_Font * font16 = NULL;
@@ -81,11 +82,11 @@ public:
     bool isDebuggerOpened();
     bool isVSyncActive();
     bool isFPSLimitActive();
-    uint getFPSLimit();
+    int getFPSLimit();
     bool isPressed(int scancode);
 	bool isHidden();
     void pushEvent(GlobalEvent event);
-    void setFpsLimit(uint n);
+    void setFpsLimit(int n);
     void makeGLCurrent();
 
     void init();

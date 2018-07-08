@@ -1,11 +1,25 @@
+#WARNING
+#I'm not the CMake expert. 
+#You can help me if you want.
+
 cmake_minimum_required(VERSION 3.0)
 project(MPS)
 
+set(TYPE "Release")#Debug, Normal, Release
 set(PLATFORM "Linux")#Linux, Windows
 set(ROOT "./src/") 
-set (CMAKE_CXX_FLAGS "-Wall -I ./src -O3 -std=c++11")
 
 add_definitions(-DInstall=${Install})
+
+if(TYPE STREQUAL "Debug")
+	set (CMAKE_CXX_FLAGS "-Wall -I ./src -g -std=c++11")
+endif()
+if(TYPE STREQUAL "Normal")
+	set (CMAKE_CXX_FLAGS "-Wall -I ./src -std=c++11")
+endif()
+if(TYPE STREQUAL "Release")
+	set (CMAKE_CXX_FLAGS "-Wall -I ./src -O3 -std=c++11")
+endif()
 
 if(PLATFORM STREQUAL "Linux")
 	set( CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "" )
@@ -21,6 +35,7 @@ if(PLATFORM STREQUAL "Windows")
 	set( CMAKE_C_COMPILER x86_64-w64-mingw32-gcc )
 	set( CMAKE_CXX_COMPILER x86_64-w64-mingw32-g++ )
 endif()
+
 
 SET(PROGRAM_SRCS
 	${ROOT}/app.cpp
@@ -38,6 +53,7 @@ SET(PROGRAM_SRCS
 	${ROOT}/fps.cpp
 	${ROOT}/lib/SDL2_rotozoom.cpp
 	${ROOT}/configmanager.cpp
+	${ROOT}/Discord.cpp
 	
 	${ROOT}/render/buffer.cpp
 	${ROOT}/render/func.cpp
@@ -73,43 +89,31 @@ SET(PROGRAM_SRCS
 	${ROOT}/scenes/editor/toolbox/tool/tool.cpp
 	${ROOT}/scenes/editor/toolbox/tool/eraser.cpp
 	${ROOT}/scenes/editor/toolbox/tool/rectangle.cpp
-)
-
+	)
+	 
 if(PLATFORM STREQUAL "Linux")
 	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/APP/linux64/)
 endif()
-
 if(PLATFORM STREQUAL "Windows")
 	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/APP/win64/)
 endif()
 
+
 add_executable(MPS "${PROGRAM_SRCS}")
+
 
 if(PLATFORM STREQUAL "Linux")
 	set_target_properties(MPS PROPERTIES OUTPUT_NAME "MPS64")
-
-	find_package(GLEW REQUIRED)
-	find_package(OpenGL REQUIRED)
-	find_package(Threads REQUIRED)
-
-	include_directories(
-		${GLEW_INCLUDE_DIRS}
-		${OPENGL_INCLUDE_DIRS}
-	)
-
-	target_link_libraries(MPS 
-		${GLEW_LIBRARIES}
-		${OPENGL_LIBRARIES}
-
-		${CMAKE_THREAD_LIBS_INIT}
-	)
 
 	target_link_libraries (MPS -lSDL2main)
 	target_link_libraries (MPS -lSDL2)
 	target_link_libraries (MPS -lSDL2_image)
 	target_link_libraries (MPS -lSDL2_ttf)
+	target_link_libraries (MPS -lGLEW)
+	target_link_libraries (MPS -lGL)
+	target_link_libraries (MPS -lpthread)
 	target_link_libraries (MPS -no-pie)
-
+	target_link_libraries (MPS ${CMAKE_SOURCE_DIR}/src/lib/libdiscord-rpc.a)
 endif() 
 
 if(PLATFORM STREQUAL "Windows")
@@ -125,5 +129,8 @@ if(PLATFORM STREQUAL "Windows")
 	target_link_libraries (MPS -lole32)
 	target_link_libraries (MPS -loleaut32)
 	target_link_libraries (MPS -lcomdlg32)
-	target_link_libraries (MPS -mwindows)
+	if(TYPE STREQUAL "Release")
+		target_link_libraries (MPS -mwindows)
+	endif()
 endif()
+

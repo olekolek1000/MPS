@@ -11,7 +11,6 @@
 #include <signal.h>
 #include <execinfo.h>
 #include <unistd.h>
-
 void signalHandler(int sig){
     stringstream ss;
     ss<<"PROGRAM CRASH, signal "<<sig<<"\n See stderr (program output) for more info.";
@@ -43,6 +42,7 @@ void App::runApplication() {
             }
             #endif
             makeGLCurrent();
+
             editor.loop();
         }
     }

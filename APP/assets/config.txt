@@ -16,7 +16,7 @@ windowMaximized=1
 #Set interface DPI.
 #auto - Set DPI automatically depending on your physical monitor dimensions.
 #any number - Set DPI manually. Default: 96
-guiDPI=auto
+guiDPI=96
 
 #Set VSync (increases input latency, 0-1)
 vsync=0
@@ -25,7 +25,7 @@ vsync=0
 fpslimit=1
 #Set FPS limit (works only if fpslimit=1)
 #auto - set FPS limit to your display Hz
-#any number - Set FPS manually.
+#any number - Set FPS manually. (Minimum value: 20 Hz)
 fpslimit_fps=auto
 
 #Set animation speed.

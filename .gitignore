@@ -3,3 +3,5 @@ CMakeFiles
 .git
 cmake_install.cmake
 Makefile
+.vscode
+src/.vscode

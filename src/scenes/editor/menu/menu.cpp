@@ -5,6 +5,7 @@
 #include <vector>
 #include <list>
 #include <sstream>
+#include <time.h>
 
 #include "menu.hpp"
 #include "../editor.hpp"
@@ -29,6 +30,18 @@
 Menu::Menu(sceneEditor * scene){
 	this->scene = scene;
 	this->a = &scene->a; 
+
+	DiscordRichPresence menuPresence;
+	memset(&menuPresence, 0, sizeof(menuPresence));
+	menuPresence.state = "Does nothing";
+    menuPresence.largeImageKey = "menu";
+	menuPresence.largeImageText = "In app menu";
+	menuPresence.smallImageKey = "icon";
+	menuPresence.smallImageText = "Moving Picture Studio";
+    menuPresence.instance = 1;
+    menuPresence.startTimestamp = time(0);
+	scene->discord_status.updateStatus(&menuPresence);
+
 }
 
 Menu::~Menu(){
