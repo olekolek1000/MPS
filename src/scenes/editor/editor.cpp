@@ -13,6 +13,7 @@
 #include <sstream>
 #include <time.h>
 
+#ifdef __linux__
 void setEditorPresence(DiscordRPC* discord_status) {
 	DiscordRichPresence editorPresence;
 	memset(&editorPresence, 0, sizeof(editorPresence));
@@ -25,7 +26,7 @@ void setEditorPresence(DiscordRPC* discord_status) {
     editorPresence.startTimestamp = time(0);
 	discord_status->updateStatus(&editorPresence);
 }
-
+#endif
 void sceneEditor::setProjection(){
     int w = a.getAreaWidth();
     int h = a.getAreaHeight();
@@ -85,16 +86,10 @@ void sceneEditor::load(){
     frameselector.init(this);
 	layerMan.init(this);layerMan.setCurrentFrame(frameMan.getCurrentFrame());
 
+	#ifdef __linux__
 	discord_status.init();
-	/*
-	discord_status.setLargeImageKey("drawing");
-	discord_status.setLargeImageText("In MPS editor");
-	discord_status.setSmallImageKey("icon");
-	discord_status.setSmallImageText("Moving Picture Studio");
-	discord_status.updateStatus();
-	*/
-
 	setEditorPresence(&discord_status);
+	#endif
 
 	actionlog.addMessage("Program started successfully.", 3.0f);
 	actionlog.addMessage("Press ESC to open menu.", 3.0f);
@@ -256,7 +251,9 @@ void sceneEditor::loop(){
 			menuopenrequest=false;
 			Menu menu(this);
 			menu.loop();
+			#ifdef __linux__
 			setEditorPresence(&discord_status);
+			#endif
 			step.reset();
 			setProjection();
 		}
@@ -264,8 +261,9 @@ void sceneEditor::loop(){
 			a.updateAll();
 		}
     }
-
+	#ifdef __linux__
 	discord_status.exit();
+	#endif
 }
 
 void sceneEditor::changeFrame(int n){

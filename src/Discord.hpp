@@ -16,6 +16,7 @@
  */
 
 #pragma once 
+#ifdef __linux__
 #include <lib/discord_rpc.h>
 #include <string>
 
@@ -107,3 +108,4 @@ public:
 
         void exit();
 };
+#endif

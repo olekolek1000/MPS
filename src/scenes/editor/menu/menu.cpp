@@ -30,7 +30,7 @@
 Menu::Menu(sceneEditor * scene){
 	this->scene = scene;
 	this->a = &scene->a; 
-
+	#ifdef __linux__
 	DiscordRichPresence menuPresence;
 	memset(&menuPresence, 0, sizeof(menuPresence));
 	menuPresence.state = "Does nothing";
@@ -41,6 +41,7 @@ Menu::Menu(sceneEditor * scene){
     menuPresence.instance = 1;
     menuPresence.startTimestamp = time(0);
 	scene->discord_status.updateStatus(&menuPresence);
+	#endif
 
 }
 

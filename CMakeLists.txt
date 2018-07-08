@@ -6,7 +6,7 @@ cmake_minimum_required(VERSION 3.0)
 project(MPS)
 
 set(TYPE "Release")#Debug, Normal, Release
-set(PLATFORM "Linux")#Linux, Windows
+set(PLATFORM "Windows")#Linux, Windows
 set(ROOT "./src/") 
 
 add_definitions(-DInstall=${Install})
