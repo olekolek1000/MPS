@@ -5,7 +5,6 @@
 #include <vector>
 #include <list>
 #include <sstream>
-#include <time.h>
 
 #include "menu.hpp"
 #include "../editor.hpp"
