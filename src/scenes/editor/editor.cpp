@@ -5,13 +5,11 @@
 #include "toolbox/toolbox.hpp"
 
 #include "render/func.hpp"
-
 #include "lib/sdl_image.hpp"
 #include "error.hpp"
 #include "menu/menu.hpp"
 
 #include <sstream>
-#include <time.h>
 #include "gui/checkbox.hpp"
 
 void sceneEditor::setProjection(){
