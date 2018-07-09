@@ -37,7 +37,7 @@ animationSpeed=1.0
 #Set theme (./assets/editor/themes)
 #Default: default
 #For dark version of Default use: default-dark
-theme=default-dark
+theme=default
 
 ####################### developer settings #######################
 #frame resizing still not implemented
