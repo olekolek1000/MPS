@@ -33,9 +33,7 @@ public:
 	ShaderManager shMan; 
 	FramebufferManager fbMan;
 	Timestep step;
-
 	Texture tex_render;
- 
 	FrameManager frameMan;
 	Drawer drawer;
     Toolbox toolbox; 
