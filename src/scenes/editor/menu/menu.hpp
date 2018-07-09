@@ -23,6 +23,7 @@ private:
 	float animspeed = 0.1;
 	int exit_delay_start=12;
 	int exit_delay=0;
+	bool projectionChanged=false;
 	
 	bool wasFullscreen;
 	void dialogPrepare();

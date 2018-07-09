@@ -169,6 +169,12 @@ void Menu::loop(){
 	step.setRate(30);
 	step.setSpeed(scene->a.config.getvarF("animationSpeed"));
 
+	for(int i=0; i<350; i++){
+		stars.push_back(Star());
+		stars.back().init();
+		stars.back().time=rand()%star_lifetime;
+	}
+
 	bool end=false;
 	while(!end){
 		while(a->eventHandle(&evt)){
@@ -201,6 +207,7 @@ void Menu::loop(){
 		while(a->onEvent()){
 			switch(a->getEvent()){
 				case GlobalEvent::WindowSizeChange:{
+					projectionChanged=true;
 					setProjection();
 					break;
 				}
@@ -225,6 +232,9 @@ void Menu::loop(){
 			z = z + (z_target-z)*animspeed;
 		
 			if(exit_delay>0){
+				if(projectionChanged){
+					end=true;
+				}
 				exit_delay--;
 				if(exit_delay==0){
 					end=true;
@@ -294,6 +304,7 @@ void Menu::loop(){
 				a->shMan["default2d"].select().setM(&model).setP(&projection);
 				a->square_vert->draw(GL_TRIANGLES);
 			}
+			if(!projectionChanged)
 			{//3d screen overlay
 				buf_plane.bind().attrib(0,3,GL_FLOAT);
 				a->square_uv->bind().attrib(1,2,GL_FLOAT);

@@ -609,7 +609,6 @@ void Drawer::update(){
 		cameraZoom=0.02;
 	}
 }
-#include <iostream>
 
 void Drawer::render(float alpha){
     

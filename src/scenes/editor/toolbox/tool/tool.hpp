@@ -2,6 +2,7 @@
 
 #include <string>
 #include "lib/sdl.hpp"
+#include "globalevent.hpp"
 
 class sceneEditor;
 class Toolbox;
@@ -31,6 +32,7 @@ public:
     virtual void eventMouseDown(){};
     virtual void eventMouseUp(){};
     virtual bool pushEvent(SDL_Event * evt){return false;};
+    virtual void pushGlobalEvent(GlobalEvent evt){};
     virtual void render(){};
     virtual void update(){};
     virtual void select(){};
