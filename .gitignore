@@ -9,3 +9,4 @@ APP/win64/*.dll
 APP/win64/*.exe
 TriggeredSRC
 APP/assets/editor/themes/default-dark/DevFiles
+.gitignore
