@@ -3,13 +3,13 @@
 #You can help me if you want.
 
 cmake_minimum_required(VERSION 3.0)
-
 project(MPS)
 
-
-set(TYPE "Normal")#Debug, Normal, Release
+set(TYPE "Release")#Debug, Normal, Release
 set(PLATFORM "Linux")#Linux, Windows
 set(ROOT "./src/")  
+
+add_definitions(-DInstall=${Install})
 
 if(TYPE STREQUAL "Debug")
 	set (CMAKE_CXX_FLAGS "-Wall -I ./src -g -std=c++11")
@@ -113,9 +113,7 @@ if(PLATFORM STREQUAL "Linux")
 	target_link_libraries (MPS -lGL)
 	target_link_libraries (MPS -lpthread)
 	target_link_libraries (MPS -no-pie)
-
-endif() 
-
+endif()
 if(PLATFORM STREQUAL "Windows")
 	set_target_properties(MPS PROPERTIES OUTPUT_NAME "MPS64.exe")
 	
