@@ -5,3 +5,5 @@ cmake_install.cmake
 Makefile
 .vscode
 src/.vscode
+APP/win64/*.dll
+APP/win64/*.exe
