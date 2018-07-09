@@ -15,11 +15,10 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-#ifdef __linux__
 #include "Discord.hpp"
 #include <string.h>
 #include <lib/discord_rpc.h>
-
+#ifdef __linux__
 /* Constructor */
     
     DiscordRPC::DiscordRPC() {
@@ -173,5 +172,5 @@
     
     void DiscordRPC::exit() {
         Discord_Shutdown();
-    }
-#endif    
+    }   
+#endif

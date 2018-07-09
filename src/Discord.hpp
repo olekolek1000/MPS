@@ -16,10 +16,9 @@
  */
 
 #pragma once 
-#ifdef __linux__
 #include <lib/discord_rpc.h>
 #include <string>
-
+#ifdef __linux__
 class DiscordRPC {
 private:
     /* Default engine data */
