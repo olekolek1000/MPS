@@ -485,7 +485,7 @@ void Menu::actionLoadProject(){
 
 					scene->frameMan.clearFrames();
 					//frames
-					for(int i=0; i<frameCount/5; i++){
+					for(int i=0; i<frameCount; i++){
 						int width;
 						file.read((char*)&width, sizeof(int));//width
 						int height;
