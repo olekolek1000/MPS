@@ -5,12 +5,7 @@
 cmake_minimum_required(VERSION 3.0)
 project(MPS)
 
-<<<<<<< HEAD
 set(TYPE "Release")#Debug, Normal, Release
-=======
-
-set(TYPE "Normal")#Debug, Normal, Release
->>>>>>> upstream/master
 set(PLATFORM "Linux")#Linux, Windows
 set(ROOT "./src/")  
 
