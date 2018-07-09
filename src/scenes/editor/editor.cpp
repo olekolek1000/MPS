@@ -13,6 +13,7 @@
 #include <sstream>
 #include <time.h>
 
+<<<<<<< HEAD
 #ifdef __linux__
 void setEditorPresence(DiscordRPC* discord_status) {
 	DiscordRichPresence editorPresence;
@@ -27,6 +28,10 @@ void setEditorPresence(DiscordRPC* discord_status) {
 	discord_status->updateStatus(&editorPresence);
 }
 #endif
+=======
+#include "gui/checkbox.hpp"
+
+>>>>>>> 3e92988ece9624b3ea351b19e0fceeb90620d398
 void sceneEditor::setProjection(){
     int w = a.getAreaWidth();
     int h = a.getAreaHeight();
@@ -106,7 +111,7 @@ void sceneEditor::openMenu(){
 void sceneEditor::loop(){
     SDL_Event evt;
     bool end=false;
-	
+
     while(!end){
         while(a.eventHandle(&evt)){
 			switch(evt.type){

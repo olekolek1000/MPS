@@ -27,6 +27,7 @@ public:
 	void reloadThemes(sceneEditor * scene);
     std::string getLocation(std::string location);
     std::string getLocationDefault(std::string location);
+    std::string getThemeName();
     void removeTexture(const char * n);
     Texture & operator [](const char* n);
 };

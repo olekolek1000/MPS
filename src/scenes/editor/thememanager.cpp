@@ -11,7 +11,7 @@ ThemeManager::ThemeManager(){
 	themeName = defaultThemeName;
 	loadVariables();
     std::fstream file;
-    file.open(std::string(std::string(LOC_ROOT)+std::string("/editor/themes/default.txt")).c_str(), std::ios::in);
+    file.open(std::string(std::string(LOC_ROOT)+std::string("editor/themes/default.txt")).c_str(), std::ios::in);
     std::string theme;
     std::getline(file, theme);
     file.close();
@@ -75,6 +75,7 @@ void ThemeManager::loadTheme(std::string name){
 
     addTexture("background","background.png",RGB);
     addTexture("button","button.png",RGBA);
+    addTexture("checkbox","checkbox.png",RGBA);
     addTexture("cs/point","colorselector/point.png",RGBA);
     addTexture("cs/scroll","colorselector/scroll.png",RGBA,NEAREST);
     addTexture("fs/background1","frameselector/background1.png",RGBA);
@@ -95,6 +96,7 @@ void ThemeManager::loadTheme(std::string name){
     addTexture("icons/undo","icons/undo.png", RGBA);
     addTexture("icons/redo","icons/redo.png", RGBA);
     addTexture("icons/menubutton","icons/menubutton.png",RGBA);
+    addTexture("icons/checkbox","icons/checkbox.png",RGBA);
     addTexture("tb/background1","toolbox/background1.png",RGBA);
 }
 
@@ -108,6 +110,9 @@ std::string ThemeManager::getLocation(std::string location){
     return ss.str();
 }
 
+std::string ThemeManager::getThemeName(){
+    return themeName;
+}
 
 std::string ThemeManager::getLocationDefault(std::string location){
     std::stringstream ss;

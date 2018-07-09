@@ -64,7 +64,7 @@ void App::init() {
     //SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
     //SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 	//SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
-	//SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 16);
+	//SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 8);
     //SDL_GL_SetAttribute(SDL_GL_RED_SIZE,8);
     //SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,8);
     //SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,8);
@@ -129,14 +129,14 @@ void App::init() {
             App::setAreaMultipler(96.0/dpi);
         }
     }
-    else{
+    else{ 
         App::setAreaMultipler(96.0/config.getvarF("guiDPI"));
     }
 
     vsync = config.getvarI("vsync");
     SDL_GL_SetSwapInterval(vsync);
     fps_limit = config.getvarI("fpslimit");
-
+ 
     if(config.getvarS("fpslimit_fps")=="auto"){
         SDL_DisplayMode current;
         SDL_GetCurrentDisplayMode(SDL_GetWindowDisplayIndex(window), &current);
@@ -151,8 +151,7 @@ void App::init() {
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glDisable(GL_DEPTH_TEST);
-    glDisable(GL_DITHER);
+    glEnable(GL_DITHER);
     glEnable(GL_LINE_SMOOTH);
 
     static const GLfloat square_vert_data[] = {0,0, 0,1, 1,1, 0,0, 1,0, 1,1};
@@ -428,34 +427,6 @@ void App::updateWindow() {
             updateDebugger();
         }
     }
-}
-
-void App::blitFramebuffer(Framebuffer * buffer){
-    #ifdef USE_FRAMEBUFFER
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    glViewport(0, 0, window_w, window_h);
-    Shader & default2d = shMan["default2d"];
-    default2d.select();
-    glBindTexture(GL_TEXTURE_2D,buffer->getTexture());
-    glBindBuffer(GL_ARRAY_BUFFER, square_vert);
-    glVertexAttribPointer(0,2,GL_FLOAT,GL_FALSE,0,(void*)0);
-    glBindBuffer(GL_ARRAY_BUFFER, square_uv);
-    glVertexAttribPointer(1,2,GL_FLOAT,GL_FALSE,0,(void*)0);
-
-    xReset(&model);
-    if(window_w>window_h*proportions) { //width-wide
-        xTranslate(&model,0.5-(window_h*proportions)/(float)window_w/2.0, 0.0);
-        xScale(&model, (window_h*proportions)/(float)window_w, 1.0f);
-    } else { //height-wide
-        xTranslate(&model,0.0, 0.5-(window_w/proportions)/(float)window_h/2.0);
-        xScale(&model, 1.0f, (window_w/proportions)/(float)window_h);
-    }
-    default2d.setM(&model);
-    projection=glm::ortho(0.0f,1.0f,1.0f,0.0f);
-    default2d.setP(&projection);
-
-    glDrawArrays(GL_TRIANGLES, 0, 6);
-    #endif
 }
 
 void App::updateDebugger(){

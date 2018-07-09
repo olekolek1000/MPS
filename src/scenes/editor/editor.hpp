@@ -50,7 +50,7 @@ public:
 	void openMenu();
 
 	void setProjection();
-	virtual void loop();
+	void loop();
 
 	void changeFrame(int n);
 
