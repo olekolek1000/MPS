@@ -7,9 +7,9 @@ cmake_minimum_required(VERSION 3.0)
 project(MPS)
 
 
-set(TYPE "Release")#Debug, Normal, Release
+set(TYPE "Normal")#Debug, Normal, Release
 set(PLATFORM "Linux")#Linux, Windows
-set(ROOT "./src/") 
+set(ROOT "./src/")  
 
 if(TYPE STREQUAL "Debug")
 	set (CMAKE_CXX_FLAGS "-Wall -I ./src -g -std=c++11")
@@ -88,6 +88,7 @@ SET(PROGRAM_SRCS
 	${ROOT}/scenes/editor/toolbox/tool/tool.cpp
 	${ROOT}/scenes/editor/toolbox/tool/eraser.cpp
 	${ROOT}/scenes/editor/toolbox/tool/rectangle.cpp
+	${ROOT}/scenes/editor/toolbox/tool/resize.cpp
 	)
 	 
 if(PLATFORM STREQUAL "Linux")

@@ -26,7 +26,6 @@ void App::init() {
     LOC_ROOT = new char[rootloc.size()+1];
     memcpy((void*)LOC_ROOT, rootloc.c_str(), rootloc.size());
     LOC_ROOT[rootloc.size()]='\0';
-    config_root.close();
 
     if(config.open("config.txt")==false){
         error("Cannot open file \"config.txt\"");
@@ -166,7 +165,6 @@ void App::init() {
 
     App::runApplication();
 
-    config.close();
     delete[] LOC_ROOT;
 }
 

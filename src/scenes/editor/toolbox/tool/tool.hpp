@@ -33,7 +33,7 @@ public:
     virtual void eventMouseUp(){};
     virtual bool pushEvent(SDL_Event * evt){return false;};
     virtual void pushGlobalEvent(GlobalEvent evt){};
-    virtual void render(){};
+    virtual void render(float alpha){};
     virtual void update(){};
     virtual void select(){};
     virtual ~Tool(){};

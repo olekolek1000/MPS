@@ -58,13 +58,13 @@ void Spray::update(){
 	box_size.update();
 	box_intensity.update();
 }
-void Spray::render(){
+void Spray::render(float alpha){
     drawer->setBrushCircleSize(box_size.getValue());
 	box_intensity.setPosition(toolbox->getSettingsX(),toolbox->getSettingsY()).setSize(toolbox->getWidth(),45);
-	box_intensity.render();
+	box_intensity.render(alpha);
 	
 	box_size.setPosition(toolbox->getSettingsX(),toolbox->getSettingsY()+45).setSize(toolbox->getWidth(),75);
-	box_size.render();
+	box_size.render(alpha);
 }
 void Spray::select(){
     toolbox->setSettingsHeight(120);

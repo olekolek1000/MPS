@@ -7,3 +7,4 @@
 #include "line.hpp"
 #include "eraser.hpp"
 #include "rectangle.hpp"
+#include "resize.hpp"

@@ -2,10 +2,13 @@
 #include "lib/opengl.hpp"
 #include "transform.hpp"
 #include "../editor.hpp"
+#include "text.hpp"
 
 #include "lib/glm.hpp"
 
 #include "render/func.hpp"
+
+#include "timestep.hpp"
 
 int GuiButton::getWidth(){
     return width;
@@ -72,6 +75,12 @@ bool GuiButton::pushEvent(SDL_Event * evt){
             break;
         }
         case SDL_MOUSEMOTION:{
+            if(evt->motion.x*scene->a.getAreaMultipler()>=posX&&evt->motion.y*scene->a.getAreaMultipler()>=posY&&evt->motion.x*scene->a.getAreaMultipler()<posX+width&&evt->motion.y*scene->a.getAreaMultipler()<posY+height){
+                hovered=true;
+            }
+            else{
+                hovered=false;
+            }
             if(pressed){
                 used=true;
             }
@@ -101,10 +110,24 @@ GuiButton::GuiButton(){
 
 GuiButton::~GuiButton(){
 	delete (glm::mat4*)model;
+    if(text!=NULL){
+        delete text;
+    }
 }
 
-GuiButton & GuiButton::render(){
+GuiButton & GuiButton::update(){
+    scale_smooth_prev=scale_smooth;
+    scale_smooth+= (scale-scale_smooth)*0.5f;
+    if(hovered){
+        scale=1.15f;
+    }
+    else{
+        scale=1.0f;
+    }
+    return *this;
+}
 
+GuiButton & GuiButton::render(float alpha){
     xReset((glm::mat4*)model);
     if(!pressed){
         xTranslate((glm::mat4*)model, posX,posY);
@@ -113,6 +136,7 @@ GuiButton & GuiButton::render(){
         xTranslate((glm::mat4*)model, posX+2,posY+2);
     }
     xScale((glm::mat4*)model,width, height);
+
     scene->shGui.select();
     scene->shGui.setM((glm::mat4*)model);
 
@@ -123,14 +147,32 @@ GuiButton & GuiButton::render(){
         scene->thMan["button"].select();
         scene->a.square_vert->draw(GL_TRIANGLES);
     }
+    float scale = alphize(alpha, scale_smooth_prev, scale_smooth);
     if(texture!=NULL){
         texture->select();
+        xReset((glm::mat4*)model);
+        xTranslate((glm::mat4*)model, posX-width*(scale-1.0f)/2.0f+(pressed==1 ? 2 : 0), posY-height*(scale-1.0f)/2.0f+(pressed==1 ? 2 : 0));
+
+        xScale((glm::mat4*)model, width*scale, height*scale);
+        scene->shGui.setM((glm::mat4*)model);
         scene->a.square_vert->draw(GL_TRIANGLES);
+    }
+    if(text!=NULL){
+        text->setBackgroundColor(0.0f,0.0f,0.0f,(scale-1.0f)*2.0f).setPosition(posX+width/2+(pressed==1 ? 2 : 0), posY+height/2+(pressed==1 ? 2 : 0)).render();
     }
     return *this;
 }
 
 GuiButton & GuiButton::setTexture(Texture * texture){
     this->texture = texture;
+    return *this;
+}
+
+GuiButton & GuiButton::setText(std::string text, TTF_Font * font, char r, char g, char b){
+    if(this->text!=NULL){
+        delete this->text;
+    }
+    this->text = new GuiText(scene, text, font, r, g, b);
+    this->text->setAlign(1,1);
     return *this;
 }

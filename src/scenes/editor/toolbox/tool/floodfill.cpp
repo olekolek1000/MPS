@@ -10,7 +10,6 @@ void FloodFill::init(){
 void FloodFill::eventMouseMove(int x, int y){
     this->x=x;
     this->y=y;
-
 }
 
 void FloodFill::eventMouseDown(){
@@ -60,7 +59,7 @@ bool FloodFill::pushEvent(SDL_Event * evt){
 void FloodFill::update(){
 
 }
-void FloodFill::render(){
+void FloodFill::render(float alpha){
 
 }
 void FloodFill::select(){

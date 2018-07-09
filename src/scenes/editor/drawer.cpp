@@ -97,13 +97,13 @@ void Drawer::activePreviewAlpha(float alpha){
 }
 
 void Drawer::updateBorders(){
-	float alpha = scene->thMan.getVariableF("drawerBorderAlpha");
-	float r = scene->thMan.getVariableF("drawerBorderColorR");
-	float g = scene->thMan.getVariableF("drawerBorderColorG");
-	float b = scene->thMan.getVariableF("drawerBorderColorB");
+    float alpha = scene->thMan.config.getvarF("drawerBorderAlpha");
+	float r = scene->thMan.config.getvarF("drawerBorderColorR");
+	float g = scene->thMan.config.getvarF("drawerBorderColorG");
+	float b = scene->thMan.config.getvarF("drawerBorderColorB");
 	{
 		float sLeft,sRight,sUp,sDown;
-		float size = scene->thMan.getVariableF("drawerBorderSize");
+		float size = scene->thMan.config.getvarF("drawerBorderSize");
 		if(currentFrame==NULL){
 			sLeft=size;
 			sRight=size;

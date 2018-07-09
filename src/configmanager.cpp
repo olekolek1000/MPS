@@ -12,6 +12,7 @@ bool ConfigManager::open(const char* filename){
         file.open(std::string(LOC_ROOT+std::string(filename)).c_str(), std::ios::in);
     }
     if(file.good()){
+        good=true;
         while(!file.eof()){
             std::string input;
             std::getline(file, input);
@@ -25,21 +26,18 @@ bool ConfigManager::open(const char* filename){
                 }
             }
         }
-        closed=false;
+        file.close();
         return true;
     }
     return false;
 }
 
-void ConfigManager::close(){
-    if(!closed){
-        file.close();
-        closed=true;
-    }
+bool ConfigManager::isGood(){
+    return good;
 }
 
 ConfigManager::~ConfigManager(){
-    close();
+    
 }
 
 std::string ConfigManager::getvarS(const char* n){

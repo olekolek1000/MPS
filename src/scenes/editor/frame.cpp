@@ -106,6 +106,20 @@ Frame::~Frame(){
     free();
 }
 
+void Frame::resize(int width, int height){
+    for(uint i=0; i<layers.size(); i++){
+        Layer * layer = layers[i];
+        SDL_Surface * surf = SDL_CreateRGBSurfaceWithFormat(0, width, height, 32, layer->getCanvas()->format->format);
+        SDL_BlitSurface(layer->getCanvas(), NULL, surf, NULL);
+        SDL_FreeSurface(layer->canvas);
+        layer->canvas = surf;
+        layer->forceUpdate();
+    }
+    this->width = width;
+    this->height = height;
+    
+}
+
 void Frame::free(){
     if(loaded){
         loaded=false;

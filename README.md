@@ -29,31 +29,34 @@ The ideas are also welcome ;)
 -Tool: Bucket fill<br>
 -Tool: Pipette<br>
 -Tool: Eraser<br>
+-Tool: Rectangle<br>
+-Tool: Resize (still WIP)<br>
 -Zoomable viewport<br>
 -Dynamic Rotatable viewport<br>
 -Scalable GUI<br>
+-Theme manager with config files (still WIP)<br>
 
 <b>===Partially done (Works fine, but there may be a lot of changes in the future):</b><br>
 -Layer support<br>
 -Toolbox<br>
 -Color selector<br>
--Ghosting<br>
--Theme manager<br>
--Tool: Rectangle<br>
+-Ghosting (more options)<br>
+
 -Menu
 
 <b>===To do:</b><br>
--Import GIF<br>
+-Import animation<br>
 -Export PNG strip<br>
+-use FFMPEG (avcodec) for everything<br>
 -"Play animation" button<br>
 -Tool: Brush (draw using any image)<br>
 -Tool: Circle<br>
 -Tool: Select<br>
 -Copy/paste<br>
--Resize image<br>
 -Compressed history (less RAM usage, more history actions)<br>
+-Compressed frames not in use<br>
 -Change key bindings<br>
--Settings (in menu)<br>
+-GUI settings (in menu)<br>
 
 <b>===In the distant future:</b><br>
 -Tablet pressure support (I'm waiting for the SDL library)<br>

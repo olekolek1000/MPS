@@ -49,7 +49,7 @@ bool Rectangle::pushEvent(SDL_Event * evt){
 }
 
 
-void Rectangle::render(){
+void Rectangle::render(float alpha){
     
 }
 
