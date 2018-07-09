@@ -23,31 +23,31 @@
     
     DiscordRPC::DiscordRPC() {
         Discord_Shutdown();
-        this->init();
     }
         
 /* Init Method */
 
     void DiscordRPC::init() {
-        DiscordEventHandlers handlers;
-        memset(&handlers, 0, sizeof(handlers));
-        Discord_Initialize(DiscordID, &handlers, 1, NULL);
+        if(activeRPC == true) {
+            DiscordEventHandlers handlers;
+            memset(&handlers, 0, sizeof(handlers));
+            Discord_Initialize(DiscordID, &handlers, 1, NULL);
 
-        DiscordRichPresence discordPresence;
-        memset(&discordPresence, 0, sizeof(discordPresence));
-        discordPresence.state = State.c_str();
-        discordPresence.details = Details.c_str();
-        discordPresence.largeImageKey = LargeImageKey.c_str();
-        discordPresence.largeImageText = LargeImageText.c_str();
-        discordPresence.instance = 1;
-        discordPresence.startTimestamp = 0;
-        Discord_UpdatePresence(&discordPresence);
+            DiscordRichPresence discordPresence;
+            memset(&discordPresence, 0, sizeof(discordPresence));
+            discordPresence.state = State.c_str();
+            discordPresence.details = Details.c_str();
+            discordPresence.largeImageKey = LargeImageKey.c_str();
+            discordPresence.largeImageText = LargeImageText.c_str();
+            discordPresence.instance = 1;
+            discordPresence.startTimestamp = 0;
+            Discord_UpdatePresence(&discordPresence);
 
-        memset(&this->statusData, 0, sizeof(statusData));
+            memset(&this->statusData, 0, sizeof(statusData));   
+        }
     }
 
 /* Status methods */
-
     //Get and set state
     std::string DiscordRPC::getState() {
         return this->statusData.state;
@@ -162,10 +162,14 @@
 
     //Update status
     void DiscordRPC::updateStatus() {
-        Discord_UpdatePresence(&statusData);
+        if(activeRPC == true) {
+            Discord_UpdatePresence(&statusData);
+        }
     }
     void DiscordRPC::updateStatus(const DiscordRichPresence* presence) {
-        Discord_UpdatePresence(presence);
+        if(activeRPC == true) {
+            Discord_UpdatePresence(presence);
+        }
     }
 
 /* Exit function */

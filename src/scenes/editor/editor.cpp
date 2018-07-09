@@ -13,7 +13,6 @@
 #include <sstream>
 #include <time.h>
 
-<<<<<<< HEAD
 #ifdef __linux__
 void setEditorPresence(DiscordRPC* discord_status) {
 	DiscordRichPresence editorPresence;
@@ -28,10 +27,9 @@ void setEditorPresence(DiscordRPC* discord_status) {
 	discord_status->updateStatus(&editorPresence);
 }
 #endif
-=======
+
 #include "gui/checkbox.hpp"
 
->>>>>>> 3e92988ece9624b3ea351b19e0fceeb90620d398
 void sceneEditor::setProjection(){
     int w = a.getAreaWidth();
     int h = a.getAreaHeight();
@@ -91,10 +89,16 @@ void sceneEditor::load(){
     frameselector.init(this);
 	layerMan.init(this);layerMan.setCurrentFrame(frameMan.getCurrentFrame());
 
-	#ifdef __linux__
-	discord_status.init();
-	setEditorPresence(&discord_status);
-	#endif
+	if(a.config.getvarI("rpc") == 1) {
+		discord_status.activeRPC = true;
+		discord_status.init();
+		#ifdef __linux__
+		discord_status.init();
+		setEditorPresence(&discord_status);
+		#endif
+	} else {
+		discord_status.activeRPC = false;
+	}
 
 	actionlog.addMessage("Program started successfully.", 3.0f);
 	actionlog.addMessage("Press ESC to open menu.", 3.0f);

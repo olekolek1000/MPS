@@ -33,6 +33,7 @@ private:
         char* appID;                    //ID of application
         DiscordRichPresence statusData; //Data of currect status
 public:
+    bool activeRPC = true;
     /* Constructor */
         
         DiscordRPC();

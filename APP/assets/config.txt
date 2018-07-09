@@ -34,6 +34,11 @@ fpslimit_fps=auto
 #2.0 - fast
 animationSpeed=1.0
 
+#Enable or disable discord rich presence 
+#0 - disable 
+#1 - enable 
+rpc=1
+
 ####################### developer settings #######################
 #frame resizing still not implemented
 newframe_width=640
