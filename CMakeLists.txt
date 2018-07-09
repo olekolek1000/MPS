@@ -9,7 +9,16 @@ set(TYPE "Release")#Debug, Normal, Release
 set(PLATFORM "Linux")#Linux, Windows
 set(ROOT "./src/")  
 
-add_definitions(-DInstall=${Install})
+add_definitions(-Dbin=${bin})
+get_directory_property(MYDEFS COMPILE_DEFINITIONS)
+MESSAGE( STATUS "Compile defs contain: " ${MYDEFS} )
+
+if(MYDEFS MATCHES "^bin=true" OR MYDEFS MATCHES ";bin=true")
+    add_definitions(-DInstall=true)
+else()
+    add_definitions(-DInstall=false)
+endif()
+
 
 if(TYPE STREQUAL "Debug")
 	set (CMAKE_CXX_FLAGS "-Wall -I ./src -g -std=c++11")
