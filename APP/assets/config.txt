@@ -34,6 +34,10 @@ fpslimit_fps=auto
 #2.0 - fast
 animationSpeed=1.0
 
+#Set theme (./assets/editor/themes)
+#Default: default
+theme=default
+
 ####################### developer settings #######################
 #frame resizing still not implemented
 newframe_width=640

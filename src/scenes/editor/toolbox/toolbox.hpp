@@ -41,7 +41,7 @@ private:
 public: 
     void init(sceneEditor * scene);
     void update();
-    void render();
+    void render(float alpha);
     Tool * getCurrentTool();
     Tool * getPreviousTool();
     void setCurrentTool(Tool * tool);

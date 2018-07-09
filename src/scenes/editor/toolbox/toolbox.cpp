@@ -56,6 +56,7 @@ void Toolbox::init(sceneEditor * scene){
     createTool(new FloodFill);
     createTool(new Pipette);
     createTool(new Eraser);
+    createTool(new Resize);
     
 	reloadTextures();
 
@@ -76,7 +77,7 @@ void Toolbox::init(sceneEditor * scene){
     }
 }
 
-void Toolbox::render(){
+void Toolbox::render(float alpha){
     scene->thMan["tb/background1"].select();
 
     Shader & sh = scene->shGui;
@@ -94,15 +95,15 @@ void Toolbox::render(){
 		scene->a.square_vert->draw(GL_TRIANGLES);
     }
     {//buttons
-        butUndo.render();
-        butRedo.render();
-        butMenu.render();
+        butUndo.render(alpha);
+        butRedo.render(alpha);
+        butMenu.render(alpha);
 
         textCurrentTool.render();
         textClock.render();
 
         for(uint i=0;i<buttons.size();i++){
-            buttons[i]->render();
+            buttons[i]->render(alpha);
         }
     }
 
@@ -117,7 +118,7 @@ void Toolbox::render(){
 		scene->a.square_uv->bind().attrib(1,2,GL_FLOAT);
 		scene->a.square_vert->draw(GL_TRIANGLES);
     }
-    currentTool->render();
+    currentTool->render(alpha);
 }
 
 Toolbox::~Toolbox(){
@@ -166,6 +167,13 @@ void Toolbox::update(){
         ss << ":"<< setfill('0') << setw(2)<<now->tm_min;
         ss << ":"<< setfill('0') << setw(2)<<now->tm_sec;
         textClock.changeText(ss.str(),scene->a.font24,255, 255, 255);
+    }
+
+    butMenu.update();
+    butUndo.update();
+    butRedo.update();
+    for(uint i=0;i<buttons.size();i++){
+        buttons[i]->update();
     }
 }
 

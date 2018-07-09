@@ -99,6 +99,10 @@ bool frameSelector::pushGlobalEvent(GlobalEvent evt){
 void frameSelector::update(){
     index_difference_prev = index_difference;
     index_difference *=0.6;
+
+    but_newframe.update();
+    but_newframetype.update();
+    but_removeframe.update();
 }
 
 void frameSelector::render(float alpha){
@@ -142,13 +146,13 @@ void frameSelector::render(float alpha){
             scene->a.square_vert->draw(GL_TRIANGLES);
 
             but_newframe.setPosition(offsetX+topWidth-35,offsetY+topHeight-35);
-            but_newframe.render();
+            but_newframe.render(alpha);
 
             but_newframetype.setPosition(but_newframe.getPosX()-but_newframetype.getWidth(),but_newframe.getPosY());
-            but_newframetype.render();
+            but_newframetype.render(alpha);
 
             but_removeframe.setPosition(offsetX+3,offsetY+topHeight-35);
-            but_removeframe.render();
+            but_removeframe.render(alpha);
 
         }
     }

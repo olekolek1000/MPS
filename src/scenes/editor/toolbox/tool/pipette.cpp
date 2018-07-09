@@ -58,7 +58,7 @@ void Pipette::update(){
         scaleMul*=0.7;
     }
 }
-void Pipette::render(){
+void Pipette::render(float alpha){
     if(isMoved){
         pixel_prev=pixel;
         pixel = drawer->getPoint(x, y);

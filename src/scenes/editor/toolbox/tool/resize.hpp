@@ -2,20 +2,18 @@
 
 #include "tool.hpp"
 #include "scenes/editor/gui/valuebox.hpp"
+#include "scenes/editor/gui/button.hpp"
 
-
-class Pencil : public Tool{
+class Resize : public Tool{
     bool down=false;
     int x,y,prevX,prevY;
     void draw();
 
-	GuiValueBox box;
-
+	GuiValueBox box_width;
+    GuiValueBox box_height;
+    GuiButton but_apply;
 public:
     void init();
-    void eventMouseMove(int x, int y);
-    void eventMouseDown();
-    void eventMouseUp();
     bool pushEvent(SDL_Event * evt);
     void update();
     void render(float alpha);

@@ -17,6 +17,6 @@ public:
     void eventMouseUp();
     bool pushEvent(SDL_Event * evt);
     void update();
-    void render();
+    void render(float alpha);
     void select();
 };

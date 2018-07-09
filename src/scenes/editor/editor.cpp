@@ -66,6 +66,7 @@ void sceneEditor::load(){
     frameMan.createFrame(a.config.getvarI("newframe_width"), a.config.getvarI("newframe_height"))->createLayer();
     frameMan.selectFrame(0);
 
+	thMan.init(this);
 	actionlog.init(this);
     drawer.init(this);drawer.setCurrentFrame(frameMan.getCurrentFrame());drawer.setCameraPosition(-a.config.getvarI("newframe_width")/2.0, -a.config.getvarI("newframe_height")/2.0);drawer.setZoomPixelPerfect(1);
     toolbox.init(this);
@@ -104,7 +105,7 @@ void sceneEditor::loop(){
                         }
 						case SDLK_RETURN:{
 							thMan.loadTheme("default");
-							thMan.reloadThemes(this);
+							thMan.reloadThemes();
 							actionlog.addMessage("Theme reloaded and changed to Default");
 							break;
 						}
@@ -223,10 +224,10 @@ void sceneEditor::loop(){
             }
 
             drawer.render(step.getAlpha());
-            toolbox.render();
+            toolbox.render(step.getAlpha());
             colorselector.render();
             frameselector.render(step.getAlpha());
-			layerMan.render();
+			layerMan.render(step.getAlpha());
 			actionlog.render();
 		}
 		if(menuopenrequest){

@@ -85,7 +85,7 @@ GuiValueBox& GuiValueBox::update(){
 	return *this;
 }
 
-GuiValueBox& GuiValueBox::render(){
+GuiValueBox& GuiValueBox::render(float alpha){
 	if(needupdatesize){
 		but_up->setPosition(posX,posY).setSize(height/2,height/2);
 		but_up->setTexture(&scene->thMan["icons/up"]);
@@ -99,8 +99,8 @@ GuiValueBox& GuiValueBox::render(){
 		needupdatesize=false;
 	}
 	
-	but_down->render();
-	but_up->render();
+	but_down->render(alpha);
+	but_up->render(alpha);
 	
 	if(valuechanged){
 		text_value->changeText(std::to_string(value),scene->a.font32,255,255,255);

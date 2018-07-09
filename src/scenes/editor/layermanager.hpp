@@ -31,5 +31,5 @@ public:
     void init(sceneEditor * scene);
     bool pushEvent(SDL_Event * evt);
     void update();
-    void render();
+    void render(float alpha);
 };
