@@ -42,7 +42,6 @@ void App::runApplication() {
             }
             #endif
             makeGLCurrent();
-
             editor.loop();
         }
     }
