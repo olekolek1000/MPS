@@ -160,13 +160,6 @@ void sceneEditor::loop(){
 			    }
 			}
 
-			if(evt.type == SDL_FINGERDOWN) {
-				char prsr[sizeof(float)];
-				size_t size = sizeof(float);
-				snprintf(prsr, size, "%f", evt.tfinger.pressure);
-				printf("Prsr: %f", evt.tfinger.pressure);
-			}
-
 			if(!toolbox.pushEvent(&evt)){
 				if(!colorselector.pushEvent(&evt)){
 					if(!frameselector.pushEvent(&evt)){
