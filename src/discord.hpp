@@ -18,7 +18,7 @@
 #pragma once 
 #include <lib/discord_rpc.h>
 #include <string>
-#ifdef __linux__
+
 class DiscordRPC {
 private:
     /* Default engine data */
@@ -43,6 +43,11 @@ public:
         void init();
            
     /* Status methods */
+
+        //Set status for editor
+        void setEditorPresence();
+        //Set status for menu
+        void setMenuPresence();
 
         //Get and set state
         std::string getState();
@@ -108,4 +113,4 @@ public:
 
         void exit();
 };
-#endif
+

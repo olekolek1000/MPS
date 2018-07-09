@@ -53,7 +53,7 @@ SET(PROGRAM_SRCS
 	${ROOT}/fps.cpp
 	${ROOT}/lib/SDL2_rotozoom.cpp
 	${ROOT}/configmanager.cpp
-	${ROOT}/Discord.cpp
+	${ROOT}/discord.cpp
 	
 	${ROOT}/render/buffer.cpp
 	${ROOT}/render/func.cpp

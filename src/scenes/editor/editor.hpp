@@ -15,7 +15,7 @@
 #include "layermanager.hpp"
 #include "actionlog.hpp"
 #include <map>
-#include "Discord.hpp"
+#include "discord.hpp"
 
 class sceneEditor{
     void load();
@@ -35,9 +35,9 @@ public:
 	FramebufferManager fbMan;
 	Timestep step;
 	Texture tex_render;
-	#ifdef __linux__
+
 	DiscordRPC discord_status;
-	#endif
+
 	FrameManager frameMan;
 	Drawer drawer;
     Toolbox toolbox; 

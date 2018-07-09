@@ -15,10 +15,10 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-#include "Discord.hpp"
+#include "discord.hpp"
 #include <string.h>
 #include <lib/discord_rpc.h>
-#ifdef __linux__
+
 /* Constructor */
     
     DiscordRPC::DiscordRPC() {
@@ -48,6 +48,34 @@
     }
 
 /* Status methods */
+
+    //Set status for editor
+    void DiscordRPC::setEditorPresence() {
+        DiscordRichPresence editorPresence;
+        memset(&editorPresence, 0, sizeof(editorPresence));
+        editorPresence.state = "Edits something";
+        editorPresence.largeImageKey = "drawing";
+        editorPresence.largeImageText = "In MPS editor";
+        editorPresence.smallImageKey = "icon";
+        editorPresence.smallImageText = "Moving Picture Studio";
+        editorPresence.instance = 1;
+        editorPresence.startTimestamp = time(0);
+        this->updateStatus(&editorPresence);
+    }
+
+    void DiscordRPC::setMenuPresence() {
+        DiscordRichPresence menuPresence;
+        memset(&menuPresence, 0, sizeof(menuPresence));
+        menuPresence.state = "Does nothing";
+        menuPresence.largeImageKey = "menu";
+        menuPresence.largeImageText = "In app menu";
+        menuPresence.smallImageKey = "icon";
+        menuPresence.smallImageText = "Moving Picture Studio";
+        menuPresence.instance = 1;
+        menuPresence.startTimestamp = time(0);
+        this->updateStatus(&menuPresence);
+    }
+
     //Get and set state
     std::string DiscordRPC::getState() {
         return this->statusData.state;
@@ -177,4 +205,3 @@
     void DiscordRPC::exit() {
         Discord_Shutdown();
     }   
-#endif

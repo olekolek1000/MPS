@@ -30,19 +30,9 @@
 Menu::Menu(sceneEditor * scene){
 	this->scene = scene;
 	this->a = &scene->a; 
-	#ifdef __linux__
-	DiscordRichPresence menuPresence;
-	memset(&menuPresence, 0, sizeof(menuPresence));
-	menuPresence.state = "Does nothing";
-    menuPresence.largeImageKey = "menu";
-	menuPresence.largeImageText = "In app menu";
-	menuPresence.smallImageKey = "icon";
-	menuPresence.smallImageText = "Moving Picture Studio";
-    menuPresence.instance = 1;
-    menuPresence.startTimestamp = time(0);
-	scene->discord_status.updateStatus(&menuPresence);
-	#endif
-
+	
+	//If in config Discord RPC is enabled then set status for menu
+	if(a->config.getvarI("rpc") == 1) {this->scene->discord_status.setMenuPresence();} 
 }
 
 Menu::~Menu(){

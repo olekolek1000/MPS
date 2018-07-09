@@ -12,22 +12,6 @@
 
 #include <sstream>
 #include <time.h>
-
-#ifdef __linux__
-void setEditorPresence(DiscordRPC* discord_status) {
-	DiscordRichPresence editorPresence;
-	memset(&editorPresence, 0, sizeof(editorPresence));
-	editorPresence.state = "Edits something";
-    editorPresence.largeImageKey = "drawing";
-	editorPresence.largeImageText = "In MPS editor";
-	editorPresence.smallImageKey = "icon";
-	editorPresence.smallImageText = "Moving Picture Studio";
-    editorPresence.instance = 1;
-    editorPresence.startTimestamp = time(0);
-	discord_status->updateStatus(&editorPresence);
-}
-#endif
-
 #include "gui/checkbox.hpp"
 
 void sceneEditor::setProjection(){
@@ -89,19 +73,18 @@ void sceneEditor::load(){
     frameselector.init(this);
 	layerMan.init(this);layerMan.setCurrentFrame(frameMan.getCurrentFrame());
 
+	actionlog.addMessage("Program started successfully.", 3.0f);
+	actionlog.addMessage("Press ESC to open menu.", 3.0f);
+
+	//If in config Discord RPC is enabled then init rpc and set status
 	if(a.config.getvarI("rpc") == 1) {
 		discord_status.activeRPC = true;
 		discord_status.init();
-		#ifdef __linux__
-		discord_status.init();
-		setEditorPresence(&discord_status);
-		#endif
+		discord_status.setEditorPresence();
+		actionlog.addMessage("Discord Rich Presence is enabled", 2.5f);
 	} else {
 		discord_status.activeRPC = false;
 	}
-
-	actionlog.addMessage("Program started successfully.", 3.0f);
-	actionlog.addMessage("Press ESC to open menu.", 3.0f);
 
     step.setRate(30);
 	step.setSpeed(a.config.getvarF("animationSpeed"));
@@ -260,9 +243,8 @@ void sceneEditor::loop(){
 			menuopenrequest=false;
 			Menu menu(this);
 			menu.loop();
-			#ifdef __linux__
-			setEditorPresence(&discord_status);
-			#endif
+			//If in config Discord RPC is enabled then set status for editor
+			if(a.config.getvarI("rpc") == 1) {discord_status.setEditorPresence();} 
 			step.reset();
 			setProjection();
 		}
@@ -270,9 +252,7 @@ void sceneEditor::loop(){
 			a.updateAll();
 		}
     }
-	#ifdef __linux__
 	discord_status.exit();
-	#endif
 }
 
 void sceneEditor::changeFrame(int n){
