@@ -3,7 +3,6 @@
 #include "lib/sdl_ttf.hpp"
 #include "shadermanager.hpp"
 #include "texturemanager.hpp"
-#include "framebuffermanager.hpp"
 
 #include <vector>
 
@@ -92,7 +91,6 @@ public:
     void init();
     void updateAll();
     void updateWindow();
-    void blitFramebuffer(Framebuffer * buffer);
     bool eventHandle(SDL_Event * evt);
 
     //Moving Picture Studio VVV

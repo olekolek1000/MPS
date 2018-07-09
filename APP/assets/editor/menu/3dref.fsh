@@ -7,7 +7,7 @@ varying vec2 UV;
 
 uniform float TIME;
 
-const int blurquality = 4;
+const int blurquality = 3;
 
 void main()
 {

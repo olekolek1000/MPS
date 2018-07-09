@@ -12,6 +12,8 @@
 
 #include <sstream>
 
+#include "gui/checkbox.hpp"
+
 void sceneEditor::setProjection(){
     int w = a.getAreaWidth();
     int h = a.getAreaHeight();
@@ -86,7 +88,7 @@ void sceneEditor::openMenu(){
 void sceneEditor::loop(){
     SDL_Event evt;
     bool end=false;
-	
+
     while(!end){
         while(a.eventHandle(&evt)){
 			switch(evt.type){
