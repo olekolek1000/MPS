@@ -1,0 +1,59 @@
+#Set window title
+windowTitle=[Moving Picture Studio]
+
+#Window width and height (in windowed mode only)
+windowWidth=1280
+windowHeight=720
+
+#Set window fullscreen
+windowFullscreen=0
+
+#Different window options (does not work with fullscreen mode)
+windowBorderless=0
+windowAlwaysOnTop=0
+windowMaximized=1
+
+#Set interface DPI.
+#auto - Set DPI automatically depending on your physical monitor dimensions.
+#any number - Set DPI manually. Default: 96
+guiDPI=96
+
+#Set VSync (increases input latency, 0-1)
+vsync=0
+
+#FPS limit? (energy saver, prevents big GPU usage, 0-1)
+fpslimit=1
+#Set FPS limit (works only if fpslimit=1)
+#auto - set FPS limit to your display Hz
+#any number - Set FPS manually. (Minimum value: 20 Hz)
+fpslimit_fps=auto
+
+#Set animation speed.
+#0.5 - slow
+#1.0 - normal
+#2.0 - fast
+animationSpeed=1.0
+
+#Enable or disable discord rich presence 
+#0 - disable 
+#1 - enable 
+rpc=1
+
+####################### developer settings #######################
+#frame resizing still not implemented
+newframe_width=640
+newframe_height=480
+
+
+
+
+
+####################### different, less significant settings #######################
+cursor_arrow_centerX=4
+cursor_arrow_centerY=0
+
+cursor_crosshair_centerX=16
+cursor_crosshair_centerY=16
+
+cursor_drag_centerX=16
+cursor_drag_centerY=16

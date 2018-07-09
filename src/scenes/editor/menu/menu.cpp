@@ -30,9 +30,6 @@
 Menu::Menu(sceneEditor * scene){
 	this->scene = scene;
 	this->a = &scene->a; 
-	
-	//If in config Discord RPC is enabled then set status for menu
-	if(a->config.getvarI("rpc") == 1) {this->scene->discord_status.setMenuPresence();} 
 }
 
 Menu::~Menu(){

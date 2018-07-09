@@ -53,7 +53,6 @@ SET(PROGRAM_SRCS
 	${ROOT}/fps.cpp
 	${ROOT}/lib/SDL2_rotozoom.cpp
 	${ROOT}/configmanager.cpp
-	${ROOT}/discord.cpp
 	
 	${ROOT}/render/buffer.cpp
 	${ROOT}/render/func.cpp
@@ -113,9 +112,7 @@ if(PLATFORM STREQUAL "Linux")
 	target_link_libraries (MPS -lGL)
 	target_link_libraries (MPS -lpthread)
 	target_link_libraries (MPS -no-pie)
-	target_link_libraries (MPS ${CMAKE_SOURCE_DIR}/src/lib/libdiscord-rpc.a)
-endif() 
-
+endif()
 if(PLATFORM STREQUAL "Windows")
 	set_target_properties(MPS PROPERTIES OUTPUT_NAME "MPS64.exe")
 	

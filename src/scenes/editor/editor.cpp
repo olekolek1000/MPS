@@ -76,16 +76,6 @@ void sceneEditor::load(){
 	actionlog.addMessage("Program started successfully.", 3.0f);
 	actionlog.addMessage("Press ESC to open menu.", 3.0f);
 
-	//If in config Discord RPC is enabled then init rpc and set status
-	if(a.config.getvarI("rpc") == 1) {
-		discord_status.activeRPC = true;
-		discord_status.init();
-		discord_status.setEditorPresence();
-		actionlog.addMessage("Discord Rich Presence is enabled", 2.5f);
-	} else {
-		discord_status.activeRPC = false;
-	}
-
     step.setRate(30);
 	step.setSpeed(a.config.getvarF("animationSpeed"));
     setProjection();
@@ -243,8 +233,6 @@ void sceneEditor::loop(){
 			menuopenrequest=false;
 			Menu menu(this);
 			menu.loop();
-			//If in config Discord RPC is enabled then set status for editor
-			if(a.config.getvarI("rpc") == 1) {discord_status.setEditorPresence();} 
 			step.reset();
 			setProjection();
 		}
@@ -252,7 +240,6 @@ void sceneEditor::loop(){
 			a.updateAll();
 		}
     }
-	discord_status.exit();
 }
 
 void sceneEditor::changeFrame(int n){
