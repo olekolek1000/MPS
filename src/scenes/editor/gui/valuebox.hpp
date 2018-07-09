@@ -52,7 +52,7 @@ public:
 	GuiValueBox & setValue(int n);
 
 	GuiValueBox & update();
-    GuiValueBox & render();
+    GuiValueBox & render(float alpha);
     bool pushEvent(SDL_Event * evt);
 
 	GuiValueBox();

@@ -2,8 +2,6 @@
 #include "../../drawer.hpp"
 #include "../toolbox.hpp"
 
-#include <sstream>
-
 void Pencil::init(){
     iconName = "pencil";
 
@@ -53,10 +51,10 @@ bool Pencil::pushEvent(SDL_Event * evt){
 }
 
 
-void Pencil::render(){
+void Pencil::render(float alpha){
     drawer->setBrushCircleSize(box.getValue());
 	box.setPosition(toolbox->getSettingsX(),toolbox->getSettingsY()).setSize(toolbox->getWidth(),75);
-    box.render();
+    box.render(alpha);
 }
 
 void Pencil::select(){

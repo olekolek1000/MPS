@@ -34,10 +34,9 @@ fpslimit_fps=auto
 #2.0 - fast
 animationSpeed=1.0
 
-#Enable or disable discord rich presence 
-#0 - disable 
-#1 - enable 
-rpc=1
+#Set theme (./assets/editor/themes)
+#Default: default
+theme=default
 
 ####################### developer settings #######################
 #frame resizing still not implemented

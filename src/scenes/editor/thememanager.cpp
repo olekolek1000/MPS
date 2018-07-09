@@ -4,25 +4,13 @@
 #include <sstream>
 #include "error.hpp"
 #include "defines.hpp"
+#include "editor.hpp"
 
 typedef unsigned int uint;
 
-ThemeManager::ThemeManager(){
-	themeName = defaultThemeName;
-	loadVariables();
-    std::fstream file;
-    file.open(std::string(std::string(LOC_ROOT)+std::string("editor/themes/default.txt")).c_str(), std::ios::in);
-    std::string theme;
-    std::getline(file, theme);
-    file.close();
-    loadTheme(theme);
-}
-
-std::string ThemeManager::getVariableS(const char*n){
-	return vars[n].varstr;
-}
-float ThemeManager::getVariableF(const char*n){
-	return vars[n].varfloat;
+void ThemeManager::init(sceneEditor * scene){
+    this->scene = scene;
+    loadTheme(scene->a.config.getvarS("theme"));
 }
 
 void ThemeManager::addTexture(std::string name, std::string location, int texspace, int texfiltering){
@@ -43,29 +31,18 @@ void ThemeManager::addTexture(std::string name, std::string location, int texspa
 void ThemeManager::loadVariables(){
 	std::stringstream loc;
     loc<<LOC_ROOT<<"/editor/themes/"<<themeName<<"/theme.cfg";
-	std::fstream file;
-	file.open(loc.str().c_str(), std::ios::in);
-	if(file.good()){
-		while(!file.eof()){
-			std::string line;
-			std::getline(file, line);
-			std::stringstream name;
-			uint i=0;
-			while(i<line.size()&&line[i]!=' '){
-				name<<line[i];
-				i++;
-			}
-			std::stringstream variable;
-			i++;
-			while(i<line.size()){
-				variable<<line[i];
-				i++;
-			}
-			vars[name.str()].varstr = variable.str();
-			vars[name.str()].varfloat = std::atof(variable.str().c_str());
-		}
-	}
-	file.close();
+    config.open(loc.str().c_str());
+    if(!config.isGood()){
+        error("Cannot find configuration file in theme named "+themeName);
+        ThemeManager::themeName=defaultThemeName;
+        loc.str("");
+        loc<<LOC_ROOT<<"/editor/themes/"<<defaultThemeName<<"/theme.cfg";
+        config.open(loc.str().c_str());
+        if(!config.isGood()){
+            error("Cannot find default theme configuration file!");
+            exit(0);
+        }
+    }
 }
 
 void ThemeManager::loadTheme(std::string name){
@@ -125,8 +102,7 @@ Texture& ThemeManager::operator [](const char* n){
 }
 
 /* THEME RELOADING */
-#include "editor.hpp"
-void ThemeManager::reloadThemes(sceneEditor * scene){
+void ThemeManager::reloadThemes(){
 	scene->toolbox.reloadTextures();
 	scene->drawer.reloadTextures();
 }

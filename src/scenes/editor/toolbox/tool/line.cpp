@@ -42,7 +42,7 @@ bool Line::pushEvent(SDL_Event * evt){
 void Line::update(){
     box.update();
 }
-void Line::render(){
+void Line::render(float alpha){
     if(down&&moved){
         drawer->activeClear();
         drawer->activeDrawLine(startX,startY,x,y,box.getValue());
@@ -50,7 +50,7 @@ void Line::render(){
     }
     drawer->setBrushCircleSize(box.getValue());
     box.setPosition(toolbox->getSettingsX(),toolbox->getSettingsY()).setSize(toolbox->getWidth(),75);
-    box.render();
+    box.render(alpha);
 }
 void Line::select(){
     toolbox->setSettingsHeight(75);

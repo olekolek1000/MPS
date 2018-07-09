@@ -30,5 +30,5 @@ void main()
 	}
 	fCOLOR=fCOLOR/float(count);
 	
-	gl_FragColor.rgba = vec4(fCOLOR.r-0.1,fCOLOR.g-0.05,fCOLOR.b,fCOLOR.a)*mul;
+	gl_FragColor.rgba = (fCOLOR*0.8)*mul;
 }

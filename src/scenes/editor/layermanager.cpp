@@ -90,24 +90,29 @@ bool LayerManager::pushEvent(SDL_Event *evt){
 }
 
 void LayerManager::update(){
-
+    but_addLayer.update();
+    for(int i = 0; i < (int)cells.size(); i++){
+        cells[i].but_remove.update();
+        cells[i].but_set.update();
+        cells[i].but_visibility.update();
+    }
 }
 
-void LayerManager::render(){
+void LayerManager::render(float alpha){
     for(int i = 0; i < (int)cells.size(); i++){
         int pY = 70+i*40;
 
         if(i == currentFrame->getSelectedLayerIndex()){
-            cells[i].but_set.setPosition(200, pY).render();
+            cells[i].but_set.setPosition(200, pY).render(alpha);
         }
         else{
-            cells[i].but_set.setPosition(190, pY).render();
+            cells[i].but_set.setPosition(190, pY).render(alpha);
         }
-        cells[i].but_visibility.setPosition(230, pY).render();
-        cells[i].but_remove.setPosition(270, pY).render();
+        cells[i].but_visibility.setPosition(230, pY).render(alpha);
+        cells[i].but_remove.setPosition(270, pY).render(alpha);
         cells[i].text_index.setPosition(310, pY).render();
 
-        but_addLayer.render();
+        but_addLayer.render(alpha);
     }
     text_buildinprogress.render();
 }

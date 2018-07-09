@@ -5,9 +5,14 @@
 cmake_minimum_required(VERSION 3.0)
 project(MPS)
 
+<<<<<<< HEAD
 set(TYPE "Release")#Debug, Normal, Release
+=======
+
+set(TYPE "Normal")#Debug, Normal, Release
+>>>>>>> upstream/master
 set(PLATFORM "Linux")#Linux, Windows
-set(ROOT "./src/") 
+set(ROOT "./src/")  
 
 add_definitions(-DInstall=${Install})
 
@@ -88,6 +93,7 @@ SET(PROGRAM_SRCS
 	${ROOT}/scenes/editor/toolbox/tool/tool.cpp
 	${ROOT}/scenes/editor/toolbox/tool/eraser.cpp
 	${ROOT}/scenes/editor/toolbox/tool/rectangle.cpp
+	${ROOT}/scenes/editor/toolbox/tool/resize.cpp
 	)
 	 
 if(PLATFORM STREQUAL "Linux")

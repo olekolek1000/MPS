@@ -51,6 +51,7 @@ public:
     Layer * getLayer(int n);
     int getLayerCount();
     int createLayer();
+    void resize(int width, int height);
     void removeLayer(int n);
 
     Frame();
