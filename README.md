@@ -5,7 +5,6 @@
 <b><a href="http://mps.olekolek1000.pl/">MAIN WEBPAGE</a></b>
 
 This is a stop-motion animation program which is made to be <b>MODERN</b>, <b>EASY</b>, <b>MULTIPLATFORM</b> and <b>FAST</b>.
-This project is currently under <b>HEAVY DEVELOPMENT</b>.
 
 ![img_screenshot](http://mps.olekolek1000.pl/github/screenshot.png)
 
