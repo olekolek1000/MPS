@@ -1,89 +1,91 @@
-<h1><b>===Moving Picture Studio===</b></h1><br>
+# Moving Picture Studio
 
-<img src="http://mps.olekolek1000.pl/github/logo.png">
+![]("http://mps.olekolek1000.pl/github/logo.png">)
 
-<b><a href="http://mps.olekolek1000.pl/">MAIN WEBPAGE</a></b>
+**[MAIN WEBPAGE](http://mps.olekolek1000.pl/)**
 
-This is a stop-motion animation program which is made to be <b>MODERN</b>, <b>EASY</b>, <b>MULTIPLATFORM</b> and <b>FAST</b>.
+This is a stop-motion animation program which is made to be **MODERN**, **EASY**, **MULTIPLATFORM** and **FAST**.
 
 ![img_screenshot](http://mps.olekolek1000.pl/github/screenshot.png)
 
-The application is written in C++, based on OpenGL 2.1/ES 2.0 and SDL.<br>
-Currently supported/tested platforms:<br>
-	-Linux x64<br>
-	-Windows x64<br>
-This application works also on ARM processors (Raspberry PI and other).<br>
+The application is written in C++, based on OpenGL 2.1/ES 2.0 and SDL.  
+Currently supported/tested platforms:  
+
+ - Linux x64
+ - Windows x64
+
+This application also works on ARM processors (Raspberry Pi and other).  
 	
 Please report any bugs and problems in this program. It helps a lot!
-The ideas are also welcome ;)
+Ideas are also welcome ;)
 
-<b>===Done:</b><br>
--Open/Save Project<br>
--Export to GIF<br>
--Frame selector (Create/remove frame, duplicate frame)<br>
--History (Undo/redo)<br>
--Tool: Pencil<br>
--Tool: Line<br>
--Tool: Spray<br>
--Tool: Bucket fill<br>
--Tool: Pipette<br>
--Tool: Eraser<br>
--Tool: Rectangle<br>
--Tool: Resize (still WIP)<br>
--Zoomable viewport<br>
--Dynamic Rotatable viewport<br>
--Scalable GUI<br>
--Theme manager with config files (still WIP)<br>
+### Done:
+ - Open/Save Project
+ - Export to GIF
+ - Frame selector (Create/remove frame, duplicate frame)
+ - History (Undo/redo)
+ - Tool: Pencil
+ - Tool: Line
+ - Tool: Spray
+ - Tool: Bucket fill
+ - Tool: Pipette
+ - Tool: Eraser
+ - Tool: Rectangle
+ - Tool: Resize (still WIP)
+ - Zoomable viewport
+ - Dynamic Rotatable viewport
+ - Scalable GUI
+ - Theme manager with config files (still WIP)
 
-<b>===Partially done (Works fine, but there may be a lot of changes in the future):</b><br>
--Layer support<br>
--Toolbox<br>
--Color selector<br>
--Ghosting (more options)<br>
+### Partially done (Works fine, but might be changed in the future):<br>
+ - Layer support
+ - Toolbox
+ - Color selector
+ - Ghosting (more options)
 
--Menu
+ - Menu
 
-<b>===To do:</b><br>
--Import animation<br>
--Export PNG strip<br>
--use FFMPEG (avcodec) for everything<br>
--"Play animation" button<br>
--Tool: Brush (draw using any image)<br>
--Tool: Circle<br>
--Tool: Select<br>
--Copy/paste<br>
--Compressed history (less RAM usage, more history actions)<br>
--Compressed frames not in use<br>
--Change key bindings<br>
--GUI settings (in menu)<br>
+### To do:
+ - Import animation
+ - Export PNG strip
+ - use FFMPEG (avcodec) for everything
+ - "Play animation" button
+ - Tool: Brush (draw using any image)
+ - Tool: Circle
+ - Tool: Select
+ - Copy/paste
+ - Compressed history (less RAM usage, more history actions)
+ - Compressed frames not in use
+ - Change key bindings
+ - GUI settings (in menu)
 
-<b>===In the distant future:</b><br>
--Tablet pressure support (I'm waiting for the SDL library)<br>
--Mac support<br>
+### In the distant future:
+ - Tablet pressure support (I'm waiting for the SDL library)
+ - Mac support
 
 
-<b>===Controls:</b><br>
-Left Shift: Rotate viewport<br>
+## Controls:
+ - Left Shift: Rotate viewport
 
-In drawing area:<br>
-LMB: Use tool (draw)<br>
---MMB: Pick color<br>
---RMB: Drag viewport<br>
---Mouse wheel: Zoom in/out<br>
---1/2/3/4/5/6/7/8/9: Scale viewport to (1:1, 2:1, 3:1 etc.) and reset viewport rotation<br>
+### Drawing area:
+ - LMB: Use tool (draw)
+ - MMB: Pick color
+ - RMB: Drag viewport
+ - Mouse wheel: Zoom in/out
+ - 1/2/3/4/5/6/7/8/9: Scale viewport to (1:1, 2:1, 3:1 etc.) and reset viewport rotation
 
-Space: Toggle ghosting visibility<br>
-CTRL+Z: Undo<br>
-CTRL+Y: Redo<br>
-Left/Right: Change frames<br>
-<br>
-F3: Show FPS<br>
-F4: Toggle fullscreen<br>
-F5: Toggle VSync<br>
-F6: Toggle FPS limit
-F7: Decrease FPS limit
-F8: Increase FPS limit
-Esc: Open menu<br>
--/+ - Scale GUI<br>
+ - Space: Toggle ghosting visibility
+ - CTRL+Z: Undo
+ - CTRL+Y: Redo
+ - Left/Right: Change frames
 
-End: Restart application (for testing purposes)<br>
+ - F3: Show FPS
+ - F4: Toggle fullscreen
+ - F5: Toggle VSync
+ - F6: Toggle FPS limit
+ - F7: Decrease FPS limit
+ - F8: Increase FPS limit
+ - Esc: Open menu
+ - -/+: Scale GUI
+
+ - End: Restart application (for testing purposes)
