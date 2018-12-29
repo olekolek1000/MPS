@@ -6,7 +6,7 @@ cmake_minimum_required(VERSION 3.0)
 project(MPS)
 
 set(TYPE "Release")#Debug, Normal, Release
-set(PLATFORM "macOS")#Linux, Windows, macOS
+set(PLATFORM "Linux")#Linux, Windows, macOS
 set(ROOT "./src/")  
 
 add_definitions(-Dbin=${bin})
