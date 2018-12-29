@@ -1,3 +1,0 @@
-/Users/devildefu/Documents/source/MPS/CMakeFiles/rebuild_cache.dir
-/Users/devildefu/Documents/source/MPS/CMakeFiles/edit_cache.dir
-/Users/devildefu/Documents/source/MPS/CMakeFiles/MPS.dir
