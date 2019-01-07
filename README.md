@@ -13,6 +13,9 @@ Currently supported/tested platforms:
 
  - Linux x64
  - Windows x64
+ 
+Works, but it's unstable:
+ - MacOS x64
 
 This application also works on ARM processors (Raspberry Pi and other).  
 	
@@ -61,7 +64,6 @@ Ideas are also welcome ;)
 
 ### In the distant future:
  - Tablet pressure support (I'm waiting for the SDL library)
- - Mac support
 
 
 ## Controls:
