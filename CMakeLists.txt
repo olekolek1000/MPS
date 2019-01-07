@@ -6,7 +6,7 @@ cmake_minimum_required(VERSION 3.0)
 project(MPS)
 
 set(TYPE "Release")#Debug, Normal, Release
-set(PLATFORM "Linux")#Linux, Windows
+set(PLATFORM "Linux")#Linux, Windows, macOS
 set(ROOT "./src/")  
 
 add_definitions(-Dbin=${bin})
@@ -43,6 +43,13 @@ if(PLATFORM STREQUAL "Windows")
 	set( CMAKE_SHARED_LIBRARY_LINK_CXX_FLAGS "-static-libgcc -static-libstdc++" )
 	set( CMAKE_C_COMPILER x86_64-w64-mingw32-gcc )
 	set( CMAKE_CXX_COMPILER x86_64-w64-mingw32-g++ )
+endif()
+if(PLATFORM STREQUAL "macOS")
+	set( CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "" )
+	set( CMAKE_SHARED_LIBRARY_LINK_CXX_FLAGS "" )
+	set( CMAKE_C_COMPILER clang )
+	set( CMAKE_CXX_COMPILER clang++ )
+	set( CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -framework OpenGL")
 endif()
 
 
@@ -106,6 +113,9 @@ endif()
 if(PLATFORM STREQUAL "Windows")
 	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/APP/win64/)
 endif()
+if(PLATFORM STREQUAL "macOS")
+	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/APP/macOS64/)
+endif()
 
 
 add_executable(MPS "${PROGRAM_SRCS}")
@@ -140,4 +150,13 @@ if(PLATFORM STREQUAL "Windows")
 		target_link_libraries (MPS -mwindows)
 	endif()
 endif()
-
+if(PLATFORM STREQUAL "macOS")
+	set_target_properties(MPS PROPERTIES OUTPUT_NAME "MPS64")
+	
+	target_link_libraries (MPS -lSDL2main)
+	target_link_libraries (MPS -lSDL2)
+	target_link_libraries (MPS -lSDL2_image)
+	target_link_libraries (MPS -lSDL2_ttf)
+	target_link_libraries (MPS -lGLEW)
+	target_link_libraries (MPS -lpthread)
+endif()

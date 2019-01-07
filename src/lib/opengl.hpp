@@ -10,7 +10,12 @@
 #ifdef __ANDROID__
 #include <SDL2/SDL_opengles2.h>
 #endif*/ 
- 
+
+#ifdef __APPLE__
+#define GLEW_STATIC
+#include <GL/glew.h>
+#endif
+
 #ifdef __MINGW32__
 //#include <SDL2/SDL_opengles2.h>
 
