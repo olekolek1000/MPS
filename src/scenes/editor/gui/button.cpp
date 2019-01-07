@@ -54,7 +54,7 @@ bool GuiButton::pushEvent(SDL_Event * evt){
     switch(evt->type){
         case SDL_MOUSEBUTTONDOWN:{
             if(evt->button.button==SDL_BUTTON_LEFT){
-                if(evt->button.x*scene->a.getAreaMultipler()>=posX&&evt->button.y*scene->a.getAreaMultipler()>=posY&&evt->button.x*scene->a.getAreaMultipler()<posX+width&&evt->button.y*scene->a.getAreaMultipler()<posY+height){
+                if(evt->button.x*scene->a.getAreaMultiplier()>=posX&&evt->button.y*scene->a.getAreaMultiplier()>=posY&&evt->button.x*scene->a.getAreaMultiplier()<posX+width&&evt->button.y*scene->a.getAreaMultiplier()<posY+height){
                     used=true;
                     pressed=true;
                 }
@@ -64,7 +64,7 @@ bool GuiButton::pushEvent(SDL_Event * evt){
         case SDL_MOUSEBUTTONUP:{
             if(evt->button.button==SDL_BUTTON_LEFT){
                 if(pressed){
-                    if(evt->button.x*scene->a.getAreaMultipler()>=posX&&evt->button.y*scene->a.getAreaMultipler()>=posY&&evt->button.x*scene->a.getAreaMultipler()<posX+width&&evt->button.y*scene->a.getAreaMultipler()<posY+height){
+                    if(evt->button.x*scene->a.getAreaMultiplier()>=posX&&evt->button.y*scene->a.getAreaMultiplier()>=posY&&evt->button.x*scene->a.getAreaMultiplier()<posX+width&&evt->button.y*scene->a.getAreaMultiplier()<posY+height){
                         used=true;
                         clicked=true;
                     }
@@ -75,7 +75,7 @@ bool GuiButton::pushEvent(SDL_Event * evt){
             break;
         }
         case SDL_MOUSEMOTION:{
-            if(evt->motion.x*scene->a.getAreaMultipler()>=posX&&evt->motion.y*scene->a.getAreaMultipler()>=posY&&evt->motion.x*scene->a.getAreaMultipler()<posX+width&&evt->motion.y*scene->a.getAreaMultipler()<posY+height){
+            if(evt->motion.x*scene->a.getAreaMultiplier()>=posX&&evt->motion.y*scene->a.getAreaMultiplier()>=posY&&evt->motion.x*scene->a.getAreaMultiplier()<posX+width&&evt->motion.y*scene->a.getAreaMultiplier()<posY+height){
                 hovered=true;
             }
             else{

@@ -151,7 +151,7 @@ bool MenuButton::pushEvent(SDL_Event * evt){
 	switch(evt->type){
         case SDL_MOUSEBUTTONDOWN:{
             if(evt->button.button==SDL_BUTTON_LEFT){
-                if(evt->motion.x*scene->a.getAreaMultipler()>=objX-width/2&&evt->motion.y*scene->a.getAreaMultipler()>=objY-height/2&&evt->motion.x*scene->a.getAreaMultipler()<objX+width/2&&evt->motion.y*scene->a.getAreaMultipler()<objY+height/2){
+                if(evt->motion.x*scene->a.getAreaMultiplier()>=objX-width/2&&evt->motion.y*scene->a.getAreaMultiplier()>=objY-height/2&&evt->motion.x*scene->a.getAreaMultiplier()<objX+width/2&&evt->motion.y*scene->a.getAreaMultiplier()<objY+height/2){
                     used=true;
                     pressed=true;
                 }
@@ -161,7 +161,7 @@ bool MenuButton::pushEvent(SDL_Event * evt){
         case SDL_MOUSEBUTTONUP:{
             if(evt->button.button==SDL_BUTTON_LEFT){
                 if(pressed){
-                    if(evt->motion.x*scene->a.getAreaMultipler()>=objX-width/2&&evt->motion.y*scene->a.getAreaMultipler()>=objY-height/2&&evt->motion.x*scene->a.getAreaMultipler()<objX+width/2&&evt->motion.y*scene->a.getAreaMultipler()<objY+height/2){
+                    if(evt->motion.x*scene->a.getAreaMultiplier()>=objX-width/2&&evt->motion.y*scene->a.getAreaMultiplier()>=objY-height/2&&evt->motion.x*scene->a.getAreaMultiplier()<objX+width/2&&evt->motion.y*scene->a.getAreaMultiplier()<objY+height/2){
                         used=true;
                         clicked=true;
                     }
@@ -172,7 +172,7 @@ bool MenuButton::pushEvent(SDL_Event * evt){
             break;
         }
         case SDL_MOUSEMOTION:{
-			if(evt->motion.x*scene->a.getAreaMultipler()>=objX-width/2&&evt->motion.y*scene->a.getAreaMultipler()>=objY-height/2&&evt->motion.x*scene->a.getAreaMultipler()<objX+width/2&&evt->motion.y*scene->a.getAreaMultipler()<objY+height/2){
+			if(evt->motion.x*scene->a.getAreaMultiplier()>=objX-width/2&&evt->motion.y*scene->a.getAreaMultiplier()>=objY-height/2&&evt->motion.x*scene->a.getAreaMultiplier()<objX+width/2&&evt->motion.y*scene->a.getAreaMultiplier()<objY+height/2){
 				hovered=true;
 			}
 			else{

@@ -293,20 +293,20 @@ bool colorSelector::pushEvent(SDL_Event * evt){
     switch(evt->type){
         case SDL_MOUSEBUTTONDOWN:{
             if(evt->button.button==SDL_BUTTON_LEFT){
-                if(evt->button.x*scene->a.getAreaMultipler()>=scene->a.getAreaWidth()-selectorheight-25-5&&evt->button.y*scene->a.getAreaMultipler()<selectorheight+5){
+                if(evt->button.x*scene->a.getAreaMultiplier()>=scene->a.getAreaWidth()-selectorheight-25-5&&evt->button.y*scene->a.getAreaMultiplier()<selectorheight+5){
                     down=true;
 
-                    if(evt->button.x*scene->a.getAreaMultipler()>=scene->a.getAreaWidth()-16&&evt->button.y*scene->a.getAreaMultipler()<selectorheight){
+                    if(evt->button.x*scene->a.getAreaMultiplier()>=scene->a.getAreaWidth()-16&&evt->button.y*scene->a.getAreaMultiplier()<selectorheight){
                         ischanginghue=true;
-                        changeHueToCursorPosition(evt->button.y*scene->a.getAreaMultipler());
+                        changeHueToCursorPosition(evt->button.y*scene->a.getAreaMultiplier());
                     }
                     else{
                         ischanginghue=false;
                     }
 
-                    if(evt->button.x*scene->a.getAreaMultipler()>=colorsX&&evt->button.x*scene->a.getAreaMultipler()<colorsX+selectorheight&&evt->button.y*scene->a.getAreaMultipler()<selectorheight){
+                    if(evt->button.x*scene->a.getAreaMultiplier()>=colorsX&&evt->button.x*scene->a.getAreaMultiplier()<colorsX+selectorheight&&evt->button.y*scene->a.getAreaMultiplier()<selectorheight){
                         ischangingcolor=true;
-                        changeColorToCursorPosition(evt->button.x*scene->a.getAreaMultipler(), evt->button.y*scene->a.getAreaMultipler());
+                        changeColorToCursorPosition(evt->button.x*scene->a.getAreaMultiplier(), evt->button.y*scene->a.getAreaMultiplier());
                     }
                     else{
                         ischangingcolor=false;
@@ -320,10 +320,10 @@ bool colorSelector::pushEvent(SDL_Event * evt){
         case SDL_MOUSEMOTION:{
             if(down){
                 if(ischanginghue){
-                    changeHueToCursorPosition(evt->motion.y*scene->a.getAreaMultipler());
+                    changeHueToCursorPosition(evt->motion.y*scene->a.getAreaMultiplier());
                 }
                 if(ischangingcolor){
-                    changeColorToCursorPosition(evt->motion.x*scene->a.getAreaMultipler(), evt->motion.y*scene->a.getAreaMultipler());
+                    changeColorToCursorPosition(evt->motion.x*scene->a.getAreaMultiplier(), evt->motion.y*scene->a.getAreaMultiplier());
                 }
 
                 used=true;

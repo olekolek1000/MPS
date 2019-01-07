@@ -190,8 +190,8 @@ void Menu::loop(){
 			    } 
 				case SDL_MOUSEMOTION:{
 					if(exit_delay==0){
-						z_target = -(evt.motion.x*scene->a.getAreaMultipler()-scene->a.getAreaWidth()/2)/(float)scene->a.getAreaWidth()*0.2;
-						y_target = (evt.motion.y*scene->a.getAreaMultipler()-scene->a.getAreaHeight()/2)/(float)scene->a.getAreaHeight()*0.2;
+						z_target = -(evt.motion.x*scene->a.getAreaMultiplier()-scene->a.getAreaWidth()/2)/(float)scene->a.getAreaWidth()*0.2;
+						y_target = (evt.motion.y*scene->a.getAreaMultiplier()-scene->a.getAreaHeight()/2)/(float)scene->a.getAreaHeight()*0.2;
 					}
 					break;
 				}

@@ -41,8 +41,8 @@ bool GuiCheckbox::pushEvent(SDL_Event * evt){
     bool used=false;
 
     if(evt->type==SDL_MOUSEMOTION){
-        int mX=evt->motion.x*p->s->a.getAreaMultipler();
-        int mY=evt->motion.y*p->s->a.getAreaMultipler();
+        int mX=evt->motion.x*p->s->a.getAreaMultiplier();
+        int mY=evt->motion.y*p->s->a.getAreaMultiplier();
         if(mX>=p->posX&&mY>=p->posY&&mX<p->posX+p->size&&mY<p->posY+p->size){
             p->hovered=true;
         }

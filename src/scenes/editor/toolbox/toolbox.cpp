@@ -185,7 +185,7 @@ bool Toolbox::pushEvent(SDL_Event * evt){
     bool used=false;
 
     if(evt->type==SDL_MOUSEBUTTONDOWN){
-        if(evt->button.x*scene->a.getAreaMultipler()<toolboxWidth&&evt->button.y*scene->a.getAreaMultipler()<toolboxHeight){
+        if(evt->button.x*scene->a.getAreaMultiplier()<toolboxWidth&&evt->button.y*scene->a.getAreaMultiplier()<toolboxHeight){
             used=true;
         }
     }
