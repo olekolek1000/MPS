@@ -127,14 +127,14 @@ GuiText& GuiText::render(){
         int x,y;
 		switch(alignX){
 			case 0:{x=posX;break;}
-			case 1:{x=posX-width*scene->a.getAreaMultipler()/2;break;}
-			case 2:{x=posX-width*scene->a.getAreaMultipler();break;}
+			case 1:{x=posX-width*scene->a.getAreaMultiplier()/2;break;}
+			case 2:{x=posX-width*scene->a.getAreaMultiplier();break;}
 			default:{x=0;break;}
 		}
 		switch(alignY){
 			case 0:{y=posY;break;}
-			case 1:{y=posY-height*scene->a.getAreaMultipler()/2;break;}
-			case 2:{y=posY-height*scene->a.getAreaMultipler();break;}
+			case 1:{y=posY-height*scene->a.getAreaMultiplier()/2;break;}
+			case 2:{y=posY-height*scene->a.getAreaMultiplier();break;}
 			default:{y=0;break;}
 		}
 
@@ -143,7 +143,7 @@ GuiText& GuiText::render(){
         if(angle!=0.0){
             xRotate((glm::mat4*)model, angle/57.296);
         }
-        xScale((glm::mat4*)model,width*scene->a.getAreaMultipler(), height*scene->a.getAreaMultipler());
+        xScale((glm::mat4*)model,width*scene->a.getAreaMultiplier(), height*scene->a.getAreaMultiplier());
 
         scene->a.square_vert->bind().attrib(0,2,GL_FLOAT);
 		scene->a.square_uv->bind().attrib(1,2,GL_FLOAT);

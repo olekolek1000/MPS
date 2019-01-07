@@ -116,14 +116,14 @@ void sceneEditor::loop(){
 							break;
 						}
 						case SDLK_EQUALS:{
-							if(a.getAreaMultipler()>0.1){
-								a.setAreaMultipler(a.getAreaMultipler()-0.05);
+							if(a.getAreaMultiplier()>0.1){
+								a.setAreaMultiplier(a.getAreaMultiplier()-0.05);
 							}
 							break;
 						}
 						case SDLK_MINUS:{
-							if(a.getAreaMultipler()<2.0){
-								a.setAreaMultipler(a.getAreaMultipler()+0.05);
+							if(a.getAreaMultiplier()<2.0){
+								a.setAreaMultiplier(a.getAreaMultiplier()+0.05);
 							}
 							break;
 						}
@@ -178,7 +178,7 @@ void sceneEditor::loop(){
 					break;
 				}
 				case GlobalEvent::GuiChange:{
-					std::stringstream ss;ss<<"GUI size: "<<(1.0/a.getAreaMultipler()*100)<<"%";
+					std::stringstream ss;ss<<"GUI size: "<<(1.0/a.getAreaMultiplier()*100)<<"%";
 					actionlog.addMessage(ss.str().c_str());
 					break;
 				}

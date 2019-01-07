@@ -29,7 +29,7 @@ private:
     bool autoproportions=true;
 
     int areawidth=1, areaheight=1;
-    float areamultipler=1.0;
+    float areamultiplier=1.0;
 
     int fps_last=0;
     int fps_frames=0;
@@ -71,8 +71,8 @@ public:
 
     int getAreaWidth();
     int getAreaHeight();
-    void setAreaMultipler(float n);
-    float getAreaMultipler();
+    void setAreaMultiplier(float n);
+    float getAreaMultiplier();
     void setProportions(float prop);
     bool onEvent();
     GlobalEvent getEvent();

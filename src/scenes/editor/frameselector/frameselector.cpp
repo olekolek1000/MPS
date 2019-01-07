@@ -31,7 +31,7 @@ bool frameSelector::pushEvent(SDL_Event * evt){
 
     switch(evt->type){
         case SDL_MOUSEBUTTONDOWN:{
-            if(evt->button.y*scene->a.getAreaMultipler()>scene->a.getAreaHeight()-height){
+            if(evt->button.y*scene->a.getAreaMultiplier()>scene->a.getAreaHeight()-height){
                 used=true;
             }
             break;

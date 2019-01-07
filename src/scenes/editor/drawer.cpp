@@ -744,7 +744,7 @@ void Drawer::render(float alpha){
 		xScale(&mdl, 1.0,1.0);
 		shColor.setM(&mdl);
 		linebuf.bind();
-		float data[]={rotationStart.x*scene->a.getAreaMultipler(),rotationStart.y*scene->a.getAreaMultipler(),(float)mouseX*scene->a.getAreaMultipler(),(float)mouseY*scene->a.getAreaMultipler()};
+		float data[]={rotationStart.x*scene->a.getAreaMultiplier(),rotationStart.y*scene->a.getAreaMultiplier(),(float)mouseX*scene->a.getAreaMultiplier(),(float)mouseY*scene->a.getAreaMultiplier()};
 		linebuf.setData(sizeof(data),data,GL_DYNAMIC_DRAW);
 		linebuf.attrib(0,2,GL_FLOAT);
 		
@@ -777,7 +777,7 @@ void Drawer::render(float alpha){
         std::stringstream ss;
         ss<<"Rot: "<<((int)(rot*10))/10.0<<"°";
         textAngle->changeText(ss.str(), scene->a.font24, 0, 0, 0);
-        textAngle->setPosition((float)(mouseX)*scene->a.getAreaMultipler(), (float)(mouseY)*scene->a.getAreaMultipler());
+        textAngle->setPosition((float)(mouseX)*scene->a.getAreaMultiplier(), (float)(mouseY)*scene->a.getAreaMultiplier());
         textAngle->setRotation(rot);
         textAngle->render();
 	}

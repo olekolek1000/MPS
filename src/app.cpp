@@ -125,11 +125,11 @@ void App::init() {
     if(config.getvarS("guiDPI")=="auto"){
         float dpi;
         if(SDL_GetDisplayDPI(SDL_GetWindowDisplayIndex(window), NULL, &dpi, NULL)==0){
-            App::setAreaMultipler(96.0/dpi);
+            App::setAreaMultiplier(96.0/dpi);
         }
     }
     else{ 
-        App::setAreaMultipler(96.0/config.getvarF("guiDPI"));
+        App::setAreaMultiplier(96.0/config.getvarF("guiDPI"));
     }
 
     vsync = config.getvarI("vsync");
@@ -200,17 +200,17 @@ void App::setProportions(float prop){
 void App::reloadFonts(){
     std::string fontfile = std::string(std::string(LOC_ROOT)+std::string("Lato-Light.ttf"));
     if(font10!=NULL)TTF_CloseFont(font10);
-    font10 = TTF_OpenFont(fontfile.c_str(),10/(float)getAreaMultipler());
+    font10 = TTF_OpenFont(fontfile.c_str(),10/(float)getAreaMultiplier());
     if(font16!=NULL)TTF_CloseFont(font16);
-    font16 = TTF_OpenFont(fontfile.c_str(),16/(float)getAreaMultipler());
+    font16 = TTF_OpenFont(fontfile.c_str(),16/(float)getAreaMultiplier());
     if(font24!=NULL)TTF_CloseFont(font24);
-    font24 = TTF_OpenFont(fontfile.c_str(),24/(float)getAreaMultipler());
+    font24 = TTF_OpenFont(fontfile.c_str(),24/(float)getAreaMultiplier());
     if(font32!=NULL)TTF_CloseFont(font32);
-    font32 = TTF_OpenFont(fontfile.c_str(),32/(float)getAreaMultipler());
+    font32 = TTF_OpenFont(fontfile.c_str(),32/(float)getAreaMultiplier());
     if(font64!=NULL)TTF_CloseFont(font64);
-    font64 = TTF_OpenFont(fontfile.c_str(),64/(float)getAreaMultipler());
+    font64 = TTF_OpenFont(fontfile.c_str(),64/(float)getAreaMultiplier());
     if(font128!=NULL)TTF_CloseFont(font128);
-    font128 = TTF_OpenFont(fontfile.c_str(),128/(float)getAreaMultipler());
+    font128 = TTF_OpenFont(fontfile.c_str(),128/(float)getAreaMultiplier());
 
     if(!font10||!font16||!font32||!font64||!font128) {
         stringstream ss;
@@ -329,8 +329,8 @@ void App::updateProportions(){
         areawidth=window_w;
         areaheight=window_w/proportions;
     }
-    areawidth*=areamultipler;
-    areaheight*=areamultipler;
+    areawidth*=areamultiplier;
+    areaheight*=areamultiplier;
     if(areawidth<10)areawidth=10;
     if(areaheight<10)areaheight=10;
     window_w_prev=window_w;
@@ -347,16 +347,16 @@ int App::getAreaHeight(){
     return areaheight;
 }
 
-void App::setAreaMultipler(float n){
-    if(areamultipler!=n){
-        areamultipler=n;
+void App::setAreaMultiplier(float n){
+    if(areamultiplier!=n){
+        areamultiplier=n;
         updateProportions();
         reloadFonts();
         pushEvent(GlobalEvent::GuiChange);
     }
 }
-float App::getAreaMultipler(){
-    return areamultipler;
+float App::getAreaMultiplier(){
+    return areamultiplier;
 }
 
 void App::setAutoProportions(bool n){

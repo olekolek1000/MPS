@@ -11,7 +11,7 @@ class GuiText;
 struct ActionCell{
     GuiText * text;
     int starttime;
-    float timemultipler;
+    float timemultiplier;
 };
 
 class ActionLog{
@@ -19,7 +19,7 @@ class ActionLog{
     std::vector<ActionCell> cells;
 public:
     void init(sceneEditor * scene);
-    void addMessage(const char * n, float timemultipler = 1.0f);
+    void addMessage(const char * n, float timemultiplier = 1.0f);
     bool pushGlobalEvent(GlobalEvent evt);
     void render();
     void clear();

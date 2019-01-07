@@ -40,8 +40,8 @@ bool Pipette::pushEvent(SDL_Event * evt){
 
     switch(evt->type){
         case SDL_MOUSEMOTION:{
-            mouseX=evt->motion.x*scene->a.getAreaMultipler();
-            mouseY=evt->motion.y*scene->a.getAreaMultipler();
+            mouseX=evt->motion.x*scene->a.getAreaMultiplier();
+            mouseY=evt->motion.y*scene->a.getAreaMultiplier();
             isMoved=true;
             break;
         }
