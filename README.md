@@ -1,6 +1,6 @@
 # Moving Picture Studio
 
-<p align="center">
+<p align="left">
   <img src="https://olekolek1000.com/mps/github/logo.png" width="350" height="350">
 </p>
 
