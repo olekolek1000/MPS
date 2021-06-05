@@ -1,6 +1,8 @@
 # Moving Picture Studio
 
-![]("https://olekolek1000.com/mps/github/logo.png">)
+<p align="center">
+  <img src="https://olekolek1000.com/mps/github/logo.png" width="350" height="350">
+</p>
 
 **[MAIN WEBPAGE](http://olekolek1000.com/mps/)**
 
